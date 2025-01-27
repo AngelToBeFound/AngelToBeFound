@@ -1,291 +1,39 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>神秘的个人网站 | 麦麦麦青春</title>
+    <title>Google 地图示例</title>
     <style>
-        /* ---------- 以下样式可以修改 ---------- */
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
+        #googleMap {
+            width: 100%;
+            height: 600px;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 20px auto;
-            display: block;
-            object-fit: cover;
-        }
-        /* ---------- 可修改样式结束 ---------- */
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 头像：替换为你的图片链接或本地路径 -->
-        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.boomplay.com%2Falbums%2F79116284&psig=AOvVaw1mhW15l_ee1uCvVzgcvcWg&ust=1738050160859000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNi8lMWzlYsDFQAAAAAdAAAAABAE" class="avatar" alt="我的头像">
-        
-        <!-- 修改标题 -->
-        <h1>你好，我是 <span style="color: #3498db;">麦青春</span></h1>
+    <h1>Google 地图</h1>
+    <div id="googleMap"></div>
 
-        <!-- 简介部分 -->
-        <section>
-            <h2>关于我</h2>
-            <p><!-- 修改自我介绍 -->
-                我是正在稀里糊涂写网页的不知名开发者<br>
-                喜欢探索新技术，也热爱分享知识。（确实）
-            </p>
-        </section>
+    <!-- 替换 YOUR_API_KEY 为你的密钥 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    
+    <script>
+        function initMap() {
+            // 设置中心坐标（上海）
+            const shanghai = { lat: 31.2304, lng: 121.4737 };
+            
+            // 初始化地图
+            const map = new google.maps.Map(document.getElementById('googleMap'), {
+                zoom: 12,
+                center: shanghai
+            });
 
-        <!-- 技能列表 -->
-        <section>
-            <h2>我的技能</h2>
-            <ul>
-                <li>用乱七八糟的工具写网页</li>
-                <li>Python入门（迫真）</li>
-                <li>UI设计，嗯</li>
-                <!-- 添加或删除列表项 -->
-            </ul>
-        </section>
-
-        <!-- 兴趣爱好 -->
-        <section>
-            <h2>兴趣爱好</h2>
-            <p>
-                摄影 | 旅行 | 阅读
-                <!-- 修改兴趣内容 -->
-            </p>
-        </section>
-
-        <!-- 联系方式 -->
-        <section>
-            <h2>联系我</h2>
-            <p>
-                📧 邮箱：<a href="mail.qq.com">2429704377@qq.com</a><br>
-                <!-- 修改邮箱 -->
-                🌐 个人网站：<a href="https://angeltobefound.github.io/AngelToBeFound/">https://angeltobefound.github.io/AngelToBeFound/</a><br>
-                <!-- 修改个人网站链接 -->
-                💼 GitHub：<a href="https://www.bilibili.com/video/BV1UT42167xb/?spm_id_from=333.337.search-card.all.click&vd_source=e2183382ead288fcb94e6b378fcf452c">先不给了，点这里是奇怪的网页哦</a>
-                <!-- 修改GitHub链接 -->
-            </p>
-        </section>
-    </div>
+            // 添加标记
+            new google.maps.Marker({
+                position: shanghai,
+                map: map,
+                title: '上海'
+            });
+        }
+    </script>
 </body>
 </html>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
-<div class="snow"></div>
