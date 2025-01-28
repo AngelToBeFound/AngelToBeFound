@@ -1,0 +1,387 @@
+/* 首页内容 */
+.header {
+	width: 100%;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.header .top {
+	width: 100%;
+	height: 45px;
+	background-color: #333;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.header .top .fr {
+	color: #ffffff;
+	height: 45px;
+	line-height: 45px;
+}
+
+.header .top .fr span {
+	font-size: 20px;
+	margin-right: 28px;
+}
+
+.header .top .fr a {
+	color: #fff;
+	font-size: 14px;
+	margin: 0px 14px 0;
+}
+
+.nav {
+	width: 100%;
+	height: 80px;
+	margin: 0 auto;
+	overflow: hidden;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+	margin-bottom: 5px;
+}
+
+.nav .fl {
+	display: block;
+	margin-top: 12px;
+}
+
+.nav .fr ul li {
+	float: left;
+	margin: 0 20px;
+}
+
+.nav .fr ul li a {
+	color: #000;
+	font-size: 16px;
+	display: block;
+	text-align: center;
+	width: 100px;
+	height: 76px;
+	line-height: 76px;
+}
+
+.nav .fr ul .act a {
+	color: #e8420a;
+	border-bottom: 4px solid #e8420a;
+}
+
+.nav .fr ul li a:hover {
+	color: #e8420a;
+	border-bottom: 4px solid #e8420a;
+}
+.banner {
+	width: 100%;
+	height: 550px;
+	background: url(../images/banner.png) center center / 1920px 100% no-repeat;
+	margin-top: -5px;
+}
+
+.footer {
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	font-size: 14px;
+	color: #fff;
+	background: #333;
+}
+
+.goods-con h3 {
+	font-size: 24px;
+	margin-top: 50px;
+	padding-left: 25px;
+}
+
+/* 24节气样式 */
+.goods-con {
+	width: 100%;
+	height: auto;
+	background-color: #f7f7f7;
+	overflow: hidden;
+	padding-bottom: 50px;
+}
+
+.goods-item {
+	width: 1200px;
+	height: auto;
+}
+
+.shangpin {
+	width: 100%;
+	height: 100%;
+	padding-top: 34px;
+}
+
+.shangpin a {
+	display: block;
+	width: 276px;
+	height: auto;
+	background-color: #fff;
+	border-radius: 8px;
+	padding-top: 35px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: 24px;
+	margin-top: 24px;
+}
+
+.shangpin a:hover {
+	box-shadow: 0px 0px 30px 0px rgb(68, 74, 92, 0.21);
+}
+
+.shangpin a img {
+	width: 150px;
+	height: 150px;
+	display: block;
+	margin: 0 auto;
+}
+
+.shangpin a .ell_1 {
+	height: 25px;
+	line-height: 25px;
+	font-size: 20px;
+	color: #222;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+/* Start:图文介绍 */
+.jieshao {
+	width: 100%;
+	height: 485px;
+	background: rgba(0, 0, 0, 0.6);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-top: 85px;
+}
+
+.jieshao-con img {
+	width: 390px;
+	height: 315px;
+}
+
+.jieshao1 {
+	width: 670px;
+	margin-left: 65px;
+	color: #FFFFFF;
+	margin-top: 35px;
+}
+
+.jieshao1p {
+	margin-top: 40px;
+	margin-bottom: 45px;
+	line-height: 25px;
+}
+/* End:图文介绍 */
+
+/* 节气简介 */
+.jianjie-con {
+	width: 100%;
+	height: auto;
+	padding: 20px 0;
+	background: #f7f7f7;
+}
+
+.jianjie-con .w1200 {
+	width: 1200px;
+	height: auto;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background: #FFFFFF;
+	border-radius: 15px;
+	padding: 30px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.jianjie-con .w1200 h3 {
+	padding: 30px 0px;
+	text-align: center;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.jianjie-con .w1200 p {
+	text-indent: 2em;
+	font-size: 14px;
+	color: #333;
+	line-height: 25px;
+	margin-top: 15px;
+}
+
+.jianjie-con .w1200 h4 {
+	padding: 30px 0px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.jianjie-con .w1200 span {
+	display: block;
+	margin-top: 15px;
+	font-size: 18px;
+	color: #333333;
+}
+/* 注册样式 */
+.register-con {
+	background: url(../images/login-banner.png) no-repeat;
+	background-size: 100% 100%;
+	padding: 250px 0;
+	margin-top: -5px;
+
+}
+.register-con .register-neirong {
+	width: 610px;
+	height: auto;
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	padding: 40px 35px 50px 35px;
+	margin: 0 auto;
+	border-radius: 5px;
+}
+
+.register-con .register-neirong .register-h3 {
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #999999;
+}
+
+.register-con .register-neirong .register-h3 span {
+	display: block;
+	width: 175px;
+	border-bottom: 2px solid #333333;
+	font-size: 24px;
+	color: #333;
+	padding-bottom: 10px;
+}
+
+.register-con .register-neirong form .shoujihao {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	margin-top: 38px;
+}
+
+.register-con .register-neirong form .shoujihao .fr {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 440px;
+	height: 40px;
+	border: 1px solid #cccccc;
+	padding-left: 20px;
+	background-color: #fff;
+	font-size: 14px;
+	color: #808080;
+}
+/* 登录样式 */
+.zhuce {
+	width: 100%;
+	height: 50px;
+	background-color: #e8420a;
+	font-size: 16px;
+	color: #fff;
+	border-radius: 5px;
+	margin-top: 30px;
+}
+button,
+input,
+select,
+textarea {
+	font-size: 100%;
+	margin: 0;
+	vertical-align: baseline;
+	*vertical-align: middle;
+	border: none;
+	background: none;
+}
+/* 初始化样式和公用样式 */
+.w1200{
+	width: 1200px;
+	margin: 0 auto;
+}
+body,
+html {
+	min-width: 1200px;
+}
+
+a {
+	color: #333;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.tl {
+	text-align: left !important;
+}
+
+.tc {
+	text-align: center !important;
+}
+
+.tr {
+	text-align: right !important;
+}
+
+.ell_1 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+* {
+	word-wrap: break-word;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	overflow-x: hidden;
+	overflow-y: auto;
+	font: 16px "微软雅黑", "Arial Narrow", HELVETICA;
+}
+
+a {
+	text-decoration: none;
+	color: #FFFFFF;
+	cursor: pointer
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+	font-weight: normal
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+img {
+	border: none !important;
+	vertical-align: middle
+}
