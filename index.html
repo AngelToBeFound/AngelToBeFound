@@ -4,77 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>麦青春的小小站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <link rel="stylesheet" href="index.css">
+
 </head>
-<body>
-    <div id="globe-container"></div>
-    <nav id="navbar">
-        <div class="container">
-            <a href="#" class="site-title">MaxCaulfield</a>
-            <div class="nav-links">
+<body class="text-gray-200">
+
+    <div id="tsparticles"></div>
+    <nav id="navbar" class="fixed w-full z-20 top-0 transition duration-300 ease-in-out">
+         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white hover:text-gray-300 transition duration-300">MaxCaulfield</a>
+            <div class="hidden md:flex space-x-6">
                 <a href="#home" class="nav-link active">主页</a>
                 <a href="#about" class="nav-link">关于我</a>
                 <a href="#photos" class="nav-link">照片展览</a>
                 <a href="#contact" class="nav-link">联系我</a>
             </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-200 focus:outline-none p-2 rounded hover:bg-gray-700 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-opacity-95 backdrop-blur-sm" style="background-color: rgba(11, 15, 25, 0.9);">
+            <a href="#home" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">主页</a>
+            <a href="#about" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">关于我</a>
+            <a href="#photos" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">照片展览</a>
+            <a href="#contact" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">联系我</a>
         </div>
     </nav>
-    <header id="home">
-        <div id="hero-content">
-            <img src="images/avatar.jpg" alt="MaxCaulfield 的头像" class="avatar reveal">
-            <div class="typewriter">
-                <h1>你好，我是 MaxCaulfield</h1>
+
+    <header id="home" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden px-4 z-10">
+         <div id="hero-content" class="relative z-1 transition-transform duration-300 ease-out">
+            <img src="images/avatar.jpg" alt="MaxCaulfield 的头像" class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full border-4 border-[var(--accent-button)] shadow-lg mb-6 reveal">
+             <div class="typewriter inline-block mb-3">
+                <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-sky-300 to-slate-300">
+                    你好，我是 MaxCaulfield
+                </h1>
             </div>
-            <p class="fade-in-up">北京市第二外国语学院 学生 | 热爱创造与探索</p>
-            <a href="#about" class="cta-button fade-in-up" style="animation-delay: 4s;">了解更多 &darr;</a>
+            <p class="text-lg md:text-2xl text-gray-300 mb-8 fade-in-up">北京市第二外国语学院 学生 | 热爱创造与探索</p>
+            <a href="#about" class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full border-2 transition duration-300 fade-in-up" style="animation-delay: 4s;">
+                了解更多 &darr;
+            </a>
         </div>
     </header>
-    <section id="about">
-        <div class="container">
-            <h2 class="reveal">关于我</h2>
-            <div class="about-content reveal">
-                <p>我是一个在网络宏流中疯狂汲取信息的人。对新鲜事物永远保持好奇，热衷于探索技术的边界和设计的魅力。</p>
-                <p>作为北京市第二外国语学院的学生，我不仅专注于学业，更利用课余时间沉浸在数字世界，学习编程、体验不同的软件工具，并尝试将创意变为现实。我相信持续学习和动手实践是成长的最佳途径。</p>
-                <div class="about-tags reveal">
-                    <span class="tag tag-blue">快速学习</span>
-                    <span class="tag tag-purple">数字探索</span>
-                    <span class="tag tag-gray">保持好奇</span>
+
+    <section id="about" class="py-20 md:py-32 bg-[var(--sky-mid)] bg-opacity-80 backdrop-blur-sm relative z-10"> <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal text-[var(--star-soft)]">关于我</h2>
+            <div class="max-w-3xl mx-auto text-center text-gray-300 leading-relaxed space-y-6 reveal">
+                <p>
+                    我是一个在网络宏流中疯狂汲取信息的人。对新鲜事物永远保持好奇，热衷于探索技术的边界和设计的魅力。
+                </p>
+                <p>
+                    作为北京市第二外国语学院的学生，我不仅专注于学业，更利用课余时间沉浸在数字世界，学习编程、体验不同的软件工具，并尝试将创意变为现实。我相信持续学习和动手实践是成长的最佳途径。
+                </p>
+                 <div class="flex flex-wrap justify-center gap-3 pt-4 reveal">
+                     <span class="bg-blue-800 text-xs font-semibold px-3 py-1 rounded-full text-blue-100 shadow-md hover:scale-105 transition-transform">快速学习</span>
+                     <span class="bg-purple-800 text-xs font-semibold px-3 py-1 rounded-full text-purple-100 shadow-md hover:scale-105 transition-transform">数字探索</span>
+                     <span class="bg-gray-700 text-xs font-semibold px-3 py-1 rounded-full text-gray-100 shadow-md hover:scale-105 transition-transform">保持好奇</span>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="photos" class="py-20 md:py-32 bg-[var(--sky-dark)] bg-opacity-80 backdrop-blur-sm relative z-10"> <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 reveal text-[var(--star-soft)]">照片展览</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                <div class="photo-item reveal">
+                    <img src="images/photo1.jpg" alt="照片展览 1" class="w-full h-64 md:h-72 object-cover">
+                </div>
+                <div class="photo-item reveal" style="transition-delay: 0.1s;">
+                    <img src="images/photo2.jpg" alt="照片展览 2" class="w-full h-64 md:h-72 object-cover">
+                </div>
+                <div class="photo-item reveal" style="transition-delay: 0.2s;">
+                    <img src="images/photo3.jpg" alt="照片展览 3" class="w-full h-64 md:h-72 object-cover">
+                </div>
+                <div class="photo-item reveal" style="transition-delay: 0.05s;">
+                    <img src="images/photo4.jpg" alt="照片展览 4" class="w-full h-64 md:h-72 object-cover">
+                </div>
+                <div class="photo-item reveal" style="transition-delay: 0.15s;">
+                    <img src="images/photo5.jpg" alt="照片展览 5" class="w-full h-64 md:h-72 object-cover">
+                </div>
+                <div class="photo-item reveal" style="transition-delay: 0.25s;">
+                    <img src="images/photo6.jpg" alt="照片展览 6" class="w-full h-64 md:h-72 object-cover">
                 </div>
             </div>
         </div>
     </section>
-    <section id="photos">
-        <div class="container">
-            <h2 class="reveal">照片展览</h2>
-            <div class="photo-grid">
-                <div class="photo-item reveal"><img src="images/photo1.jpg" alt="照片展览 1"></div>
-                <div class="photo-item reveal"><img src="images/photo2.jpg" alt="照片展览 2"></div>
-                <div class="photo-item reveal"><img src="images/photo3.jpg" alt="照片展览 3"></div>
-                <div class="photo-item reveal"><img src="images/photo4.jpg" alt="照片展览 4"></div>
-                <div class="photo-item reveal"><img src="images/photo5.jpg" alt="照片展览 5"></div>
-                <div class="photo-item reveal"><img src="images/photo6.jpg" alt="照片展览 6"></div>
-            </div>
-        </div>
-    </section>
-    <section id="contact">
-        <div class="container">
-            <h2 class="reveal">联系我</h2>
-            <div class="contact-content reveal">
-                <p>通过邮箱联系我:</p>
-                <div class="contact-icon-group">
-                    <div class="contact-icon">
-                        <span>mail.qq.com</span>
-                        <a href="mailto:nanci_fanghua520@qq.com" title="点击发送邮件">nanci_fanghua520@qq.com</a>
+
+    <section id="contact" class="py-20 md:py-32 bg-gradient-to-br from-[var(--sky-purple)] to-[var(--sky-dark)] bg-opacity-90 backdrop-blur-sm relative z-10"> <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 reveal text-[var(--star-soft)]">联系我</h2>
+            <div class="mt-12 reveal">
+                <p class="text-gray-400 mb-8 text-lg">通过邮箱联系我:</p>
+                <div class="flex justify-center items-center w-full">
+                    <div class="flex items-center space-x-4 contact-icon-group">
+                        <div class="flex-shrink-0">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[var(--star-soft)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-sm text-gray-400">mail.qq.com</span>
+                            <a href="mailto:nanci_fanghua520@qq.com" class="text-base text-[var(--accent-link)] hover:text-[var(--star-bright)] transition duration-300" title="点击发送邮件">
+                                nanci_fanghua520@qq.com
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <footer>
-        <div class="container">
+
+    <footer class="bg-black text-gray-600 py-8 text-center relative z-10">
+         <div class="container mx-auto px-6">
             <p>&copy; 2025 MaxCaulfield. 用 ❤️ 和代码构建.</p>
         </div>
     </footer>
+
     <script src="script.js" defer></script>
+
 </body>
 </html>
