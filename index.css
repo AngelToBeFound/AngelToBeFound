@@ -108,10 +108,10 @@ nav.scrolled {
     transform: translateY(0) scale(1);
 }
 
-/* Adjust section backgrounds if needed (can be less transparent now) */
-#about { background-color: rgba(11, 15, 25, 0.8); } /* Slightly more opaque */
-#photos { background-color: rgba(11, 15, 25, 0.9); } /* Slightly more opaque */
-#contact { background: linear-gradient(to bottom right, rgba(42, 26, 61, 0.9), rgba(11, 15, 25, 0.9)); } /* Slightly more opaque */
+/* Adjust section backgrounds if needed */
+#about { background-color: rgba(11, 15, 25, 0.8); }
+#photos { background-color: rgba(11, 15, 25, 0.9); }
+#contact { background: linear-gradient(to bottom right, rgba(42, 26, 61, 0.9), rgba(11, 15, 25, 0.9)); }
 
 
 .photo-item {
@@ -124,31 +124,20 @@ nav.scrolled {
 }
 .photo-item:hover {
      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
-     transform: translateY(-5px);
+     transform: translateY(-5px); /* Keep subtle lift on hover */
 }
 .photo-item img {
     display: block; width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s ease, filter 0.4s ease;
+    transition: transform 0.4s ease; /* Keep only transform transition */
+    cursor: zoom-in; /* Indicate clickable for zoom */
 }
 .photo-item:hover img {
-    transform: scale(1.15);
-    filter: brightness(0.7);
+    transform: scale(1.05); /* Keep slight zoom on hover */
+    /* Removed filter: brightness(0.7); */
 }
-.photo-item::after {
-    content: '查看'; font-family: 'Inter', sans-serif;
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    color: white; font-size: 1.5rem;
-    font-weight: 500; opacity: 0;
-    background-color: rgba(0,0,0,0.3);
-    padding: 0.5rem 1rem; border-radius: 5px;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    pointer-events: none; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-}
- .photo-item:hover::after {
-     opacity: 0.9;
-     transform: translate(-50%, -50%) scale(1);
- }
+
+/* Removed the ::after rule for the "查看" overlay */
+/* .photo-item::after { ... } */
 
 .contact-icon-group { /* Style the group if needed */ }
 
@@ -185,6 +174,34 @@ nav.scrolled {
     color: var(--star-bright);
 }
 
+/* --- Lightbox Styles --- */
+#lightbox-overlay {
+    /* Uses Tailwind classes for position, bg, display, z-index, cursor */
+    /* Custom styles for finer control if needed */
+    opacity: 0; /* Start hidden for transition */
+    visibility: hidden; /* Ensure it's not interactable when hidden */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    cursor: zoom-out; /* Indicate clicking background closes */
+}
+#lightbox-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+#lightbox-img {
+    /* Uses Tailwind classes for max-width/height, object-fit, rounded, shadow */
+    /* Add transition for potential future animations */
+    transition: transform 0.3s ease;
+}
+#lightbox-close {
+    /* Uses Tailwind classes for position, text color/size/weight, cursor */
+    /* Add transition for color change */
+    transition: color 0.2s ease;
+    line-height: 1; /* Adjust line height for better positioning */
+}
+/* --- End Lightbox Styles --- */
+
+
+/* --- Scrollbar Styles --- */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #0f172a; }
 ::-webkit-scrollbar-thumb { background-color: var(--accent-link); border-radius: 10px; border: 2px solid #0f172a; }
