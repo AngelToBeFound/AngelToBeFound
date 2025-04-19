@@ -110,20 +110,25 @@ if (typeof THREE !== 'undefined') {
         container.appendChild(renderer.domElement);
 
         // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft ambient light
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.25); // Soft ambient light
         scene.add(ambientLight);
 
-        const sunLight = new THREE.DirectionalLight(0xffffff, 1.0); // Bright directional light (sun)
+        const sunLight = new THREE.DirectionalLight(0xffffff, 1.2); // Bright directional light (sun)
         sunLight.position.set(5, 3, 5); // Position the light source
         scene.add(sunLight);
 
-        // Earth Geometry and Material
+        // Earth Geometry and Material with day/night textures
         const earthGeometry = new THREE.SphereGeometry(1, 64, 32); // Radius 1, detail levels
-        // Simple blue material, day/night effect comes from lighting
+        const textureLoader = new THREE.TextureLoader();
+        const dayTexture = textureLoader.load('images/earth_day.jpg');
+        const nightTexture = textureLoader.load('images/earth_night.jpg');
         const earthMaterial = new THREE.MeshStandardMaterial({
-            color: 0x2563eb, // Blue color
+            map: dayTexture,
             metalness: 0.3,
-            roughness: 0.7
+            roughness: 0.7,
+            emissive: 0xffffff,
+            emissiveMap: nightTexture,
+            emissiveIntensity: 0.7
         });
         earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
         scene.add(earthMesh);
