@@ -5,68 +5,61 @@
     /* Or use Silver: rgba(192, 192, 192, 0.7); */
 
     /* Define base starry sky colors */
-    --sky-dark: #0b0f19; /* Very dark blue/black */
-    --sky-mid: #191970; /* Midnight Blue */
-    --sky-purple: #483d8b; /* Dark Slate Blue / Purple */
+    --sky-dark: #000005; /* Even darker for space */
+    --sky-mid: #0b0f19;
+    --sky-purple: #2a1a3d; /* Darker purple */
     --star-bright: #FFFFFF;
     --star-soft: #ADD8E6; /* Light Blue */
     --star-pale: #F0F8FF; /* Alice Blue */
-    --accent-link: #a7c7e7; /* Softer blue for links */
-    --accent-button: #60a5fa; /* Brighter blue for button */
-    --button-hover-fill: #E0E0E0; /* Light grey/silver for hover fill */
-    --button-hover-text: #111827; /* Dark text on hover fill */
+    --accent-link: #a7c7e7;
+    --accent-button: #3b82f6; /* Standard blue */
+    --button-hover-fill: #E0E0E0;
+    --button-hover-text: #111827;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--sky-dark); /* Use dark base */
+    background-color: var(--sky-dark); /* Set base dark color */
     color: #e5e7eb;
     overflow-x: hidden;
-    position: relative;
+    /* Remove position: relative and body::before */
 }
 
-/* Updated background gradient with starry sky colors */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(
-        -45deg,
-        var(--sky-dark),
-        var(--sky-mid),
-        var(--sky-purple),
-        var(--sky-mid),
-        var(--sky-dark)
-    );
-    background-size: 400% 400%;
-    animation: gradient-flow 25s ease infinite; /* Slower animation */
-    z-index: -2;
-    opacity: 0.8; /* Slightly more opaque gradient */
-}
-
-@keyframes gradient-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+/* Remove body::before gradient */
+/* body::before { ... } */
 
 html { scroll-behavior: smooth; }
 
-#tsparticles {
+/* Style for the 3D globe container */
+#globe-container {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Behind all other content */
+    overflow: hidden; /* Hide potential scrollbars */
 }
 
-/* --- Updated Component Styles for Starry Sky Theme --- */
+/* Ensure canvas fills the container */
+#globe-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* --- Component Styles --- */
+/* Make sure sections have transparent or semi-transparent backgrounds */
+/* to see the globe behind */
 
 nav { transition: background-color 0.3s ease; }
 nav.scrolled {
-    background-color: rgba(11, 15, 25, 0.7); /* Use dark base with transparency */
+    background-color: rgba(11, 15, 25, 0.7);
     backdrop-filter: blur(12px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
-.nav-link { position: relative; transition: color 0.3s ease; color: var(--accent-link); } /* Use accent link color */
+.nav-link { position: relative; transition: color 0.3s ease; color: var(--accent-link); }
 .nav-link::after {
     content: ''; position: absolute; width: 0; height: 2px;
     bottom: -5px; left: 50%; transform: translateX(-50%);
@@ -75,17 +68,14 @@ nav.scrolled {
     box-shadow: 0 0 8px var(--glow-color);
 }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-.nav-link:hover, .nav-link.active { color: var(--star-bright); } /* Hover/active to bright white */
+.nav-link:hover, .nav-link.active { color: var(--star-bright); }
 
-/* Updated typewriter styles */
 .typewriter h1 {
     overflow: hidden; border-right: .15em solid var(--glow-color); white-space: nowrap;
     margin: 0 auto; letter-spacing: .1em;
     animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
-    /* Updated text gradient */
-    text-shadow: 0 0 10px rgba(173, 216, 230, 0.4); /* Use glow color for shadow */
+    text-shadow: 0 0 10px rgba(173, 216, 230, 0.4);
 }
-/* Tailwind class for h1 gradient will be updated in HTML */
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--glow-color); } }
 
@@ -105,15 +95,21 @@ nav.scrolled {
     transform: translateY(0) scale(1);
 }
 
-/* Updated photo item hover */
+/* Update section backgrounds for transparency */
+#about { background-color: rgba(11, 15, 25, 0.5); } /* Example: Dark semi-transparent */
+#photos { background-color: rgba(11, 15, 25, 0.7); } /* Example: Darker semi-transparent */
+#contact { background: linear-gradient(to bottom right, rgba(42, 26, 61, 0.7), rgba(11, 15, 25, 0.8)); } /* Semi-transparent gradient */
+
+
 .photo-item {
     overflow: hidden; position: relative; border-radius: 0.5rem;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    border: 1px solid rgba(173, 216, 230, 0.1); /* Subtle border */
+    border: 1px solid rgba(173, 216, 230, 0.1);
+    background-color: rgba(255, 255, 255, 0.05); /* Slight background tint */
+    backdrop-filter: blur(2px); /* Optional blur */
 }
 .photo-item:hover {
-     /* Use glow color for shadow */
      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
      transform: translateY(-5px);
 }
@@ -141,47 +137,42 @@ nav.scrolled {
      transform: translate(-50%, -50%) scale(1);
  }
 
-/* Updated contact icon hover */
+.contact-icon-group { /* Style the group if needed */ }
+
 .contact-icon a {
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
     display: inline-block;
-    color: var(--accent-link); /* Use accent link color */
+    color: var(--accent-link);
 }
 .contact-icon a:hover {
     transform: scale(1.2) translateY(-3px);
-    color: var(--star-bright); /* Hover to bright white */
+    color: var(--star-bright);
 }
-.contact-icon span { transition: opacity 0.3s ease; opacity: 0.7; } /* Slightly more visible text */
+.contact-icon span { transition: opacity 0.3s ease; opacity: 0.7; }
  .contact-icon a:hover span { opacity: 1; }
 
-/* Updated button styles */
 .cta-button {
     position: relative; overflow: hidden; z-index: 1;
     transition: color 0.4s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    background-color: var(--accent-button); /* Use accent button color */
+    background-color: var(--accent-button);
     border-color: var(--accent-button);
-    color: var(--star-bright); /* Text color */
-    /* Ensure padding and border-radius are applied if not using Tailwind classes */
-    padding: 0.75rem 2rem; /* Example padding */
-    border-radius: 9999px; /* Example border-radius */
-    border-width: 2px; /* Example border-width */
-    font-weight: 600; /* Example font-weight */
-    display: inline-block; /* Ensure it behaves like a button */
+    color: var(--star-bright);
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border-width: 2px;
+    font-weight: 600;
+    display: inline-block;
 }
 .cta-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color);
-    background-color: transparent; /* Make transparent on hover */
-    border-color: var(--glow-color); /* Border uses glow color */
-    color: var(--star-bright); /* Keep text bright */
+    background-color: transparent;
+    border-color: var(--glow-color);
+    color: var(--star-bright);
 }
-/* Remove ::before fill effect, rely on background/border change */
-/* .cta-button::before { ... } */
 
-
-/* Updated scrollbar */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0f172a; } /* Dark slate track */
+::-webkit-scrollbar-track { background: #0f172a; }
 ::-webkit-scrollbar-thumb { background-color: var(--accent-link); border-radius: 10px; border: 2px solid #0f172a; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--star-soft); box-shadow: 0 0 10px var(--glow-color); }
