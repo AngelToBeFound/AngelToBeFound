@@ -42,9 +42,17 @@ document.addEventListener('DOMContentLoaded', updateActiveLink);
 // Ensure tsParticles is loaded before using it
 if (typeof tsParticles !== 'undefined') {
     tsParticles.load("tsparticles", {
-        fpsLimit: 60,
+        fpsLimit: 60, // Keep FPS limit
         particles: {
-            number: { value: 90, density: { enable: true, area: 800 } }, // Slightly more base particles
+            number: {
+                // --- MODIFICATION START ---
+                value: 70, // Set a fixed number of particles (e.g., 70). Adjust as needed.
+                density: {
+                    enable: false, // Disable density calculation to enforce the fixed value.
+                    // area: 800 // This value is now ignored.
+                }
+                // --- MODIFICATION END ---
+            },
             // Star colors
             color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#86efac", "#67e8f9"] },
             // Add star shape
@@ -67,7 +75,7 @@ if (typeof tsParticles !== 'undefined') {
                 width: 1,
                 warp: true
             },
-            collisions: { enable: false },
+            collisions: { enable: false }, // Keep collisions disabled for performance
             move: {
                 direction: "none", enable: true, outModes: { default: "out" },
                 random: true, speed: 0.5, // Slightly slower base speed
@@ -83,15 +91,15 @@ if (typeof tsParticles !== 'undefined') {
         interactivity: {
             events: {
                 onHover: { enable: true, mode: "repulse" }, // Simplified hover
-                onClick: { enable: true, mode: "push" },
+                onClick: { enable: true, mode: "push" }, // Keep push on click
                 resize: true,
             },
             modes: {
                 repulse: { distance: 70, duration: 0.4, speed: 0.6 }, // Adjust repulse
-                push: { quantity: 3 },
+                push: { quantity: 3 }, // Reduce pushed particles if needed
             },
         },
-        // Static Emitter Configuration
+        // Static Emitter Configuration (Keep as is unless it also causes issues)
         emitters: {
             name: "avatarEmitter",
             position: { x: 50, y: 50 },
@@ -113,7 +121,7 @@ if (typeof tsParticles !== 'undefined') {
                 links: { enable: false }
             }
         },
-        detectRetina: true,
+        detectRetina: true, // Keep retina detection
         background: { opacity: 0 } // Transparent background for tsParticles canvas
     }).catch(error => {
         console.error("Error loading tsParticles:", error); // Add error handling
