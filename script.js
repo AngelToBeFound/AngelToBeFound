@@ -32,8 +32,83 @@ window.addEventListener('scroll', updateActiveLink);
 document.addEventListener('DOMContentLoaded', updateActiveLink);
 
 
-// --- Remove tsParticles Initialization ---
-// tsParticles.load(...) code removed
+// --- tsParticles Initialization (Static Emitter + Enhanced Decorations) ---
+tsParticles.load("tsparticles", {
+    fpsLimit: 60,
+    particles: {
+        number: { value: 90, density: { enable: true, area: 800 } }, // Slightly more base particles
+        // Star colors
+        color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#86efac", "#67e8f9"] },
+        // Add star shape
+        shape: { type: ["circle", "star"] },
+        opacity: {
+            value: {min: 0.1, max: 0.6}, // Slightly higher max opacity
+             // Twinkling effect
+             animation: { enable: true, speed: 0.8, minimumValue: 0.1, sync: false, destroy: "none", startValue: "random" }
+        },
+        size: {
+            value: { min: 0.5, max: 2.5 }, // Slightly larger max size
+             // Size pulsing effect
+            animation: { enable: true, speed: 4, minimumValue: 0.5, sync: false, destroy: "none", startValue: "random"}
+        },
+        links: {
+            color: "random",
+            distance: 130,
+            enable: true,
+            opacity: 0.15, // Slightly fainter links
+            width: 1,
+            warp: true
+        },
+        collisions: { enable: false },
+        move: {
+            direction: "none", enable: true, outModes: { default: "out" },
+            random: true, speed: 0.5, // Slightly slower base speed
+            straight: false,
+            // Add slight wobble/noise
+            noise: {
+                enable: true,
+                delay: { value: 0.5 },
+                factor: { value: 0.5 }
+            }
+        }
+    },
+    interactivity: {
+        events: {
+            onHover: { enable: true, mode: "repulse" }, // Simplified hover
+            onClick: { enable: true, mode: "push" },
+            resize: true,
+        },
+        modes: {
+            repulse: { distance: 70, duration: 0.4, speed: 0.6 }, // Adjust repulse
+            push: { quantity: 3 },
+            // grab: { distance: 140, links: { opacity: 0.3 } } // Removed grab
+        },
+    },
+    // Static Emitter Configuration
+    emitters: {
+        name: "avatarEmitter",
+        position: { x: 50, y: 50 },
+        rate: { quantity: 2, delay: 0.1 },
+        size: { width: 100, height: 100, mode: "percent" },
+        particles: { // Properties of emitted particles
+            size: { value: {min: 1, max: 3} },
+            opacity: { value: {min: 0.5, max: 0.9} },
+            color: { value: ["#ffffff", "#a78bfa", "#6ee7b7", "#22d3ee"] },
+            shape: { type: "star" }, // Emit stars
+            move: {
+                speed: 1.8,
+                decay: 0.05,
+                direction: "outside",
+                straight: false,
+                outModes: { default: "destroy", top: "none", bottom: "none" }
+            },
+            life: { duration: 2.0, count: 1 },
+            links: { enable: false }
+        }
+    },
+    detectRetina: true,
+    background: { opacity: 0 }
+});
 
 
 // --- Scroll Reveal Animation ---
@@ -76,149 +151,3 @@ if (mobileMenuButton && mobileMenu) {
         });
     });
  }
-
-// --- Three.js Globe Background ---
-// Ensure Three.js library is loaded before this script runs (defer attribute helps)
-if (typeof THREE !== 'undefined') {
-    let scene, camera, renderer, earthMesh;
-    let isDragging = false;
-    let previousMousePosition = { x: 0, y: 0 };
-    let targetRotation = { x: 0, y: 0 }; // Target rotation based on drag
-    let currentRotation = { x: 0, y: 0 }; // Current smoothed rotation
-    const rotationSpeed = 0.001; // Auto-rotation speed
-    const dragFactor = 0.005; // How much mouse movement affects rotation
-    const lerpFactor = 0.1; // Smoothing factor for rotation
-
-    function initGlobe() {
-        const container = document.getElementById('globe-container');
-        if (!container) {
-            console.error("Globe container not found!");
-            return;
-        }
-
-        // Scene
-        scene = new THREE.Scene();
-
-        // Camera
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 3; // Adjust camera distance from Earth
-
-        // Renderer
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent background
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio); // Adjust for high-DPI screens
-        container.appendChild(renderer.domElement);
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.25); // Soft ambient light
-        scene.add(ambientLight);
-
-        const sunLight = new THREE.DirectionalLight(0xffffff, 1.2); // Bright directional light (sun)
-        sunLight.position.set(5, 3, 5); // Position the light source
-        scene.add(sunLight);
-
-        // Earth Geometry and Material with day/night textures
-        const earthGeometry = new THREE.SphereGeometry(1, 64, 32); // Radius 1, detail levels
-        const textureLoader = new THREE.TextureLoader();
-        const dayTexture = textureLoader.load('images/earth_day.jpg');
-        const nightTexture = textureLoader.load('images/earth_night.jpg');
-        const earthMaterial = new THREE.MeshStandardMaterial({
-            map: dayTexture,
-            metalness: 0.3,
-            roughness: 0.7,
-            emissive: 0xffffff,
-            emissiveMap: nightTexture,
-            emissiveIntensity: 0.7
-        });
-        earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-        scene.add(earthMesh);
-
-        // Initial rotation offset (optional, to show different starting face)
-        earthMesh.rotation.y = Math.PI * 1.5;
-        targetRotation.y = earthMesh.rotation.y;
-        currentRotation.y = earthMesh.rotation.y;
-
-
-        // Add Mouse Event Listeners for Interaction
-        container.addEventListener('mousedown', onMouseDown);
-        container.addEventListener('mousemove', onMouseMove);
-        container.addEventListener('mouseup', onMouseUp);
-        container.addEventListener('mouseleave', onMouseUp); // Stop dragging if mouse leaves container
-        // container.addEventListener('wheel', onMouseWheel); // Optional: Zoom
-
-        // Handle Window Resize
-        window.addEventListener('resize', onWindowResize);
-
-        // Start Animation
-        animate();
-    }
-
-    function onMouseDown(event) {
-        isDragging = true;
-        previousMousePosition.x = event.clientX;
-        previousMousePosition.y = event.clientY;
-    }
-
-    function onMouseMove(event) {
-        if (!isDragging) return;
-
-        const deltaX = event.clientX - previousMousePosition.x;
-        const deltaY = event.clientY - previousMousePosition.y;
-
-        // Update target rotation based on mouse movement
-        targetRotation.y += deltaX * dragFactor;
-        targetRotation.x += deltaY * dragFactor;
-
-        // Clamp vertical rotation to avoid flipping upside down
-        targetRotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, targetRotation.x));
-
-        previousMousePosition.x = event.clientX;
-        previousMousePosition.y = event.clientY;
-    }
-
-    function onMouseUp() {
-        isDragging = false;
-    }
-
-    // Optional: Zoom functionality
-    // function onMouseWheel(event) {
-    //     camera.position.z += event.deltaY * 0.005;
-    //     camera.position.z = Math.max(1.5, Math.min(5, camera.position.z)); // Clamp zoom
-    // }
-
-
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-
-        // Auto-rotate if not dragging
-        if (!isDragging) {
-            targetRotation.y += rotationSpeed;
-        }
-
-        // Smoothly interpolate current rotation towards target rotation (Lerp)
-        currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor;
-        currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor;
-
-        // Apply the smoothed rotation
-        earthMesh.rotation.x = currentRotation.x;
-        earthMesh.rotation.y = currentRotation.y;
-
-        renderer.render(scene, camera);
-    }
-
-    // Initialize the globe when the DOM is ready
-    if (document.readyState === 'loading') { // Loading hasn't finished yet
-        document.addEventListener('DOMContentLoaded', initGlobe);
-    } else { // `DOMContentLoaded` has already fired
-        initGlobe();
-    }
-
-} else {
-    console.error("THREE.js library not loaded!");
-}

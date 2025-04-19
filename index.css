@@ -32,20 +32,24 @@ body::before {
         #7c3aed, /* Purple */
         #16a34a, /* Green */
         #0891b2, /* Cyan */
-        #4f46e5, /* Indigo (added back for transition) */
-        #c026d3  /* Fuchsia (added back for transition) */
+        #4f46e5, /* Indigo */
+        #c026d3, /* Fuchsia */
+        #2563eb /* Repeat first color for smoother loop */
     );
-    background-size: 600% 600%;
-    animation: gradient-flow 20s ease infinite;
+    background-size: 400% 400%; /* Make size larger for smoother flow */
+    /* Updated animation for single direction */
+    animation: gradient-flow 25s linear infinite; /* Use linear timing, longer duration */
     z-index: -2; /* Behind particles */
     opacity: 0.7; /* Adjust opacity as desired */
 }
 
+/* Updated keyframes for single direction loop */
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+    /* No 50% keyframe, animation loops from 100% back to 0% */
 }
+
 
 html { scroll-behavior: smooth; }
 
@@ -58,11 +62,6 @@ html { scroll-behavior: smooth; }
     height: 100%;
     z-index: -1; /* Behind content, above gradient */
 }
-
-/* Remove globe container styles */
-/* #globe-container { ... } */
-/* #globe-container canvas { ... } */
-
 
 /* --- Component Styles --- */
 /* Sections need z-index to be above particles/gradient */
