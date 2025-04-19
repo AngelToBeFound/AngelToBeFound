@@ -1,57 +1,71 @@
-/* --- Starry Sky Color Theme --- */
+/* --- Starry Sky Color Theme (Adjusted for Particle Background) --- */
 :root {
-    /* Updated glow color to a light sky blue / silver */
     --glow-color: rgba(173, 216, 230, 0.7); /* Light Blue */
-    /* Or use Silver: rgba(192, 192, 192, 0.7); */
-
-    /* Define base starry sky colors */
-    --sky-dark: #000005; /* Even darker for space */
-    --sky-mid: #0b0f19;
-    --sky-purple: #2a1a3d; /* Darker purple */
+    --sky-dark: #0b0f19; /* Very dark blue/black */
+    --sky-mid: #191970; /* Midnight Blue */
+    --sky-purple: #483d8b; /* Dark Slate Blue / Purple */
     --star-bright: #FFFFFF;
     --star-soft: #ADD8E6; /* Light Blue */
     --star-pale: #F0F8FF; /* Alice Blue */
     --accent-link: #a7c7e7;
-    --accent-button: #3b82f6; /* Standard blue */
+    --accent-button: #60a5fa; /* Brighter blue for button */
     --button-hover-fill: #E0E0E0;
     --button-hover-text: #111827;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--sky-dark); /* Set base dark color */
+    background-color: var(--sky-dark); /* Base dark color */
     color: #e5e7eb;
     overflow-x: hidden;
-    /* Remove position: relative and body::before */
+    position: relative; /* Needed for pseudo-element */
 }
 
-/* Remove body::before gradient */
-/* body::before { ... } */
+/* Re-add background gradient */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient( /* Blue, Purple, Green, Cyan gradient */
+        -45deg,
+        #2563eb, /* Blue */
+        #7c3aed, /* Purple */
+        #16a34a, /* Green */
+        #0891b2, /* Cyan */
+        #4f46e5, /* Indigo (added back for transition) */
+        #c026d3  /* Fuchsia (added back for transition) */
+    );
+    background-size: 600% 600%;
+    animation: gradient-flow 20s ease infinite;
+    z-index: -2; /* Behind particles */
+    opacity: 0.7; /* Adjust opacity as desired */
+}
+
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 html { scroll-behavior: smooth; }
 
-/* Style for the 3D globe container */
-#globe-container {
+/* Style for the particle container */
+#tsparticles {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Behind all other content */
-    overflow: hidden; /* Hide potential scrollbars */
+    z-index: -1; /* Behind content, above gradient */
 }
 
-/* Ensure canvas fills the container */
-#globe-container canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
+/* Remove globe container styles */
+/* #globe-container { ... } */
+/* #globe-container canvas { ... } */
 
 
 /* --- Component Styles --- */
-/* Make sure sections have transparent or semi-transparent backgrounds */
-/* to see the globe behind */
+/* Sections need z-index to be above particles/gradient */
 
 nav { transition: background-color 0.3s ease; }
 nav.scrolled {
@@ -95,10 +109,10 @@ nav.scrolled {
     transform: translateY(0) scale(1);
 }
 
-/* Update section backgrounds for transparency */
-#about { background-color: rgba(11, 15, 25, 0.5); } /* Example: Dark semi-transparent */
-#photos { background-color: rgba(11, 15, 25, 0.7); } /* Example: Darker semi-transparent */
-#contact { background: linear-gradient(to bottom right, rgba(42, 26, 61, 0.7), rgba(11, 15, 25, 0.8)); } /* Semi-transparent gradient */
+/* Adjust section backgrounds if needed (can be less transparent now) */
+#about { background-color: rgba(11, 15, 25, 0.8); } /* Slightly more opaque */
+#photos { background-color: rgba(11, 15, 25, 0.9); } /* Slightly more opaque */
+#contact { background: linear-gradient(to bottom right, rgba(42, 26, 61, 0.9), rgba(11, 15, 25, 0.9)); } /* Slightly more opaque */
 
 
 .photo-item {
@@ -106,8 +120,8 @@ nav.scrolled {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     border: 1px solid rgba(173, 216, 230, 0.1);
-    background-color: rgba(255, 255, 255, 0.05); /* Slight background tint */
-    backdrop-filter: blur(2px); /* Optional blur */
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(2px);
 }
 .photo-item:hover {
      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
