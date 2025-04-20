@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
     <style>
         /* --- Base Styles & Theme Variables --- */
@@ -65,7 +66,45 @@
             font-family: 'Inter', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden; /* Prevent horizontal scroll */
+            position: relative; /* Needed for pseudo-element */
         }
+
+        /* --- ADDED: Background Gradient (from index.css) --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(
+                -45deg,
+                #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb
+            );
+            background-size: 400% 400%;
+            animation: gradient-flow 25s linear infinite;
+            z-index: -2; /* Behind particles */
+            opacity: 0.7; /* Adjust opacity as desired */
+            /* Fade gradient slightly in light mode */
+             transition: opacity 0.3s ease;
+        }
+        body.light-theme::before {
+            opacity: 0.4; /* Less prominent in light mode */
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        /* --- END ADDED: Background Gradient --- */
+
+        /* --- ADDED: tsParticles Container Style --- */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind content, above gradient */
+        }
+        /* --- END ADDED: tsParticles Container Style --- */
+
 
         /* Glassmorphism Effect Base */
         .glass-effect {
@@ -81,14 +120,23 @@
         #blog-header {
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 50; /* Ensure header is above content */
             transition: background-color 0.3s ease;
+            /* Remove glass effect base from here, apply conditionally */
         }
         #blog-header.scrolled {
+             /* Apply glass effect only when scrolled */
              background-color: var(--bg-glass);
-             backdrop-filter: blur(16px); /* More blur on scroll */
+             backdrop-filter: blur(16px);
+             border-bottom: 1px solid var(--border-color); /* Add border when scrolled */
              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        /* Initial transparent state */
+        #blog-header:not(.scrolled) {
+             background-color: transparent;
+             border-bottom: 1px solid transparent; /* Keep space but transparent */
+        }
+
 
         /* Text Gradient for Titles */
         .text-gradient {
@@ -160,7 +208,9 @@
 
     </style>
 </head>
-<body class="dark-theme"> <header id="blog-header" class="py-4 glass-effect !rounded-none !border-transparent !border-b !border-[var(--border-color)] mb-8 md:mb-12">
+<body class="dark-theme"> <div id="tsparticles"></div>
+
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
                 <span class="text-gradient" data-translate-key="blog_title">麦青春的博客</span>
@@ -185,9 +235,7 @@
         </div>
     </header>
 
-    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-
-        <main class="md:col-span-2 space-y-8 md:space-y-12 stagger-fade">
+    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative z-10"> <main class="md:col-span-2 space-y-8 md:space-y-12 stagger-fade">
 
             <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.1s;">
                 <img src="https://placehold.co/800x400/0b0f19/a7c7e7?text=Blog+Post+1" alt="博客文章1的图片" class="w-full h-48 object-cover">
@@ -295,8 +343,7 @@
 
     </div>
 
-    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm">
-        <div class="container mx-auto px-6">
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10"> <div class="container mx-auto px-6">
              <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
              <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
         </div>
@@ -305,82 +352,16 @@
     <script>
         // --- Translations ---
         const translations = {
-            'en': {
-                'blog_title': "MaxCaulfield's Blog",
-                'about_me': "About Me",
-                'about_me_text': "Hi! I'm MaxCaulfield, a student passionate about exploring tech and design. Welcome to my little blog!",
-                'learn_more_about_me': "Learn more about me →",
-                'categories': "Categories",
-                'tech_category': "Tech",
-                'life_category': "Life",
-                'misc_category': "Misc",
-                'tags': "Tags",
-                'recent_posts': "Recent Posts",
-                'category': "Category",
-                'post1_title': "My First Blog Post",
-                'post1_excerpt': "This is the excerpt for my first blog post. Here I share some thoughts and experiences from my journey learning frontend development. Hope you like it. This is an auto-generated placeholder...",
-                'post2_title': "Thoughts on Glassmorphism",
-                'post2_excerpt': "Recently, I've been very interested in the Glassmorphism design style. It creates a unique sense of depth through background blur, translucency, and thin borders. This post explores how to implement this effect...",
-                'post3_title': "Frontend-Only Theme Switching",
-                'post3_excerpt': "How to implement light/dark theme switching for a website using only CSS variables and JavaScript, without relying on a backend? This article introduces a simple method based on CSS variables and localStorage.",
-                'read_more': "Read More →",
-                'prev_page': "Prev",
-                'next_page': "Next",
-                'footer_built_with': "Built with ❤️ and code.",
-                'back_to_home': "Back to Home",
-                'current_lang_display': "EN"
-            },
-            'zh-CN': {
-                'blog_title': "麦青春的博客",
-                'about_me': "关于博主",
-                'about_me_text': "你好！我是 MaxCaulfield，一个热爱探索技术和设计的学生。欢迎来到我的小小博客！",
-                'learn_more_about_me': "了解更多关于我 →",
-                'categories': "文章分类",
-                'tech_category': "技术",
-                'life_category': "生活",
-                'misc_category': "随笔",
-                'tags': "标签云",
-                'recent_posts': "近期文章",
-                'category': "分类",
-                'post1_title': "我的第一篇博客文章",
-                'post1_excerpt': "这是我的第一篇博客文章的摘要内容。我在这里分享一些关于我学习前端开发过程中的想法和经验，希望大家喜欢。这是一个自动生成的占位符摘要，实际内容会更长一些...",
-                'post2_title': "关于玻璃模糊效果的思考",
-                'post2_excerpt': "最近对玻璃模糊（Glassmorphism）设计风格很感兴趣。它通过背景模糊、半透明和细边框创造出一种独特的层次感。这篇文章探讨了如何在网页中实现这种效果，以及它的一些优缺点。",
-                'post3_title': "纯前端实现主题切换",
-                'post3_excerpt': "如何在不依赖后端的情况下，仅使用 CSS 变量和 JavaScript 实现网站的浅色/深色主题切换？本文将介绍一种基于 CSS 变量和 localStorage 的简单实现方法。",
-                'read_more': "阅读全文 →",
-                'prev_page': "上一页",
-                'next_page': "下一页",
-                'footer_built_with': "用 ❤️ 和代码构建.",
-                'back_to_home': "返回主页",
-                'current_lang_display': "简"
-            },
-            'zh-TW': {
-                'blog_title': "麥青春的部落格",
-                'about_me': "關於博主",
-                'about_me_text': "你好！我是 MaxCaulfield，一個熱愛探索技術和設計的學生。歡迎來到我的小小部落格！",
-                'learn_more_about_me': "了解更多關於我 →",
-                'categories': "文章分類",
-                'tech_category': "技術",
-                'life_category': "生活",
-                'misc_category': "隨筆",
-                'tags': "標籤雲",
-                'recent_posts': "近期文章",
-                'category': "分類",
-                'post1_title': "我的第一篇部落格文章",
-                'post1_excerpt': "這是我的第一篇部落格文章的摘要內容。我在這裡分享一些關於我學習前端開發過程中的想法和經驗，希望大家喜歡。這是一個自動生成的佔位符摘要，實際內容會更長一些...",
-                'post2_title': "關於玻璃模糊效果的思考",
-                'post2_excerpt': "最近對玻璃模糊（Glassmorphism）設計風格很感興趣。它通過背景模糊、半透明和細邊框創造出一種獨特的層次感。這篇文章探討了如何在網頁中實現這種效果，以及它的一些優缺點。",
-                'post3_title': "純前端實現主題切換",
-                'post3_excerpt': "如何在不依賴後端的情況下，僅使用 CSS 變數和 JavaScript 實現網站的淺色/深色主題切換？本文將介紹一種基於 CSS 變數和 localStorage 的簡單實現方法。",
-                'read_more': "閱讀全文 →",
-                'prev_page': "上一頁",
-                'next_page': "下一頁",
-                'footer_built_with': "用 ❤️ 和程式碼構建.",
-                'back_to_home': "返回主頁",
-                'current_lang_display': "繁"
-            }
+            'en': { /* ... English translations ... */ },
+            'zh-CN': { /* ... Simplified Chinese translations ... */ },
+            'zh-TW': { /* ... Traditional Chinese translations ... */ }
+            // NOTE: Translation objects are kept from previous version for brevity
+            // Ensure they are complete as per previous code block if running
         };
+        translations['en'] = { 'blog_title': "MaxCaulfield's Blog", 'about_me': "About Me", 'about_me_text': "Hi! I'm MaxCaulfield, a student passionate about exploring tech and design. Welcome to my little blog!", 'learn_more_about_me': "Learn more about me →", 'categories': "Categories", 'tech_category': "Tech", 'life_category': "Life", 'misc_category': "Misc", 'tags': "Tags", 'recent_posts': "Recent Posts", 'category': "Category", 'post1_title': "My First Blog Post", 'post1_excerpt': "This is the excerpt for my first blog post. Here I share some thoughts and experiences from my journey learning frontend development. Hope you like it. This is an auto-generated placeholder...", 'post2_title': "Thoughts on Glassmorphism", 'post2_excerpt': "Recently, I've been very interested in the Glassmorphism design style. It creates a unique sense of depth through background blur, translucency, and thin borders. This post explores how to implement this effect...", 'post3_title': "Frontend-Only Theme Switching", 'post3_excerpt': "How to implement light/dark theme switching for a website using only CSS variables and JavaScript, without relying on a backend? This article introduces a simple method based on CSS variables and localStorage.", 'read_more': "Read More →", 'prev_page': "Prev", 'next_page': "Next", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN" };
+        translations['zh-CN'] = { 'blog_title': "麦青春的博客", 'about_me': "关于博主", 'about_me_text': "你好！我是 MaxCaulfield，一个热爱探索技术和设计的学生。欢迎来到我的小小博客！", 'learn_more_about_me': "了解更多关于我 →", 'categories': "文章分类", 'tech_category': "技术", 'life_category': "生活", 'misc_category': "随笔", 'tags': "标签云", 'recent_posts': "近期文章", 'category': "分类", 'post1_title': "我的第一篇博客文章", 'post1_excerpt': "这是我的第一篇博客文章的摘要内容。我在这里分享一些关于我学习前端开发过程中的想法和经验，希望大家喜欢。这是一个自动生成的占位符摘要，实际内容会更长一些...", 'post2_title': "关于玻璃模糊效果的思考", 'post2_excerpt': "最近对玻璃模糊（Glassmorphism）设计风格很感兴趣。它通过背景模糊、半透明和细边框创造出一种独特的层次感。这篇文章探讨了如何在网页中实现这种效果，以及它的一些优缺点。", 'post3_title': "纯前端实现主题切换", 'post3_excerpt': "如何在不依赖后端的情况下，仅使用 CSS 变量和 JavaScript 实现网站的浅色/深色主题切换？本文将介绍一种基于 CSS 变量和 localStorage 的简单实现方法。", 'read_more': "阅读全文 →", 'prev_page': "上一页", 'next_page': "下一页", 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简" };
+        translations['zh-TW'] = { 'blog_title': "麥青春的部落格", 'about_me': "關於博主", 'about_me_text': "你好！我是 MaxCaulfield，一個熱愛探索技術和設計的學生。歡迎來到我的小小部落格！", 'learn_more_about_me': "了解更多關於我 →", 'categories': "文章分類", 'tech_category': "技術", 'life_category': "生活", 'misc_category': "隨筆", 'tags': "標籤雲", 'recent_posts': "近期文章", 'category': "分類", 'post1_title': "我的第一篇部落格文章", 'post1_excerpt': "這是我的第一篇部落格文章的摘要內容。我在這裡分享一些關於我學習前端開發過程中的想法和經驗，希望大家喜歡。這是一個自動生成的佔位符摘要，實際內容會更長一些...", 'post2_title': "關於玻璃模糊效果的思考", 'post2_excerpt': "最近對玻璃模糊（Glassmorphism）設計風格很感興趣。它通過背景模糊、半透明和細邊框創造出一種獨特的層次感。這篇文章探討了如何在網頁中實現這種效果，以及它的一些優缺點。", 'post3_title': "純前端實現主題切換", 'post3_excerpt': "如何在不依賴後端的情況下，僅使用 CSS 變數和 JavaScript 實現網站的淺色/深色主題切換？本文將介紹一種基於 CSS 變數和 localStorage 的簡單實現方法。", 'read_more': "閱讀全文 →", 'prev_page': "上一頁", 'next_page': "下一頁", 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁" };
+
 
         // --- Theme Switching Logic ---
         const themeToggle = document.getElementById('theme-toggle');
@@ -388,34 +369,25 @@
         const moonIcon = themeToggle.querySelector('.fa-moon');
         const currentTheme = localStorage.getItem('theme') || 'dark'; // Default to dark
 
-        // Apply initial theme
-        if (currentTheme === 'light') {
-            document.body.classList.add('light-theme');
-            document.body.classList.remove('dark-theme'); // Ensure dark is removed
-            sunIcon.classList.add('hidden');
-            moonIcon.classList.remove('hidden');
-        } else {
-             document.body.classList.add('dark-theme'); // Ensure dark is added initially
-             document.body.classList.remove('light-theme');
-             sunIcon.classList.remove('hidden');
-             moonIcon.classList.add('hidden');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            let newTheme;
-            if (document.body.classList.contains('light-theme')) {
-                document.body.classList.remove('light-theme');
-                document.body.classList.add('dark-theme');
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-                newTheme = 'dark';
-            } else {
+        function applyTheme(theme) {
+            if (theme === 'light') {
                 document.body.classList.add('light-theme');
-                 document.body.classList.remove('dark-theme');
+                document.body.classList.remove('dark-theme');
                 sunIcon.classList.add('hidden');
                 moonIcon.classList.remove('hidden');
-                newTheme = 'light';
+            } else {
+                document.body.classList.add('dark-theme');
+                document.body.classList.remove('light-theme');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
             }
+        }
+        // Apply initial theme
+        applyTheme(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+            applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
 
@@ -429,14 +401,11 @@
         // Function to apply translations
         function applyTranslations(lang) {
             if (!translations[lang]) return; // Exit if language not found
-
             document.documentElement.lang = lang.split('-')[0]; // Set html lang attribute
-
             const elements = document.querySelectorAll('[data-translate-key]');
             elements.forEach(el => {
                 const key = el.getAttribute('data-translate-key');
-                if (translations[lang][key]) {
-                    // Handle specific elements like placeholders or titles if needed
+                if (translations[lang][key] !== undefined) { // Check if key exists
                     if (el.tagName === 'INPUT' && el.placeholder) {
                          el.placeholder = translations[lang][key];
                     } else if (el.title) {
@@ -444,11 +413,16 @@
                     } else {
                          el.textContent = translations[lang][key];
                     }
+                } else {
+                    console.warn(`Translation key "${key}" not found for language "${lang}"`);
                 }
             });
              // Update the language display in the button
              if(translations[lang]['current_lang_display']) {
                 currentLangSpan.textContent = translations[lang]['current_lang_display'];
+             } else {
+                 // Fallback display if specific key is missing
+                 currentLangSpan.textContent = lang.split('-')[0].toUpperCase();
              }
         }
 
@@ -485,7 +459,7 @@
          // --- Header Scroll Effect ---
          const header = document.getElementById('blog-header');
          window.addEventListener('scroll', () => {
-             if (window.scrollY > 50) {
+             if (window.scrollY > 30) { // Trigger slightly earlier
                  header.classList.add('scrolled');
              } else {
                  header.classList.remove('scrolled');
@@ -498,20 +472,80 @@
              containers.forEach(container => {
                  const items = container.querySelectorAll('.fade-in');
                  items.forEach((item, index) => {
-                     // Ensure initial opacity is 0 before animation starts
-                     item.style.opacity = '0';
-                      // Use existing animation delay if set, otherwise calculate stagger
+                     item.style.opacity = '0'; // Ensure initial opacity is 0
                      let delay = item.style.animationDelay ? parseFloat(item.style.animationDelay) : 0;
-                     if (delay === 0) { // Only apply stagger if no explicit delay is set
+                     if (delay === 0) {
                          delay = index * 0.1; // Stagger delay
                          item.style.animationDelay = `${delay}s`;
                      }
-                     // Trigger animation (re-add class or use animation-fill-mode)
-                     item.style.animationName = 'fadeInAnimation'; // Ensure animation name is set
+                     item.style.animationName = 'fadeInAnimation'; // Apply animation
                  });
              });
          }
          document.addEventListener('DOMContentLoaded', applyStaggeredFadeIn);
+
+         // --- ADDED: tsParticles Initialization (Optimized) ---
+         if (typeof tsParticles !== 'undefined') {
+            tsParticles.load("tsparticles", {
+                fpsLimit: 60,
+                particles: {
+                    number: {
+                        value: 70, // Use the optimized fixed number
+                        density: {
+                            enable: false // Keep density disabled
+                        }
+                    },
+                    color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, // Colors match theme accents
+                     shape: { type: ["circle", "star"] }, // Circle and star shapes
+                     opacity: {
+                         value: {min: 0.1, max: 0.5}, // Slightly lower max opacity for subtlety
+                         animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } // Gentle twinkle
+                     },
+                     size: {
+                         value: { min: 0.5, max: 2.0 }, // Smaller max size
+                         animation: { enable: false } // Disable size animation for performance
+                     },
+                     links: {
+                         color: "random", // Or use var(--text-accent)
+                         distance: 140,
+                         enable: true,
+                         opacity: 0.1, // Fainter links
+                         width: 1,
+                         warp: false // Disable warp for less visual noise
+                     },
+                     collisions: { enable: false },
+                     move: {
+                         direction: "none", enable: true, outModes: { default: "out" },
+                         random: true, speed: 0.6, // Slightly faster speed
+                         straight: false,
+                         attract: { // Add slight attraction between particles
+                             enable: false, // Keep false for performance unless desired
+                             rotateX: 600,
+                             rotateY: 1200
+                         }
+                     }
+                 },
+                 interactivity: {
+                     events: {
+                         onHover: { enable: true, mode: "repulse" }, // Repulse on hover
+                         onClick: { enable: true, mode: "push" }, // Push on click
+                         resize: true,
+                     },
+                     modes: {
+                         repulse: { distance: 80, duration: 0.4, speed: 0.8 }, // Adjust repulse
+                         push: { quantity: 2 }, // Push fewer particles
+                         // Remove grab mode if not needed
+                     },
+                 },
+                 detectRetina: true,
+                 background: { opacity: 0 } // Keep background transparent
+             }).catch(error => {
+                 console.error("Error loading tsParticles:", error);
+             });
+         } else {
+             console.warn("tsParticles library not found.");
+         }
+         // --- END ADDED: tsParticles Initialization ---
 
     </script>
 
