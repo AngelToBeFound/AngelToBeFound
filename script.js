@@ -79,6 +79,7 @@ const translations = {
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Theme Switching Logic (REMOVED) ---
+    // No theme switching logic needed as per final decision.
 
     // --- Language Switching Logic ---
     const langToggle = document.getElementById('lang-toggle');
@@ -221,51 +222,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- tsParticles Initialization (Connected Stars) ---
+    // --- tsParticles Initialization (Separate Stars) ---
     if (typeof tsParticles !== 'undefined') {
         tsParticles.load("tsparticles", {
-            fpsLimit: 60,
+            fpsLimit: 60, // Limit FPS for performance
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } }, // Keep density enabled for responsiveness
-                color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, // Varying colors
-                shape: { type: "star" }, // Star shape
+                number: { value: 70, density: { enable: false } }, // Fixed number of particles
+                color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, // Array of possible colors
+                shape: { type: ["circle", "star"] }, // Particle shapes
                 opacity: {
-                    value: {min: 0.2, max: 0.7}, // Random opacity
-                    animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false } // Twinkle
+                    value: {min: 0.1, max: 0.6}, // Random opacity
+                    animation: { enable: true, speed: 1.0, minimumValue: 0.1, sync: false } // Opacity animation (twinkle)
                 },
                 size: {
-                    value: { min: 0.5, max: 2.5 }, // Varying sizes
-                    animation: { enable: true, speed: 2.5, minimumValue: 0.5, sync: false} // Size pulse
+                    value: { min: 0.5, max: 2.5 }, // Random size
+                    animation: { enable: true, speed: 3, minimumValue: 0.5, sync: false} // Size animation (pulse)
                 },
-                // === MODIFICATION START: Enable links ===
                 links: {
-                    enable: true, // Enable links between particles
-                    distance: 150, // Max distance for links
-                    color: "random", // Use random colors for links
-                    opacity: 0.4, // Link opacity
-                    width: 1, // Link width
-                    warp: false
+                    enable: false, // Links disabled for separate stars
                 },
-                // === MODIFICATION END ===
-                collisions: { enable: false },
+                collisions: { enable: false }, // Collisions disabled
                 move: {
-                    direction: "none", enable: true, outModes: { default: "out" },
-                    random: true, speed: 0.6, straight: false, attract: { enable: false }
+                    direction: "none", // Random direction
+                    enable: true,
+                    outModes: { default: "out" }, // Particles leave canvas edges
+                    random: true,
+                    speed: 0.6, // Movement speed
+                    straight: false, // Non-straight paths
+                    attract: { enable: false } // No attraction
                 }
             },
             interactivity: {
                 events: {
-                    onHover: { enable: true, mode: "repulse" }, // Repulse on hover
-                    onClick: { enable: true, mode: "push" }, // Push on click
-                    resize: true
+                    onHover: { enable: true, mode: "bubble" }, // Bubble effect on hover
+                    onClick: { enable: true, mode: "push" }, // Push particles on click
+                    resize: true // Adjust on resize
                 },
                 modes: {
-                    repulse: { distance: 100, duration: 0.4, speed: 1 }, // Repulse config
-                    push: { quantity: 4 } // Push config
+                    bubble: { distance: 100, duration: 2, opacity: 0.8, size: 3 }, // Bubble config
+                    push: { quantity: 3 } // Push config
                 }
             },
-            detectRetina: true,
-            background: { opacity: 0 } // Transparent background
+            detectRetina: true, // Adjust for high-DPI screens
+            background: { opacity: 0 } // Transparent background for particle canvas
         }).catch(error => { console.error("Error loading tsParticles:", error); });
     } else {
         console.warn("tsParticles library not found.");
@@ -282,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.1 });
         revealElements.forEach(el => { revealObserver.observe(el); });
     } else {
+        // Fallback for browsers without IntersectionObserver
         revealElements.forEach(el => el.classList.add('visible'));
     }
 
