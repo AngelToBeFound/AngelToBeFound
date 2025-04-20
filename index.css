@@ -1,70 +1,25 @@
-/* --- Theme Variables --- */
+/* --- Dark Theme Variables (Original + Renamed for consistency) --- */
 :root {
-    /* --- Dark Theme Colors --- */
-    --bg-primary-dark: #0b0f19;
-    --bg-secondary-dark: rgba(17, 24, 39, 0.8); /* bg-gray-900 with opacity */
-    --bg-glass-dark: rgba(31, 41, 55, 0.6); /* bg-gray-800 slightly more transparent */
-    --bg-footer-dark: #000000;
-    --text-primary-dark: #e5e7eb; /* text-gray-200 */
-    --text-secondary-dark: #9ca3af; /* text-gray-400 */
-    --text-accent-dark: #a7c7e7; /* accent-link */
-    --text-cta-dark: #FFFFFF;
-    --border-color-dark: rgba(55, 65, 81, 0.5); /* gray-700 */
-    --glow-color-dark: rgba(173, 216, 230, 0.7); /* Light Blue */
-    --accent-color-dark: #60a5fa; /* Brighter blue for button */
-    --skill-tag-bg-dark: rgba(30, 41, 59, 0.7); /* Default tag bg */
-    --skill-tag-text-dark: #cbd5e1; /* Default tag text */
-
-    /* === MODIFICATION START: 3rd Attempt Light Theme Colors === */
-    /* --- Light Theme Colors (Focus on Contrast) --- */
-    --bg-primary-light: #f8fafc; /* slate-50 (Keep very light base) */
-    --bg-secondary-light: #ffffff; /* white (Opaque white for section BG) */
-    --bg-glass-light: rgba(255, 255, 255, 0.75); /* white with blur */
-    --bg-footer-light: #f1f5f9; /* slate-100 (Slightly darker footer BG) */
-    --text-primary-light: #0f172a; /* slate-900 (Even darker primary text) */
-    --text-secondary-light: #334155; /* slate-700 (Even darker secondary text) */
-    --text-accent-light: #2563eb; /* blue-600 (Deeper blue accent) */
-    --text-cta-light: #FFFFFF; /* White text on blue button */
-    --border-color-light: rgba(156, 163, 175, 0.7); /* gray-400 more opaque (Stronger border) */
-    --glow-color-light: rgba(59, 130, 246, 0.6); /* blue-500 */
-    --accent-color-light: #2563eb; /* blue-600 (Deeper blue button) */
-    --skill-tag-bg-light: rgba(229, 231, 235, 0.8); /* gray-200 */
-    --skill-tag-text-light: #1f2937; /* gray-800 */
-    /* === MODIFICATION END === */
-
-    /* --- Default Theme Assignment (Dark) --- */
-    --bg-primary: var(--bg-primary-dark);
-    --bg-secondary: var(--bg-secondary-dark);
-    --bg-glass: var(--bg-glass-dark);
-    --bg-footer: var(--bg-footer-dark);
-    --text-primary: var(--text-primary-dark);
-    --text-secondary: var(--text-secondary-dark);
-    --text-accent: var(--text-accent-dark);
-    --text-cta: var(--text-cta-dark);
-    --border-color: var(--border-color-dark);
-    --glow-color: var(--glow-color-dark);
-    --accent-color: var(--accent-color-dark);
-    --skill-tag-bg: var(--skill-tag-bg-dark);
-    --skill-tag-text: var(--skill-tag-text-dark);
+    --bg-primary: #0b0f19; /* Formerly --sky-dark */
+    --bg-secondary: rgba(17, 24, 39, 0.8); /* Section background */
+    --bg-glass: rgba(31, 41, 55, 0.6); /* Glass effect background */
+    --bg-footer: #000000;
+    --text-primary: #e5e7eb; /* Formerly text-gray-200 */
+    --text-secondary: #9ca3af; /* Formerly text-gray-400 */
+    --text-accent: #a7c7e7; /* Formerly --accent-link */
+    --text-title-gradient-from: #a7c7e7; /* Adjusted for hero title */
+    --text-title-gradient-via: #bfdbfe; /* Adjusted for hero title */
+    --text-title-gradient-to: #e0f2fe; /* Adjusted for hero title */
+    --text-cta: #FFFFFF;
+    --border-color: rgba(55, 65, 81, 0.5); /* Formerly --border-color-dark */
+    --glow-color: rgba(173, 216, 230, 0.7); /* Formerly --glow-color-dark */
+    --accent-color: #60a5fa; /* Formerly --accent-color-dark / --accent-button */
+    --skill-tag-bg: rgba(30, 41, 59, 0.7);
+    --skill-tag-text: #cbd5e1;
+    --star-soft: #ADD8E6; /* Keep original star colors if needed */
+    --star-bright: #FFFFFF;
 
     scroll-behavior: smooth;
-}
-
-/* --- Apply Light Theme --- */
-body.light-theme {
-    --bg-primary: var(--bg-primary-light);
-    --bg-secondary: var(--bg-secondary-light);
-    --bg-glass: var(--bg-glass-light);
-    --bg-footer: var(--bg-footer-light);
-    --text-primary: var(--text-primary-light);
-    --text-secondary: var(--text-secondary-light);
-    --text-accent: var(--text-accent-light);
-    --text-cta: var(--text-cta-light);
-    --border-color: var(--border-color-light);
-    --glow-color: var(--glow-color-light);
-    --accent-color: var(--accent-color-light);
-    --skill-tag-bg: var(--skill-tag-bg-light);
-    --skill-tag-text: var(--skill-tag-text-light);
 }
 
 /* --- Base Body Styles --- */
@@ -74,7 +29,7 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     position: relative;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Remove theme transition */
 }
 
 /* --- Background Gradient --- */
@@ -87,10 +42,7 @@ body::before {
     animation: gradient-flow 25s linear infinite;
     z-index: -2;
     opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-body.light-theme::before {
-    opacity: 0.15; /* Make gradient very faint in light mode */
+    /* Remove theme transition */
 }
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
@@ -99,12 +51,7 @@ body.light-theme::before {
 
 /* --- tsParticles Container --- */
 #tsparticles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
 }
 
 /* --- Glass Effect Utility --- */
@@ -112,31 +59,25 @@ body.light-theme::before {
     background-color: var(--bg-glass);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
-    border-radius: 0.75rem; /* rounded-xl */
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Remove theme transition */
 }
-body.light-theme .glass-effect {
-     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); /* Slightly stronger shadow in light mode */
-}
-
 
 /* --- Navigation Bar --- */
 #navbar {
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border-bottom: 1px solid transparent; /* Start transparent */
+    border-bottom: 1px solid transparent;
 }
 #navbar.scrolled {
     background-color: var(--bg-glass);
     backdrop-filter: blur(16px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-bottom-color: var(--border-color);
 }
 .nav-link {
-    position: relative;
-    transition: color 0.3s ease;
-    color: var(--text-accent);
-    padding-bottom: 8px;
+    position: relative; transition: color 0.3s ease;
+    color: var(--text-accent); padding-bottom: 8px;
 }
 .nav-link::after {
     content: ''; position: absolute; width: 0; height: 2px;
@@ -148,8 +89,8 @@ body.light-theme .glass-effect {
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 .nav-link:hover, .nav-link.active { color: var(--text-primary); }
 
-/* --- Theme/Lang Toggle Buttons --- */
-.theme-lang-button {
+/* --- Theme/Lang Toggle Buttons (Keep Lang only) --- */
+.theme-lang-button { /* Style for language button */
     padding: 0.5rem; border-radius: 9999px;
     transition: background-color 0.2s ease, color 0.2s ease;
     color: var(--text-secondary); background-color: transparent;
@@ -195,6 +136,8 @@ body.light-theme .glass-effect {
      margin: 0 auto; letter-spacing: .1em;
      animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
      text-shadow: 0 0 8px var(--glow-color);
+     /* Use specific gradient colors */
+     background-image: linear-gradient(to right, var(--text-title-gradient-from), var(--text-title-gradient-via), var(--text-title-gradient-to));
 }
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--glow-color); } }
@@ -208,16 +151,13 @@ body.light-theme .glass-effect {
 /* Call to Action Button */
 .cta-button {
     position: relative; overflow: hidden; z-index: 1;
-    transition: all 0.3s var(--ease-out-smooth, ease-out);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slightly reduced shadow */
+    transition: all 0.3s ease-out; /* Simplified transition */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     background-color: var(--accent-color);
     border-color: var(--accent-color);
     color: var(--text-cta);
     padding: 0.75rem 2rem; border-radius: 9999px; border-width: 2px;
     font-weight: 600; display: inline-block;
-}
-body.light-theme .cta-button {
-     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme button */
 }
 .cta-button:hover {
     transform: translateY(-3px);
@@ -231,55 +171,41 @@ body.light-theme .cta-button {
 .section-bg {
     background-color: var(--bg-secondary);
     backdrop-filter: blur(8px);
-    transition: background-color 0.3s ease;
+    /* Remove theme transition */
 }
 .section-title {
     font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;
     text-align: center; margin-bottom: 3rem;
-    color: var(--text-primary); transition: color 0.3s ease;
+    color: var(--text-primary);
+    /* Remove theme transition */
 }
 @media (min-width: 768px) {
     .section-title { font-size: 2.25rem; line-height: 2.5rem; margin-bottom: 4rem; }
 }
 
-/* === ADDED: Section Divider Lines === */
-#about, #photos, #contact, .footer-bg {
-    border-top: 1px solid var(--border-color);
-    transition: border-color 0.3s ease; /* Add transition for border */
-}
-/* === END ADDED === */
+/* Removed Section Divider Lines Rule */
+/* #about, #photos, #contact, .footer-bg { ... } */
 
 
 /* --- About Section --- */
 .skill-tag {
     font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem;
     border-radius: 9999px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-    background-color: var(--skill-tag-bg); color: var(--skill-tag-text);
+    transition: transform 0.3s ease; /* Removed color/bg transitions */
+    /* Background and text color set by inline classes */
 }
-/* Specific overrides for unique tag colors (optional) */
-.skill-tag.bg-blue-800 { background-color: #1e40af; color: #dbeafe; }
-body.light-theme .skill-tag.bg-blue-800 { background-color: #dbeafe; color: #1e3a8a; } /* Adjusted light theme blue tag */
-.skill-tag.bg-purple-800 { background-color: #581c87; color: #e9d5ff; }
-body.light-theme .skill-tag.bg-purple-800 { background-color: #f3e8ff; color: #581c87; } /* Adjusted light theme purple tag */
-.skill-tag.bg-gray-700 { background-color: #374151; color: #f3f4f6; }
-body.light-theme .skill-tag.bg-gray-700 { background-color: #e5e7eb; color: #374151; } /* Adjusted light theme gray tag */
-
 .skill-tag:hover { transform: scale(1.05); }
 
 /* --- Photos Section --- */
 .photo-item {
     overflow: hidden; position: relative; border-radius: 0.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     border: 1px solid var(--border-color);
     background-color: var(--bg-glass); backdrop-filter: blur(2px);
 }
-body.light-theme .photo-item {
-     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Lighter shadow */
-}
 .photo-item:hover {
-     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 15px var(--glow-color); /* Adjusted hover shadow */
+     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 15px var(--glow-color);
      transform: translateY(-5px);
 }
 .photo-img {
@@ -301,13 +227,15 @@ body.light-theme .photo-item {
 }
  .contact-icon a:hover span { opacity: 1; }
  .contact-icon-group svg {
-     color: var(--accent-color); transition: color 0.3s ease;
+     color: var(--star-soft); /* Reverted to original variable */
+     /* Removed theme transition */
  }
 
 /* --- Footer --- */
 .footer-bg {
-    background-color: var(--bg-footer); transition: background-color 0.3s ease;
-    /* border-top is now handled by the general section rule */
+    background-color: var(--bg-footer);
+    /* Remove theme transition */
+    /* Remove border-top */
 }
 
 /* --- Scroll Reveal --- */
