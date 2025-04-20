@@ -232,20 +232,22 @@
                 <img src="https://placehold.co/800x400/483d8b/F0F8FF?text=Why+This+Site%3F" alt="为什么要做这个个人网站？" class="w-full h-48 object-cover">
                 <div class="p-6 md:p-8">
                     <p class="text-sm text-[var(--text-secondary)] mb-2">
-                        <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="life_category">生活</a> | <time datetime="2025-04-20">2025年4月20日</time> </p>
+                        <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="life_category">生活</a> | <time datetime="2025-04-20">2025年4月20日</time>
+                    </p>
                     <h2 class="text-2xl md:text-3xl font-bold mb-3">
                         <a href="post-why-website.html" class="hover:text-[var(--text-accent)] transition-colors" data-translate-key="post_why_title">为什么要做这个个人网站？</a>
                     </h2>
                     <p class="text-[var(--text-secondary)] mb-4 line-clamp-3" data-translate-key="post_why_excerpt">
-                        [这里是文章摘要... 点击阅读全文查看详细内容。]
+                        你好，我是麦青春。这个网站是学习过程中的产物，用来记录想法、分享资料，未来会持续更新。部分内容由 AI 辅助搭建，源码已在 GitHub 开源...
                     </p>
                     <a href="post-why-website.html" class="font-semibold text-[var(--text-accent)] hover:underline" data-translate-key="read_more">阅读全文 &rarr;</a>
                 </div>
             </article>
-            </main>
+
+        </main>
 
         <aside class="md:col-span-1 space-y-8 md:space-y-10 stagger-fade">
-            <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.15s;">
+             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.15s;">
                 <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="about_me">关于博主</h3>
                 <img src="images/avatar.jpg" alt="MaxCaulfield 的头像" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-[var(--text-accent)]">
                 <p class="text-sm text-center text-[var(--text-secondary)]" data-translate-key="about_me_text">
@@ -253,7 +255,6 @@
                 </p>
                  <a href="index.html#about" class="block text-center mt-3 text-sm text-[var(--text-accent)] hover:underline" data-translate-key="learn_more_about_me">了解更多关于我 &rarr;</a>
             </div>
-
             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.25s;">
                 <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="categories">文章分类</h3>
                 <ul class="space-y-2">
@@ -262,23 +263,17 @@
                      <li><a href="#" class="flex justify-between items-center text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors"><span data-translate-key="misc_category">随笔</span> <span class="text-xs bg-[var(--bg-glass)] px-2 py-0.5 rounded-full border border-[var(--border-color)]">0</span></a></li>
                 </ul>
             </div>
-
             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.35s;">
                  <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="tags">标签云</h3>
                  <div class="tag-cloud">
-                     <a href="#">个人网站</a>
-                     <a href="#">博客</a>
-                     <a href="#">学习</a>
-                     <a href="#">前端</a>
-                     <a href="#">设计</a>
+                     <a href="#">个人网站</a> <a href="#">博客</a> <a href="#">学习</a> <a href="#">前端</a> <a href="#">设计</a> <a href="#">AI</a> <a href="#">开源</a>
                  </div>
             </div>
-
-             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.45s;">
+            <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.45s;">
                 <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="recent_posts">近期文章</h3>
                 <ul class="space-y-3">
                     <li><a href="post-why-website.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_why_title">为什么要做这个个人网站？</a></li>
-                    </ul>
+                </ul>
             </div>
         </aside>
     </div>
@@ -291,24 +286,30 @@
     </footer>
 
     <script>
-        // --- Translations (Updated with new keys) ---
+        // --- Translations (Updated excerpt) ---
         const translations = {
             'en': {
                 'blog_title': "MaxCaulfield's Blog", 'about_me': "About Me", 'about_me_text': "Hi! I'm MaxCaulfield, a student passionate about exploring tech and design. Welcome to my little blog!", 'learn_more_about_me': "Learn more about me →", 'categories': "Categories", 'tech_category': "Tech", 'life_category': "Life", 'misc_category': "Misc", 'tags': "Tags", 'recent_posts': "Recent Posts", 'category': "Category",
-                'post_why_title': "Why Build This Personal Website?", // New key
-                'post_why_excerpt': "[This is the article excerpt... Click Read More for details.]", // New key
+                'post_why_title': "Why Build This Personal Website?",
+                // === MODIFICATION START: Updated Excerpt ===
+                'post_why_excerpt': "Hello, I'm Mai Qingchun. This site is part of my learning journey, a place to share thoughts and resources, with more updates to come. It's partly built with AI, and the source code is open on GitHub...",
+                // === MODIFICATION END ===
                 'read_more': "Read More →", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN"
             },
             'zh-CN': {
                 'blog_title': "麦青春的博客", 'about_me': "关于博主", 'about_me_text': "你好！我是 MaxCaulfield，一个热爱探索技术和设计的学生。欢迎来到我的小小博客！", 'learn_more_about_me': "了解更多关于我 →", 'categories': "文章分类", 'tech_category': "技术", 'life_category': "生活", 'misc_category': "随笔", 'tags': "标签云", 'recent_posts': "近期文章", 'category': "分类",
-                'post_why_title': "为什么要做这个个人网站？", // New key
-                'post_why_excerpt': "[这里是文章摘要... 点击阅读全文查看详细内容。]", // New key
+                'post_why_title': "为什么要做这个个人网站？",
+                 // === MODIFICATION START: Updated Excerpt ===
+                'post_why_excerpt': "你好，我是麦青春。这个网站是学习过程中的产物，用来记录想法、分享资料，未来会持续更新。部分内容由 AI 辅助搭建，源码已在 GitHub 开源...",
+                 // === MODIFICATION END ===
                 'read_more': "阅读全文 →", 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简"
             },
             'zh-TW': {
                 'blog_title': "麥青春的部落格", 'about_me': "關於博主", 'about_me_text': "你好！我是 MaxCaulfield，一個熱愛探索技術和設計的學生。歡迎來到我的小小部落格！", 'learn_more_about_me': "了解更多關於我 →", 'categories': "文章分類", 'tech_category': "技術", 'life_category': "生活", 'misc_category': "隨筆", 'tags': "標籤雲", 'recent_posts': "近期文章", 'category': "分類",
-                'post_why_title': "為什麼要做這個個人網站？", // New key
-                'post_why_excerpt': "[這裡是文章摘要... 點擊閱讀全文查看詳細內容。]", // New key
+                'post_why_title': "為什麼要做這個個人網站？",
+                 // === MODIFICATION START: Updated Excerpt ===
+                'post_why_excerpt': "你好，我是麥青春。這個網站是學習過程中的產物，用來記錄想法、分享資料，未來會持續更新。部分內容由 AI 輔助搭建，源碼已在 GitHub 開源...",
+                 // === MODIFICATION END ===
                 'read_more': "閱讀全文 →", 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁"
             }
         };
@@ -318,12 +319,7 @@
         const sunIcon = themeToggle.querySelector('.fa-sun');
         const moonIcon = themeToggle.querySelector('.fa-moon');
         const currentTheme = localStorage.getItem('theme') || 'dark';
-
-        function applyTheme(theme) { /* ... same as before ... */ }
-        applyTheme(currentTheme);
-        themeToggle.addEventListener('click', () => { /* ... same as before ... */ });
         function applyTheme(theme) { if (theme === 'light') { document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme'); sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); } else { document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme'); sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); } } applyTheme(currentTheme); themeToggle.addEventListener('click', () => { const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light'; applyTheme(newTheme); localStorage.setItem('theme', newTheme); });
-
 
         // --- Language Switching Logic ---
         const langToggle = document.getElementById('lang-toggle');
@@ -331,29 +327,16 @@
         const currentLangSpan = document.getElementById('current-lang');
         const langLinks = langDropdown.querySelectorAll('a[data-lang]');
         let currentLang = localStorage.getItem('language') || 'zh-CN';
-
-        function applyTranslations(lang) { /* ... same as before ... */ }
-        applyTranslations(currentLang);
-        langToggle.addEventListener('click', (e) => { /* ... same as before ... */ });
-        document.addEventListener('click', (e) => { /* ... same as before ... */ });
-        langLinks.forEach(link => { link.addEventListener('click', (e) => { /* ... same as before ... */ }); });
         function applyTranslations(lang) { if (!translations[lang]) return; document.documentElement.lang = lang.split('-')[0]; const elements = document.querySelectorAll('[data-translate-key]'); elements.forEach(el => { const key = el.getAttribute('data-translate-key'); if (translations[lang][key] !== undefined) { if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; } else if (el.title) { el.title = translations[lang][key]; } else { el.textContent = translations[lang][key]; } } else { console.warn(`Translation key "${key}" not found for language "${lang}"`); } }); if(translations[lang]['current_lang_display']) { currentLangSpan.textContent = translations[lang]['current_lang_display']; } else { currentLangSpan.textContent = lang.split('-')[0].toUpperCase(); } } applyTranslations(currentLang); langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); }); document.addEventListener('click', (e) => { if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) { langDropdown.classList.add('hidden'); } }); langLinks.forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const selectedLang = link.getAttribute('data-lang'); if (selectedLang !== currentLang) { currentLang = selectedLang; localStorage.setItem('language', currentLang); applyTranslations(currentLang); } langDropdown.classList.add('hidden'); }); });
-
 
          // --- Header Scroll Effect ---
          const header = document.getElementById('blog-header');
-         window.addEventListener('scroll', () => { /* ... same as before ... */ });
          window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
 
-
          // --- Staggered Fade-In Animation ---
-         function applyStaggeredFadeIn() { /* ... same as before ... */ }
-         document.addEventListener('DOMContentLoaded', applyStaggeredFadeIn);
          function applyStaggeredFadeIn() { const containers = document.querySelectorAll('.stagger-fade'); containers.forEach(container => { const items = container.querySelectorAll('.fade-in'); items.forEach((item, index) => { item.style.opacity = '0'; let delay = item.style.animationDelay ? parseFloat(item.style.animationDelay) : 0; if (delay === 0) { delay = index * 0.1; item.style.animationDelay = `${delay}s`; } item.style.animationName = 'fadeInAnimation'; }); }); } document.addEventListener('DOMContentLoaded', applyStaggeredFadeIn);
 
-
          // --- tsParticles Initialization (Optimized) ---
-         if (typeof tsParticles !== 'undefined') { /* ... same as before ... */ } else { console.warn("tsParticles library not found."); }
          if (typeof tsParticles !== 'undefined') { tsParticles.load("tsparticles", { fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 } }).catch(error => { console.error("Error loading tsParticles:", error); }); } else { console.warn("tsParticles library not found."); }
 
     </script>
