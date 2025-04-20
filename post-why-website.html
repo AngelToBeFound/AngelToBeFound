@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
     <style>
-        /* --- Base Styles & Theme Variables (Same as blog.html) --- */
+        /* --- Base Styles & Theme Variables --- */
         :root {
              --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
         }
@@ -33,26 +33,8 @@
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
 
         /* Styles for Post Content Area */
-        .post-content-area {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: 2rem; /* p-8 */
-            /* === MODIFICATION START: Removed negative margin-top === */
-            /* margin-top: -2rem; */ /* Removed this line */
-            /* === MODIFICATION END === */
-            position: relative;
-            z-index: 10; /* Above background effects */
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        @media (min-width: 768px) {
-            .post-content-area {
-                padding: 3rem; /* p-12 */
-                 /* === MODIFICATION START: Removed negative margin-top === */
-                 /* margin-top: -3rem; */ /* Removed this line */
-                 /* === MODIFICATION END === */
-            }
-        }
+        .post-content-area { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 2rem; position: relative; z-index: 10; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        @media (min-width: 768px) { .post-content-area { padding: 3rem; } }
         /* Basic styling for content within the post */
         .post-body h1, .post-body h2, .post-body h3 { color: var(--text-primary); margin-top: 1.5em; margin-bottom: 0.75em; font-weight: 600; }
         .post-body h1 { font-size: 2.25rem; line-height: 2.5rem; } .post-body h2 { font-size: 1.875rem; line-height: 2.25rem; } .post-body h3 { font-size: 1.5rem; line-height: 2rem; }
@@ -102,13 +84,12 @@
     </header>
 
     <div class="container mx-auto px-6 relative z-10">
-         <div class="mb-6 md:mb-8"> {/* Container for the back link */}
+         <div class="mb-6 md:mb-8">
             <a href="blog.html" class="text-sm text-[var(--text-accent)] hover:underline">
                 &larr; <span data-translate-key="back_to_blog">返回博客列表</span>
             </a>
         </div>
-
-        <article class="post-content-area glass-effect">
+         <article class="post-content-area glass-effect">
             <header class="mb-8 md:mb-12 text-center">
                 <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gradient" data-translate-key="post_why_title">
                     为什么要做这个个人网站？
@@ -129,7 +110,7 @@
                 <p data-translate-key="post_why_para6">这个网站的源码目前在Github上开源，如果你想要本网站的主题，你可以点击文章末尾的源码分享按钮进行下载。</p>
 
                 <div class="my-10 text-center">
-                    <img src="https://placehold.co/600x400/483d8b/F0F8FF?text=Smiling+Anime+Character"
+                    <img src="images/smiling-character.jpg"
                          alt="主包只会咧嘴笑的二刺螈"
                          class="max-w-full md:max-w-lg mx-auto rounded-lg shadow-lg border border-[var(--border-color)]">
                     <p class="text-center text-sm text-[var(--text-secondary)] mt-3" data-translate-key="image_caption">
