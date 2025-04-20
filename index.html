@@ -12,30 +12,12 @@
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <link rel="stylesheet" href="index.css">
     <style>
-        /* Basic Glass Effect for Dropdown (copied from blog.html) */
-        .glass-effect {
-            background-color: rgba(31, 41, 55, 0.8); /* Slightly adjusted opacity */
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(55, 65, 81, 0.5);
-            border-radius: 0.5rem; /* rounded-md */
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        /* Ensure dropdown links use theme variables if available, or default */
-        #lang-dropdown a {
-            color: var(--text-secondary-dark, #9ca3af); /* Default to dark theme secondary color */
-        }
-        #lang-dropdown a:hover {
-             background-color: rgba(55, 65, 81, 0.6); /* Adjust hover as needed */
-             color: var(--text-primary-dark, #e5e7eb);
-        }
-        /* Mobile language dropdown */
-        #mobile-lang-dropdown {
-            background-color: rgba(31, 41, 55, 0.9); /* Mobile might need less transparency */
-        }
-         #mobile-lang-dropdown a { color: var(--accent-link, #a7c7e7); }
-         #mobile-lang-dropdown a:hover { background-color: #374151; color: var(--star-bright, #FFF); }
-
+        .glass-effect { background-color: rgba(31, 41, 55, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(55, 65, 81, 0.5); border-radius: 0.5rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #lang-dropdown a { color: var(--text-secondary-dark, #9ca3af); }
+        #lang-dropdown a:hover { background-color: rgba(55, 65, 81, 0.6); color: var(--text-primary-dark, #e5e7eb); }
+        #mobile-lang-dropdown { background-color: rgba(31, 41, 55, 0.9); }
+        #mobile-lang-dropdown a { color: var(--accent-link, #a7c7e7); }
+        #mobile-lang-dropdown a:hover { background-color: #374151; color: var(--star-bright, #FFF); }
     </style>
 </head>
 <body class="text-gray-200">
@@ -51,6 +33,7 @@
                 <a href="#about" class="nav-link" data-translate-key="nav_about">关于我</a>
                 <a href="#photos" class="nav-link" data-translate-key="nav_photos">照片展览</a>
                 <a href="#contact" class="nav-link" data-translate-key="nav_contact">联系我</a>
+                <a href="blog.html" class="nav-link" data-translate-key="nav_blog">博客</a>
                 <div class="relative">
                     <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white flex items-center">
                         <i class="fas fa-language text-xl mr-1"></i>
@@ -66,7 +49,8 @@
             </div>
 
             <div class="md:hidden flex items-center">
-                 <button id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false" class="text-gray-200 focus:outline-none p-2 rounded hover:bg-gray-700 transition ml-2"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <button id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false" class="text-gray-200 focus:outline-none p-2 rounded hover:bg-gray-700 transition ml-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </div>
@@ -76,12 +60,10 @@
             <a href="#about" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_about">关于我</a>
             <a href="#photos" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_photos">照片展览</a>
             <a href="#contact" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_contact">联系我</a>
+            <a href="blog.html" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_blog">博客</a>
             <div class="px-4 pt-3 pb-2 border-t border-gray-700">
                 <button id="mobile-lang-toggle" aria-label="Change language" class="w-full flex justify-between items-center p-2 rounded hover:bg-gray-700 transition-colors text-gray-300 hover:text-white">
-                    <span class="flex items-center">
-                         <i class="fas fa-language text-lg mr-2"></i>
-                         <span class="text-sm" data-translate-key="language_select">选择语言</span>
-                    </span>
+                    <span class="flex items-center"> <i class="fas fa-language text-lg mr-2"></i> <span class="text-sm" data-translate-key="language_select">选择语言</span> </span>
                     <span id="mobile-current-lang" class="text-sm font-medium">中文</span>
                  </button>
                 <div id="mobile-lang-dropdown" class="mt-2 space-y-1 hidden rounded bg-gray-800/80 p-1">
@@ -133,31 +115,18 @@
 
     <section id="photos" class="py-20 md:py-32 bg-[var(--sky-dark)] bg-opacity-80 backdrop-blur-sm relative z-10">
           <div class="container mx-auto px-6">
-             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 reveal text-[var(--star-soft)]" data-translate-key="photos_title">照片展览</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 reveal text-[var(--star-soft)]" data-translate-key="photos_title">照片展览</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-                <div class="photo-item reveal">
-                    <img src="images/photo1.jpg" alt="照片展览 1" class="w-full h-64 md:h-72 object-cover cursor-pointer">
-                </div>
-                 <div class="photo-item reveal" style="transition-delay: 0.1s;">
-                    <img src="images/photo2.jpg" alt="照片展览 2" class="w-full h-64 md:h-72 object-cover cursor-pointer">
-                </div>
-                 <div class="photo-item reveal" style="transition-delay: 0.2s;">
-                    <img src="images/photo3.jpg" alt="照片展览 3" class="w-full h-64 md:h-72 object-cover cursor-pointer">
-                </div>
-                 <div class="photo-item reveal" style="transition-delay: 0.05s;">
-                    <img src="images/photo4.jpg" alt="照片展览 4" class="w-full h-64 md:h-72 object-cover cursor-pointer">
-                </div>
-                 <div class="photo-item reveal" style="transition-delay: 0.15s;">
-                    <img src="images/photo5.jpg" alt="照片展览 5" class="w-full h-64 md:h-72 object-cover cursor-pointer">
-                </div>
-                 <div class="photo-item reveal" style="transition-delay: 0.25s;">
-                    <img src="images/photo6.jpg" alt="照片展览 6" class="w-full h-64 md:h-72 object-cover cursor-pointer">
-                </div>
+                <div class="photo-item reveal"> <img src="images/photo1.jpg" alt="照片展览 1" class="w-full h-64 md:h-72 object-cover cursor-pointer"> </div>
+                <div class="photo-item reveal" style="transition-delay: 0.1s;"> <img src="images/photo2.jpg" alt="照片展览 2" class="w-full h-64 md:h-72 object-cover cursor-pointer"> </div>
+                <div class="photo-item reveal" style="transition-delay: 0.2s;"> <img src="images/photo3.jpg" alt="照片展览 3" class="w-full h-64 md:h-72 object-cover cursor-pointer"> </div>
+                <div class="photo-item reveal" style="transition-delay: 0.05s;"> <img src="images/photo4.jpg" alt="照片展览 4" class="w-full h-64 md:h-72 object-cover cursor-pointer"> </div>
+                <div class="photo-item reveal" style="transition-delay: 0.15s;"> <img src="images/photo5.jpg" alt="照片展览 5" class="w-full h-64 md:h-72 object-cover cursor-pointer"> </div>
+                <div class="photo-item reveal" style="transition-delay: 0.25s;"> <img src="images/photo6.jpg" alt="照片展览 6" class="w-full h-64 md:h-72 object-cover cursor-pointer"> </div>
             </div>
             <p class="text-center text-sm text-gray-400 mt-8 reveal" style="transition-delay: 0.3s;" data-translate-key="photos_caption">
                 其实是主包丢AI创作出来的卡哇伊二刺螈
             </p>
-
         </div>
     </section>
 
@@ -165,7 +134,7 @@
           <div class="container mx-auto px-6 text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-8 reveal text-[var(--star-soft)]" data-translate-key="contact_title">联系我</h2>
             <div class="mt-12 reveal">
-                 <p class="text-gray-400 mb-8 text-lg" data-translate-key="contact_prompt">通过邮箱联系我:</p>
+                <p class="text-gray-400 mb-8 text-lg" data-translate-key="contact_prompt">通过邮箱联系我:</p>
                 <div class="flex justify-center items-center w-full">
                     <div class="flex items-center space-x-4 contact-icon-group">
                         <div class="flex-shrink-0">
@@ -173,7 +142,7 @@
                         </div>
                         <div class="flex flex-col text-left">
                             <span class="text-sm text-gray-400">mail.qq.com</span>
-                             <a href="mailto:nanci_fanghua520@qq.com" class="text-base text-[var(--accent-link)] hover:text-[var(--star-bright)] transition duration-300" title="点击发送邮件" data-translate-key="contact_email_tooltip">
+                            <a href="mailto:nanci_fanghua520@qq.com" class="text-base text-[var(--accent-link)] hover:text-[var(--star-bright)] transition duration-300" title="点击发送邮件" data-translate-key="contact_email_tooltip">
                                 nanci_fanghua520@qq.com
                             </a>
                         </div>
@@ -185,13 +154,13 @@
 
     <footer class="bg-black text-gray-600 py-8 text-center relative z-10">
          <div class="container mx-auto px-6">
-             <p>&copy; 2025 MaxCaulfield. <span data-translate-key="footer_text">用 ❤️ 和代码构建.</span></p>
+            <p>&copy; 2025 MaxCaulfield. <span data-translate-key="footer_text">用 ❤️ 和代码构建.</span></p>
         </div>
     </footer>
 
     <div id="lightbox-overlay" class="fixed inset-0 bg-black bg-opacity-85 hidden items-center justify-center z-50 transition-opacity duration-300 ease-in-out cursor-pointer">
         <span id="lightbox-close" class="absolute top-5 right-8 text-white text-4xl font-bold cursor-pointer hover:text-gray-400 transition-colors">&times;</span>
-         <img id="lightbox-img" src="" alt="Enlarged photo" class="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-xl cursor-default">
+        <img id="lightbox-img" src="" alt="Enlarged photo" class="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-xl cursor-default">
     </div>
 
     <script src="script.js" defer></script>
