@@ -1,177 +1,234 @@
-/* --- Starry Sky Color Theme (Adjusted for Particle Background) --- */
+/* --- Theme Variables --- */
 :root {
-    --glow-color: rgba(173, 216, 230, 0.7); /* Light Blue */
-    --sky-dark: #0b0f19; /* Very dark blue/black */
-    --sky-mid: #191970; /* Midnight Blue */
-    --sky-purple: #483d8b; /* Dark Slate Blue / Purple */
-    --star-bright: #FFFFFF;
-    --star-soft: #ADD8E6; /* Light Blue */
-    --star-pale: #F0F8FF; /* Alice Blue */
-    --accent-link: #a7c7e7;
-    --accent-button: #60a5fa; /* Brighter blue for button */
-    --button-hover-fill: #E0E0E0;
-    --button-hover-text: #111827;
-    /* Define a smoother easing function */
-    --ease-out-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+    /* --- Dark Theme Colors --- */
+    --bg-primary-dark: #0b0f19;
+    --bg-secondary-dark: rgba(17, 24, 39, 0.8); /* bg-gray-900 with opacity */
+    --bg-glass-dark: rgba(31, 41, 55, 0.6); /* bg-gray-800 slightly more transparent */
+    --bg-footer-dark: #000000;
+    --text-primary-dark: #e5e7eb; /* text-gray-200 */
+    --text-secondary-dark: #9ca3af; /* text-gray-400 */
+    --text-accent-dark: #a7c7e7; /* accent-link */
+    --text-cta-dark: #FFFFFF;
+    --border-color-dark: rgba(55, 65, 81, 0.5); /* gray-700 */
+    --glow-color-dark: rgba(173, 216, 230, 0.7); /* Light Blue */
+    --accent-color-dark: #60a5fa; /* Brighter blue for button */
+    --skill-tag-bg-dark: rgba(30, 41, 59, 0.7); /* Default tag bg */
+    --skill-tag-text-dark: #cbd5e1; /* Default tag text */
+
+    /* --- Light Theme Colors --- */
+    --bg-primary-light: #f8fafc; /* slate-50 */
+    --bg-secondary-light: rgba(255, 255, 255, 0.85); /* white with opacity */
+    --bg-glass-light: rgba(241, 245, 249, 0.7); /* slate-100 more transparent */
+    --bg-footer-light: #e2e8f0; /* slate-200 */
+    --text-primary-light: #1e293b; /* slate-800 */
+    --text-secondary-light: #475569; /* slate-600 */
+    --text-accent-light: #3b82f6; /* blue-500 */
+    --text-cta-light: #FFFFFF;
+    --border-color-light: rgba(203, 213, 225, 0.6); /* slate-300 */
+    --glow-color-light: rgba(59, 130, 246, 0.6); /* blue-500 */
+    --accent-color-light: #3b82f6; /* blue-500 */
+    --skill-tag-bg-light: rgba(226, 232, 240, 0.7); /* slate-200 */
+    --skill-tag-text-light: #334155; /* slate-700 */
+
+    /* --- Default Theme Assignment (Dark) --- */
+    --bg-primary: var(--bg-primary-dark);
+    --bg-secondary: var(--bg-secondary-dark);
+    --bg-glass: var(--bg-glass-dark);
+    --bg-footer: var(--bg-footer-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-accent: var(--text-accent-dark);
+    --text-cta: var(--text-cta-dark);
+    --border-color: var(--border-color-dark);
+    --glow-color: var(--glow-color-dark);
+    --accent-color: var(--accent-color-dark);
+    --skill-tag-bg: var(--skill-tag-bg-dark);
+    --skill-tag-text: var(--skill-tag-text-dark);
+
+    scroll-behavior: smooth;
 }
 
+/* --- Apply Light Theme --- */
+body.light-theme {
+    --bg-primary: var(--bg-primary-light);
+    --bg-secondary: var(--bg-secondary-light);
+    --bg-glass: var(--bg-glass-light);
+    --bg-footer: var(--bg-footer-light);
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --text-accent: var(--text-accent-light);
+    --text-cta: var(--text-cta-light);
+    --border-color: var(--border-color-light);
+    --glow-color: var(--glow-color-light);
+    --accent-color: var(--accent-color-light);
+    --skill-tag-bg: var(--skill-tag-bg-light);
+    --skill-tag-text: var(--skill-tag-text-light);
+}
+
+/* --- Base Body Styles --- */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--sky-dark); /* Base dark color */
-    color: #e5e7eb;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     overflow-x: hidden;
-    position: relative; /* Needed for pseudo-element */
+    position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Re-add background gradient */
+/* --- Background Gradient --- */
 body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient( /* Blue, Purple, Green, Cyan gradient */
-        -45deg,
-        #2563eb, /* Blue */
-        #7c3aed, /* Purple */
-        #16a34a, /* Green */
-        #0891b2, /* Cyan */
-        #4f46e5, /* Indigo */
-        #c026d3, /* Fuchsia */
-        #2563eb /* Repeat first color for smoother loop */
-    );
-    background-size: 400% 400%; /* Make size larger for smoother flow */
-    animation: gradient-flow 25s linear infinite; /* Use linear timing, longer duration */
-    z-index: -2; /* Behind particles */
-    opacity: 0.7; /* Adjust opacity as desired */
+    background: linear-gradient(-45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb);
+    background-size: 400% 400%;
+    animation: gradient-flow 25s linear infinite;
+    z-index: -2;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
-
-/* Updated keyframes for single direction loop */
+body.light-theme::before {
+    opacity: 0.3; /* Make gradient fainter in light mode */
+}
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
 }
 
-
-html { scroll-behavior: smooth; }
-
-/* Style for the particle container */
+/* --- tsParticles Container --- */
 #tsparticles {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Behind content, above gradient */
+    z-index: -1;
 }
 
-/* --- Component Styles --- */
-
-/* --- MODIFICATION: Increased transition durations --- */
-
-nav { transition: background-color 0.4s var(--ease-out-smooth); } /* Increased duration */
-nav.scrolled {
-    background-color: rgba(11, 15, 25, 0.7);
+/* --- Glass Effect Utility --- */
+.glass-effect {
+    background-color: var(--bg-glass);
     backdrop-filter: blur(12px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem; /* rounded-xl */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.nav-link { position: relative; transition: color 0.4s var(--ease-out-smooth); color: var(--accent-link); } /* Increased duration */
+
+
+/* --- Navigation Bar --- */
+#navbar {
+    /* Uses sticky positioning via HTML class */
+    /* Background applied conditionally via JS/scrolled class */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent; /* Start transparent */
+}
+#navbar.scrolled {
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-bottom-color: var(--border-color);
+}
+.nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+    color: var(--text-accent);
+    padding-bottom: 8px; /* Add padding for the underline */
+}
 .nav-link::after {
     content: ''; position: absolute; width: 0; height: 2px;
-    bottom: -5px; left: 50%; transform: translateX(-50%);
+    bottom: 0px; /* Position underline correctly */
+    left: 50%; transform: translateX(-50%);
     background-color: var(--glow-color);
-    /* Increased duration for the underline */
-    transition: width 0.4s var(--ease-out-smooth), box-shadow 0.4s var(--ease-out-smooth);
+    transition: width 0.3s ease;
     box-shadow: 0 0 8px var(--glow-color);
 }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-.nav-link:hover, .nav-link.active { color: var(--star-bright); }
+.nav-link:hover, .nav-link.active { color: var(--text-primary); } /* Hover/active color */
 
+/* --- Theme/Lang Toggle Buttons --- */
+.theme-lang-button {
+    padding: 0.5rem; /* p-2 */
+    border-radius: 9999px; /* rounded-full */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--text-secondary);
+    background-color: transparent;
+}
+.theme-lang-button:hover {
+    background-color: var(--bg-glass);
+    color: var(--text-primary);
+}
+/* Language Dropdown */
+.lang-dropdown {
+    position: absolute;
+    right: 0;
+    margin-top: 0.5rem; /* mt-2 */
+    width: 8rem; /* w-32 */
+    border-radius: 0.375rem; /* rounded-md */
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
+    display: none; /* hidden */
+    /* Glass effect applied via class */
+}
+.lang-dropdown.show { /* Use 'show' class instead of toggling 'hidden' directly */
+    display: block;
+}
+.lang-dropdown-item {
+    display: block;
+    padding: 0.5rem 1rem; /* px-4 py-2 */
+    font-size: 0.875rem; /* text-sm */
+    color: var(--text-secondary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.lang-dropdown-item:hover {
+    background-color: var(--bg-glass);
+    color: var(--text-primary);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    /* Glass effect applied via class */
+    background-color: var(--bg-glass); /* Ensure background for mobile */
+    backdrop-filter: blur(16px);
+}
+.mobile-menu-item {
+    display: block;
+    padding: 0.75rem 1rem; /* py-3 px-4 */
+    font-size: 0.875rem; /* text-sm */
+    color: var(--text-accent);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+.mobile-menu-item:hover, .mobile-menu-item.active { /* Add active state style */
+    color: var(--text-primary);
+    background-color: rgba(127, 127, 127, 0.1); /* Subtle hover */
+}
+
+
+/* --- Hero Section --- */
+/* Typewriter uses inline styles/animation from HTML/CSS */
 .typewriter h1 {
-    overflow: hidden; border-right: .15em solid var(--glow-color); white-space: nowrap;
-    margin: 0 auto; letter-spacing: .1em;
-    animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
-    text-shadow: 0 0 10px rgba(173, 216, 230, 0.4);
+    /* Existing styles */
+     overflow: hidden; border-right: .15em solid var(--glow-color); white-space: nowrap;
+     margin: 0 auto; letter-spacing: .1em;
+     animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
+     text-shadow: 0 0 10px rgba(173, 216, 230, 0.4); /* Keep existing shadow */
 }
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--glow-color); } }
 
 .fade-in-up {
     opacity: 0; transform: translateY(20px);
-    animation: fadeInUp 1s ease 3.5s forwards; /* Keep existing animation */
+    animation: fadeInUp 1s ease 3.5s forwards;
 }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-.reveal {
-    opacity: 0;
-    transform: translateY(50px) scale(0.98);
-    /* Keep longer duration for reveal */
-    transition: opacity 0.8s var(--ease-out-smooth), transform 0.8s var(--ease-out-smooth);
-}
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-/* Adjust section backgrounds if needed */
-#about { background-color: rgba(11, 15, 25, 0.8); }
-#photos { background-color: rgba(11, 15, 25, 0.9); }
-#contact { background: linear-gradient(to bottom right, rgba(42, 26, 61, 0.9), rgba(11, 15, 25, 0.9)); }
-
-
-.photo-item {
-    overflow: hidden; position: relative; border-radius: 0.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    /* Increased duration for transform and shadow */
-    transition: transform 0.5s var(--ease-out-smooth), box-shadow 0.5s var(--ease-out-smooth);
-    border: 1px solid rgba(173, 216, 230, 0.1);
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(2px);
-}
-.photo-item:hover {
-     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
-     transform: translateY(-5px); /* Keep subtle lift on hover */
-}
-.photo-item img {
-    display: block; width: 100%; height: 100%; object-fit: cover;
-    /* Increased duration for image scale */
-    transition: transform 0.5s var(--ease-out-smooth);
-    cursor: zoom-in; /* Indicate clickable for zoom */
-}
-.photo-item:hover img {
-    transform: scale(1.05); /* Keep slight zoom on hover */
-}
-
-/* Style for skill tags in About section */
-#about .flex span {
-    /* Increased duration for smoothness */
-    transition: transform 0.4s var(--ease-out-smooth), box-shadow 0.4s var(--ease-out-smooth);
-    transform-origin: center;
-}
-/* Hover effect is handled by Tailwind's hover:scale-105 */
-
-
-.contact-icon-group { /* Style the group if needed */ }
-
-.contact-icon a {
-    /* Increased duration for contact icons */
-    transition: transform 0.45s ease-out, color 0.4s ease-out;
-    display: inline-block;
-    color: var(--accent-link);
-}
-.contact-icon a:hover {
-    transform: scale(1.15) translateY(-3px); /* Slightly adjust scale for smoother feel */
-    color: var(--star-bright);
-}
-.contact-icon span { transition: opacity 0.4s ease-out; opacity: 0.7; } /* Increased duration */
- .contact-icon a:hover span { opacity: 1; }
-
+/* Call to Action Button */
 .cta-button {
     position: relative; overflow: hidden; z-index: 1;
-    /* Increased and unified duration for all properties */
-    transition: color 0.4s var(--ease-out-smooth), transform 0.4s var(--ease-out-smooth), box-shadow 0.4s var(--ease-out-smooth), background-color 0.4s var(--ease-out-smooth), border-color 0.4s var(--ease-out-smooth);
+    transition: all 0.3s var(--ease-out-smooth, ease-out); /* Use smoother transition */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    background-color: var(--accent-button);
-    border-color: var(--accent-button);
-    color: var(--star-bright);
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-cta); /* Use theme variable for text */
     padding: 0.75rem 2rem;
     border-radius: 9999px;
     border-width: 2px;
@@ -179,39 +236,115 @@ nav.scrolled {
     display: inline-block;
 }
 .cta-button:hover {
-    transform: translateY(-3px); /* Slightly reduce lift */
+    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color);
     background-color: transparent;
     border-color: var(--glow-color);
-    color: var(--star-bright);
+    color: var(--text-primary); /* Change text color on hover */
 }
 
-/* --- Lightbox Styles --- */
-#lightbox-overlay {
+/* --- General Section Styles --- */
+.section-bg {
+    background-color: var(--bg-secondary); /* Use theme variable */
+    backdrop-filter: blur(8px); /* Add subtle blur to sections */
+    transition: background-color 0.3s ease;
+}
+.section-title {
+    font-size: 1.875rem; /* text-3xl */
+    line-height: 2.25rem;
+    font-weight: 700; /* font-bold */
+    text-align: center;
+    margin-bottom: 3rem; /* mb-12 */
+    color: var(--text-primary); /* Use theme variable */
+    transition: color 0.3s ease;
+}
+@media (min-width: 768px) {
+    .section-title {
+        font-size: 2.25rem; /* text-4xl */
+        line-height: 2.5rem;
+        margin-bottom: 4rem; /* mb-16 */
+    }
+}
+
+/* --- About Section --- */
+.skill-tag {
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 600; /* font-semibold */
+    padding: 0.25rem 0.75rem; /* px-3 py-1 */
+    border-radius: 9999px; /* rounded-full */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
+    transition: transform 0.3s ease;
+    /* Background and text color set by inline classes for uniqueness, */
+    /* but could be standardized with variables if preferred */
+}
+.skill-tag:hover {
+    transform: scale(1.05);
+}
+
+/* --- Photos Section --- */
+.photo-item {
+    overflow: hidden; position: relative; border-radius: 0.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 1px solid var(--border-color); /* Use theme variable */
+    background-color: var(--bg-glass); /* Use glass effect */
+    backdrop-filter: blur(2px);
+}
+.photo-item:hover {
+     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
+     transform: translateY(-5px);
+}
+.photo-img { /* Renamed from photo-item img */
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+    cursor: zoom-in;
+}
+.photo-item:hover .photo-img {
+    transform: scale(1.05);
+}
+
+/* --- Contact Section --- */
+.contact-icon a {
+    transition: transform 0.35s ease-out, color 0.3s ease-out;
+    display: inline-block;
+    color: var(--text-accent); /* Use theme variable */
+}
+.contact-icon a:hover {
+    transform: scale(1.15) translateY(-3px);
+    color: var(--text-primary); /* Use theme variable */
+}
+.contact-icon span {
+    transition: opacity 0.3s ease-out;
+    opacity: 0.8; /* Slightly increase base opacity */
+    color: var(--text-secondary); /* Use theme variable */
+}
+ .contact-icon a:hover span { opacity: 1; }
+
+/* --- Footer --- */
+.footer-bg {
+    background-color: var(--bg-footer); /* Use theme variable */
+    transition: background-color 0.3s ease;
+}
+
+/* --- Scroll Reveal --- */
+.reveal {
     opacity: 0;
-    visibility: hidden;
-    /* Increased duration for fade in/out */
-    transition: opacity 0.4s var(--ease-out-smooth), visibility 0.4s var(--ease-out-smooth);
-    cursor: zoom-out;
+    transform: translateY(50px) scale(0.98);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother ease */
 }
-#lightbox-overlay.visible {
+.reveal.visible {
     opacity: 1;
-    visibility: visible;
+    transform: translateY(0) scale(1);
 }
-#lightbox-img {
-    transition: transform 0.4s var(--ease-out-smooth); /* Increased duration */
-}
-#lightbox-close {
-    transition: color 0.3s var(--ease-out-smooth); /* Keep close button relatively snappy */
-    line-height: 1;
-}
-/* --- End Lightbox Styles --- */
 
-
-/* --- Scrollbar Styles --- */
+/* --- Scrollbar --- */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0f172a; }
-::-webkit-scrollbar-thumb { background-color: var(--accent-link); border-radius: 10px; border: 2px solid #0f172a; }
-::-webkit-scrollbar-thumb:hover { background-color: var(--star-soft); box-shadow: 0 0 10px var(--glow-color); }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); }
+::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
 
-/* --- End MODIFICATION --- */
+/* --- Lightbox Styles (Keep as is) --- */
+#lightbox-overlay { opacity: 0; visibility: hidden; transition: opacity 0.35s ease-out, visibility 0.35s ease-out; cursor: zoom-out; }
+#lightbox-overlay.visible { opacity: 1; visibility: visible; }
+#lightbox-img { transition: transform 0.3s ease-out; }
+#lightbox-close { transition: color 0.2s ease-out; line-height: 1; }
