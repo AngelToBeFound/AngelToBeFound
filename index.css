@@ -1,292 +1,269 @@
 /* --- Dark Theme Variables Only --- */
-/* 定义 CSS 变量，用于统一管理颜色、字体等样式 */
 :root {
-    /* 基础颜色 */
-    --bg-primary: transparent; /* 主背景透明，以显示下面的渐变和粒子效果 */
-    --bg-secondary: rgba(17, 24, 39, 0.85); /* 区块背景 (例如: 关于我, 照片) */
-    --bg-glass: rgba(31, 41, 55, 0.75); /* 玻璃拟态效果背景 (更强的模糊感) */
-    --bg-footer: #080a10; /* 页脚背景，更深的颜色 */
+    /* Base Colors */
+    --bg-primary: transparent; /* Transparent to show background effects */
+    --bg-secondary: rgba(17, 24, 39, 0.85); /* Section background (e.g., gray-900 with opacity) */
+    --bg-glass: rgba(31, 41, 55, 0.65); /* Glass effect background (e.g., gray-800 with opacity) */
+    --bg-footer: #000000; /* Footer background */
 
-    /* 文本颜色 */
-    --text-primary: #e5e7eb; /* 主要文本颜色 (亮灰色) */
-    --text-secondary: #a0aec0; /* 次要文本颜色 (稍暗的灰色) */
-    --text-accent: #8cb5e5; /* 点缀色，用于链接等 (调整后的浅蓝色，稍暗) */
-    --text-cta: #FFFFFF; /* CTA 按钮文字颜色 (白色) */
+    /* Text Colors */
+    --text-primary: #e5e7eb; /* Primary text (e.g., text-gray-200) */
+    --text-secondary: #9ca3af; /* Secondary text (e.g., text-gray-400) */
+    --text-accent: #a7c7e7; /* Accent text, links (e.g., light blue) */
+    --text-cta: #FFFFFF; /* Text on CTA button */
 
-    /* 标题渐变色 (保持不变) */
+    /* Title Gradient */
     --text-title-gradient-from: #a7c7e7;
     --text-title-gradient-via: #bfdbfe;
     --text-title-gradient-to: #e0f2fe;
 
-    /* 边框和效果 */
-    --border-color: rgba(55, 65, 81, 0.6); /* 边框颜色 (稍明显) */
-    --glow-color: rgba(140, 181, 229, 0.6); /* 辉光效果颜色 (基于调整后的点缀色) */
-    --accent-color: #528bcd; /* 主要点缀色 (用于头像边框, CTA按钮背景等，调整后的蓝色) */
+    /* Borders & Effects */
+    --border-color: rgba(55, 65, 81, 0.5); /* Border color (e.g., gray-700) */
+    --glow-color: rgba(173, 216, 230, 0.7); /* Glow effect color (e.g., light blue) */
+    --accent-color: #60a5fa; /* Accent color for elements like buttons, avatar border */
 
-    /* 特定元素 */
-    --skill-tag-bg: rgba(30, 41, 59, 0.7); /* 技能标签背景 */
-    --skill-tag-text: #cbd5e1; /* 技能标签文字 */
+    /* Specific Elements */
+    --skill-tag-bg: rgba(30, 41, 59, 0.7); /* Skill tag background */
+    --skill-tag-text: #cbd5e1; /* Skill tag text */
+    --star-soft: #ADD8E6; /* Original variable, used for contact icon */
 
-    /* 全局设置 */
-    scroll-behavior: smooth; /* 平滑滚动效果 */
+    /* Aliases for potential compatibility if needed */
+    --accent-link: var(--text-accent);
+    --accent-button: var(--accent-color);
+
+    /* Global Settings */
+    scroll-behavior: smooth;
 }
 
-/* --- 基础 Body 样式 --- */
+/* Removed body.light-theme rule */
+
+/* --- Base Body Styles --- */
 body {
-    font-family: 'Inter', sans-serif; /* 设置字体 */
-    background-color: var(--bg-primary); /* 应用透明背景 */
-    color: var(--text-primary); /* 设置默认文字颜色 */
-    overflow-x: hidden; /* 防止水平滚动条 */
-    position: relative; /* 用于 ::before 伪元素定位 */
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary); /* Transparent */
+    color: var(--text-primary);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    position: relative; /* Needed for ::before */
 }
 
-/* --- 静态星空背景渐变 --- */
+/* --- Background Gradient --- */
 body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* 修改为星空渐变色 */
-    background: linear-gradient(
-        -45deg,
-        #0f172a, /* 深蓝 */
-        #1e1b4b, /* 深紫 */
-        #312e81, /* 紫色 */
-        #0c4a6e, /* 深蓝 */
-        #1e3a8a, /* 蓝色 */
-        #0f172a  /* 回到深蓝 */
-    );
-    background-size: 100% 100%; /* 覆盖整个区域 */
-    /* 移除动画，使其变为静态 */
-    /* animation: gradient-flow 25s linear infinite; */
-    z-index: -2; /* 置于粒子效果之下 */
-    opacity: 0.9; /* 背景不透明度 */
+    background: linear-gradient(-45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb);
+    background-size: 400% 400%;
+    animation: gradient-flow 25s linear infinite;
+    z-index: -2; /* Behind particles */
+    opacity: 0.7; /* Default dark mode opacity */
 }
-/* 移除动画关键帧 */
-/* @keyframes gradient-flow { ... } */
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
 
-/* --- tsParticles 容器 --- */
+/* --- tsParticles Container --- */
 #tsparticles {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; /* 位于渐变之上，内容之下 */
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; /* Above gradient, below content */
 }
 
-/* --- 玻璃拟态效果 --- */
+/* --- Glass Effect Utility --- */
 .glass-effect {
-    background-color: var(--bg-glass); /* 应用玻璃背景色 */
-    backdrop-filter: blur(16px); /* 增加模糊效果 */
-    border: 1px solid var(--border-color); /* 应用边框 */
-    border-radius: 0.75rem; /* 圆角 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 增加阴影 */
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* --- 导航栏 --- */
+/* --- Navigation Bar --- */
 #navbar {
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border-bottom: 1px solid transparent; /* 初始透明边框 */
+    border-bottom: 1px solid transparent; /* Start transparent */
 }
-/* 导航栏滚动后的样式 */
 #navbar.scrolled {
-    background-color: var(--bg-glass); /* 应用玻璃效果 */
-    backdrop-filter: blur(20px); /* 滚动时更强的模糊 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-    border-bottom-color: var(--border-color); /* 显示边框 */
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-bottom-color: var(--border-color);
 }
-/* 导航链接 */
 .nav-link {
-    position: relative;
-    transition: color 0.3s ease;
-    color: var(--text-accent); /* 使用调整后的点缀色 */
-    padding-bottom: 8px; /* 底部留出空间给下划线 */
-    font-weight: 500; /* 中等字重 */
+    position: relative; transition: color 0.3s ease;
+    color: var(--text-accent); padding-bottom: 8px;
 }
-/* 导航链接下划线效果 */
 .nav-link::after {
     content: ''; position: absolute; width: 0; height: 2px;
     bottom: 0px; left: 50%; transform: translateX(-50%);
-    background-color: var(--glow-color); /* 使用辉光颜色 */
+    background-color: var(--glow-color);
     transition: width 0.3s ease;
-    box-shadow: 0 0 8px var(--glow-color); /* 添加辉光 */
+    box-shadow: 0 0 8px var(--glow-color);
 }
-/* 悬停或激活状态下的导航链接 */
-.nav-link:hover::after, .nav-link.active::after { width: 60%; } /* 下划线宽度 */
-.nav-link:hover, .nav-link.active { color: var(--text-primary); } /* 激活时文字变亮 */
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+.nav-link:hover, .nav-link.active { color: var(--text-primary); }
 
-/* --- 语言切换按钮样式 --- */
-.lang-button { /* 新类名，专门用于按钮样式 */
-    padding: 0.5rem; /* 内边距 */
-    border-radius: 9999px; /* 圆形 */
+/* --- Lang Toggle Button Styles --- */
+.theme-lang-button { /* Reusing class name, but only for lang now */
+    padding: 0.5rem; border-radius: 9999px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: var(--text-secondary); /* 使用次要文字颜色 */
-    background-color: transparent; /* 透明背景 */
+    color: var(--text-secondary); background-color: transparent;
 }
-.lang-button:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* 悬停时轻微背景 */
-    color: var(--text-primary); /* 悬停时文字变亮 */
+.theme-lang-button:hover {
+    background-color: var(--bg-glass); color: var(--text-primary);
 }
-/* 语言下拉菜单 */
+/* Language Dropdown */
 .lang-dropdown {
     position: absolute; right: 0; margin-top: 0.5rem; width: 8rem;
-    border-radius: 0.375rem; /* 圆角 */
+    border-radius: 0.375rem;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    display: none; /* 默认隐藏 */
-    /* 通过 glass-effect 类应用玻璃效果 */
+    display: none; /* Hidden by default */
+    /* Glass effect applied via class */
 }
-.lang-dropdown.show { display: block; } /* 用于 JS 控制显示 */
-/* 下拉菜单项 */
+.lang-dropdown.show { display: block; } /* Class to show dropdown */
 .lang-dropdown-item {
     display: block; padding: 0.5rem 1rem; font-size: 0.875rem;
     color: var(--text-secondary);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 .lang-dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.08); /* 悬停背景 */
-    color: var(--text-primary);
+    background-color: var(--bg-glass); color: var(--text-primary);
 }
 
-/* 移动端菜单 */
+/* Mobile Menu */
 .mobile-menu {
-    /* 通过 glass-effect 类应用玻璃效果 */
+    background-color: var(--bg-glass); backdrop-filter: blur(16px);
 }
 .mobile-menu-item {
     display: block; padding: 0.75rem 1rem; font-size: 0.875rem;
     color: var(--text-accent);
     transition: background-color 0.15s ease, color 0.15s ease;
-    border-radius: 0.25rem; /* 轻微圆角 */
-    margin: 0.25rem 0.5rem; /* 增加间距 */
 }
 .mobile-menu-item:hover, .mobile-menu-item.active {
-    color: var(--text-primary); background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary); background-color: rgba(127, 127, 127, 0.1);
 }
 
 
-/* --- 英雄区域 --- */
-/* 打字机效果标题 */
+/* --- Hero Section --- */
 .typewriter h1 {
-     overflow: hidden; /* 隐藏超出部分 */
-     border-right: .15em solid var(--glow-color); /* 光标效果 */
-     white-space: nowrap; /* 防止换行 */
-     margin: 0 auto; /* 居中 */
-     letter-spacing: .1em; /* 字间距 */
-     animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite; /* 动画 */
-     text-shadow: 0 0 10px var(--glow-color); /* 文字辉光 */
-     /* 应用标题渐变色 */
+     overflow: hidden; border-right: .15em solid var(--glow-color); white-space: nowrap;
+     margin: 0 auto; letter-spacing: .1em;
+     animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
+     text-shadow: 0 0 8px var(--glow-color);
+     /* Use specific gradient colors */
      background-image: linear-gradient(to right, var(--text-title-gradient-from), var(--text-title-gradient-via), var(--text-title-gradient-to));
+     /* Required for gradient text */
      -webkit-background-clip: text;
      background-clip: text;
-     color: transparent; /* 使文字透明以显示背景渐变 */
+     color: transparent;
 }
-/* 打字动画 */
 @keyframes typing { from { width: 0 } to { width: 100% } }
-/* 光标闪烁动画 */
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--glow-color); } }
 
-/* 副标题向上淡入动画 */
 .fade-in-up {
     opacity: 0; transform: translateY(20px);
-    animation: fadeInUp 1s ease 3.5s forwards; /* 延迟执行 */
+    animation: fadeInUp 1s ease 3.5s forwards;
 }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-/* 行动号召按钮 (CTA) */
+/* Call to Action Button */
 .cta-button {
     position: relative; overflow: hidden; z-index: 1;
     transition: all 0.3s ease-out;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 调整阴影 */
-    background-color: var(--accent-color); /* 使用调整后的点缀色 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    background-color: var(--accent-color);
     border-color: var(--accent-color);
-    color: var(--text-cta); /* 白色文字 */
-    /* 其他 Tailwind 类控制 padding, border-radius, border-width, font-weight, display */
+    color: var(--text-cta);
+    padding: 0.75rem 2rem; border-radius: 9999px; border-width: 2px;
+    font-weight: 600; display: inline-block;
 }
 .cta-button:hover {
-    transform: translateY(-3px) scale(1.03); /* 悬停效果 */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color); /* 增强阴影和辉光 */
-    background-color: transparent; /* 背景变透明 */
-    border-color: var(--glow-color); /* 边框变辉光色 */
-    color: var(--text-primary); /* 文字变亮 */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 0 15px var(--glow-color);
+    background-color: transparent;
+    border-color: var(--glow-color);
+    color: var(--text-primary);
 }
 
-/* --- 通用区块样式 --- */
+/* --- General Section Styles --- */
 .section-bg {
-    background-color: var(--bg-secondary); /* 应用区块背景色 */
-    backdrop-filter: blur(10px); /* 轻微模糊 */
+    background-color: var(--bg-secondary);
+    backdrop-filter: blur(8px);
 }
 .section-title {
     font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;
     text-align: center; margin-bottom: 3rem;
-    color: var(--text-primary); /* 主要文字颜色 */
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* 轻微文字阴影 */
+    color: var(--text-primary);
 }
 @media (min-width: 768px) {
     .section-title { font-size: 2.25rem; line-height: 2.5rem; margin-bottom: 4rem; }
 }
 
-/* --- 关于我区块 --- */
+/* Removed Section Divider Lines Rule */
+
+/* --- About Section --- */
 .skill-tag {
     font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem;
     border-radius: 9999px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* 添加细边框 */
-    /* 背景和文字颜色由 Tailwind 类设置 */
+    /* Background and text color set by inline classes */
 }
 .skill-tag:hover { transform: scale(1.05); }
 
-/* --- 照片区块 --- */
+/* --- Photos Section --- */
 .photo-item {
     overflow: hidden; position: relative; border-radius: 0.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* 增强阴影 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    border: 1px solid var(--border-color); /* 应用边框颜色 */
-    background-color: var(--bg-glass); /* 应用玻璃背景 */
-    backdrop-filter: blur(5px); /* 轻微模糊 */
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-glass); backdrop-filter: blur(2px);
 }
 .photo-item:hover {
-     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color); /* 悬停辉光 */
-     transform: translateY(-5px); /* 悬停上移 */
+     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 15px var(--glow-color);
+     transform: translateY(-5px);
 }
 .photo-img {
     display: block; width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s ease; cursor: zoom-in; /* 鼠标指针 */
+    transition: transform 0.4s ease; cursor: zoom-in;
 }
-.photo-item:hover .photo-img { transform: scale(1.05); } /* 悬停图片放大 */
+.photo-item:hover .photo-img { transform: scale(1.05); }
 
-/* --- 联系我区块 --- */
-/* 图标组容器 */
-.contact-icon-group svg {
-     color: var(--accent-color); /* 使用调整后的点缀色 */
-     transition: transform 0.3s ease; /* 添加过渡 */
+/* --- Contact Section --- */
+.contact-icon a {
+    transition: transform 0.35s ease-out, color 0.3s ease-out;
+    display: inline-block; color: var(--text-accent);
 }
-.contact-icon-group:hover svg {
-    transform: scale(1.1); /* 悬停时图标放大 */
+.contact-icon a:hover {
+    transform: scale(1.15) translateY(-3px); color: var(--text-primary);
 }
-/* 邮箱链接 */
-.contact-icon-group a {
-    transition: color 0.3s ease; /* 添加颜色过渡 */
+.contact-icon span {
+    transition: opacity 0.3s ease-out; opacity: 0.8; color: var(--text-secondary);
 }
-.contact-icon-group a:hover {
-    color: var(--text-primary); /* 悬停时文字变亮 */
-    text-shadow: 0 0 5px var(--glow-color); /* 添加辉光 */
-}
+ .contact-icon a:hover span { opacity: 1; }
+ .contact-icon-group svg {
+     color: var(--star-soft); /* Reverted to original variable */
+ }
 
-/* --- 页脚 --- */
+/* --- Footer --- */
 .footer-bg {
-    background-color: var(--bg-footer); /* 应用页脚背景色 */
-    border-top: 1px solid var(--border-color); /* 添加顶部边框 */
+    background-color: var(--bg-footer);
+    /* border-top removed */
 }
 
-/* --- 滚动浮现动画 --- */
+/* --- Scroll Reveal --- */
 .reveal {
     opacity: 0; transform: translateY(50px) scale(0.98);
     transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-/* --- 滚动条样式 --- */
+/* --- Scrollbar --- */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); } /* 半透明轨道 */
-::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; } /* 滚动条滑块 */
-::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); } /* 悬停时变亮 */
+::-webkit-scrollbar-track { background: var(--bg-primary); } /* Should be transparent now */
+::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; /* Removed border */ }
+::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
 
-/* --- 灯箱样式 (保持不变) --- */
+/* --- Lightbox Styles (Keep as is) --- */
 #lightbox-overlay { opacity: 0; visibility: hidden; transition: opacity 0.35s ease-out, visibility 0.35s ease-out; cursor: zoom-out; }
 #lightbox-overlay.visible { opacity: 1; visibility: visible; }
 #lightbox-img { transition: transform 0.3s ease-out; }
 #lightbox-close { transition: color 0.2s ease-out; line-height: 1; }
+
