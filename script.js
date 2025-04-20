@@ -39,7 +39,7 @@ window.addEventListener('scroll', updateActiveLink);
 // DOMContentLoaded listener moved to the end to include language init
 
 
-// --- tsParticles Initialization (Static Emitter + Enhanced Decorations) ---
+// --- tsParticles Initialization (Emitter Removed) ---
 if (typeof tsParticles !== 'undefined') {
     tsParticles.load("tsparticles", {
         fpsLimit: 60,
@@ -57,7 +57,28 @@ if (typeof tsParticles !== 'undefined') {
             events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true },
             modes: { repulse: { distance: 70, duration: 0.4, speed: 0.6 }, push: { quantity: 3 } }
         },
-        emitters: { /* ... Your emitter config ... */ }, // Keep your emitter config
+        // *** EMITTERS CONFIGURATION REMOVED ***
+        // emitters: {
+        //     name: "avatarEmitter",
+        //     position: { x: 50, y: 50 },
+        //     rate: { quantity: 2, delay: 0.1 },
+        //     size: { width: 100, height: 100, mode: "percent" },
+        //     particles: {
+        //         size: { value: {min: 1, max: 3} },
+        //         opacity: { value: {min: 0.5, max: 0.9} },
+        //         color: { value: ["#ffffff", "#a78bfa", "#6ee7b7", "#22d3ee"] },
+        //         shape: { type: "star" },
+        //         move: {
+        //             speed: 1.8,
+        //             decay: 0.05,
+        //             direction: "outside",
+        //             straight: false,
+        //             outModes: { default: "destroy", top: "none", bottom: "none" }
+        //         },
+        //         life: { duration: 2.0, count: 1 },
+        //         links: { enable: false }
+        //     }
+        // },
         detectRetina: true,
         background: { opacity: 0 }
     }).catch(error => {
@@ -207,7 +228,7 @@ if (lightboxOverlay && lightboxImg && lightboxClose && photoItems.length > 0) {
 }
 
 
-// --- *** Language Switching Logic (Integrated) *** ---
+// --- Language Switching Logic (Integrated) ---
 
 const translations = {
     'en': {
