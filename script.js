@@ -33,88 +33,63 @@ window.addEventListener('scroll', updateActiveLink);
 // DOMContentLoaded listener at the end
 
 
-// --- tsParticles Initialization (Combined Linked Background + Scattered Unlinked Stars) ---
+// --- tsParticles Initialization (Interaction Re-enabled, Faster Emitter) ---
 if (typeof tsParticles !== 'undefined') {
     tsParticles.load("tsparticles", {
         fpsLimit: 60,
         // particles: Configures the main background (e.g., linked circles)
         particles: {
-            number: {
-                value: 50, // Reduced number for linked particles
-                density: { enable: true, area: 800 }
-            },
-            color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF"] }, // Simple colors for linked ones
-            shape: { type: "circle" }, // Use circles for the linked background
+            number: { value: 50, density: { enable: true, area: 800 } },
+            color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF"] },
+            shape: { type: "circle" },
             opacity: { value: { min: 0.1, max: 0.4 }, animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false } },
-            size: { value: { min: 1, max: 3 } }, // Smaller size for linked ones
-            // *** LINKS ENABLED for this background layer ***
-            links: {
-                color: "#ffffff", // Link color
-                distance: 150,
-                enable: true,
-                opacity: 0.15, // Fainter links
-                width: 1
-            },
+            size: { value: { min: 1, max: 3 } },
+            links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.15, width: 1 },
             collisions: { enable: false },
-            move: {
-                direction: "none",
-                enable: true,
-                outModes: { default: "out" },
-                random: true,
-                speed: 0.4, // Slower speed for background
-                straight: false
-            }
+            move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.4, straight: false }
         },
         // interactivity: Applies to all particles unless specified by group
         interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: false, mode: "push" }, resize: true }, // Disabled push on click for cleaner background
-            modes: { repulse: { distance: 80, duration: 0.4 } }
+            events: {
+                onHover: {
+                    enable: true, // Hover interaction remains enabled
+                    mode: "repulse"
+                 },
+                onClick: {
+                    enable: true, // *** Re-enabled click interaction ***
+                    mode: "push"
+                },
+                resize: true
+            },
+            modes: {
+                repulse: { distance: 80, duration: 0.4 },
+                push: { quantity: 3 } // Keep push quantity (adjust if needed)
+            }
         },
-        // *** MODIFIED EMITTER for Scattered Unlinked Stars ***
+        // Emitter for Scattered Unlinked Stars
         emitters: {
-            // Emitter now configured to scatter slowly across the screen
             direction: "none",
             rate: {
-                quantity: 1, // Emit only 1 star...
-                delay: 0.5 // ...every 0.5 seconds (adjust for density)
+                quantity: 1,
+                delay: 0.2 // *** Decreased delay for faster generation ***
             },
-            size: {
-                width: 100,
-                height: 100,
-                 mode: "percent" // Emit from anywhere on the canvas
-            },
-            position: { // Positioned at center, but size covers all
-                x: 50,
-                y: 50
-            },
-            // Particles emitted by THIS emitter (Unlinked Stars)
+            size: { width: 100, height: 100, mode: "percent" },
+            position: { x: 50, y: 50 },
+            // Particles emitted (Unlinked Stars)
             particles: {
-                shape: { type: "star" }, // Emitted particles are stars
-                size: { value: { min: 1, max: 3 } }, // Size of stars
-                color: { value: ["#FFFFFF", "#86efac", "#67e8f9", "#a7c7e7"] }, // Star colors
+                shape: { type: "star" },
+                size: { value: { min: 1, max: 3 } },
+                color: { value: ["#FFFFFF", "#86efac", "#67e8f9", "#a7c7e7"] },
                 opacity: { value: { min: 0.3, max: 0.8 }, animation: { enable: true, speed: 0.9, minimumValue: 0.3 } },
-                // *** LINKS DISABLED for emitted stars ***
-                links: { enable: false },
-                // Stars move outwards slightly faster and fade
-                move: {
-                    speed: 0.8,
-                    decay: 0.05, // Optional: slow down over time
-                    direction: "none", // Random direction
-                    straight: false,
-                    random: true,
-                    outModes: { default: "destroy" } // Remove when they go off screen
-                },
-                // Stars have a limited lifespan
-                life: {
-                    duration: { min: 5, max: 10 }, // Last between 5 and 10 seconds
-                    count: 1 // Emit only once per emission cycle
-                }
+                links: { enable: false }, // Keep links disabled for emitted stars
+                move: { speed: 0.8, decay: 0.05, direction: "none", straight: false, random: true, outModes: { default: "destroy" } },
+                life: { duration: { min: 5, max: 10 }, count: 1 }
             }
         },
         detectRetina: true,
         background: { opacity: 0 }
     }).then(container => {
-        console.log("tsParticles loaded successfully (linked background + scattered stars)");
+        console.log("tsParticles loaded (linked bg + faster stars + interaction)"); // Updated log
     }).catch(error => {
         console.error("Error loading tsParticles:", error);
     });
@@ -218,10 +193,68 @@ const langToggle = document.getElementById('lang-toggle'); const langDropdown = 
 const mobileCurrentLangSpan = document.getElementById('mobile-current-lang'); const mobileLangLinks = document.querySelectorAll('#mobile-lang-dropdown a[data-lang]');
 let currentLang = localStorage.getItem('language') || 'zh-CN';
 
-function applyTranslations(lang) { /* ... (keep existing applyTranslations function) ... */ }
-function setupLangSwitcher(toggleButton, dropdownMenu, links) { /* ... (keep existing setupLangSwitcher function) ... */ }
+// Keep existing applyTranslations function
+function applyTranslations(lang) {
+    if (!translations[lang]) return;
+    document.documentElement.lang = lang.split('-')[0];
+    const elements = document.querySelectorAll('[data-translate-key]');
+    elements.forEach(el => {
+        const key = el.getAttribute('data-translate-key');
+        if (translations[lang][key] !== undefined) {
+            if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
+            else if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; }
+            else if (el.title) { el.title = translations[lang][key]; }
+            else if (el.tagName === 'IMG' && el.alt) { el.alt = translations[lang][key]; }
+            else { el.textContent = translations[lang][key]; }
+        } else { console.warn(`Translation key "${key}" not found for language "${lang}"`); }
+    });
+    const displayLang = translations[lang]['current_lang_display'] || lang.split('-')[0].toUpperCase();
+    if (currentLangSpan) currentLangSpan.textContent = displayLang;
+    if (mobileCurrentLangSpan) mobileCurrentLangSpan.textContent = displayLang;
+    const allLangLinks = document.querySelectorAll('a[data-lang]');
+    allLangLinks.forEach(link => {
+        link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
+        link.classList.toggle('text-[var(--star-bright)]', link.getAttribute('data-lang') === lang);
+    });
+}
+
+// Keep existing setupLangSwitcher function
+function setupLangSwitcher(toggleButton, dropdownMenu, links) {
+    if (!toggleButton || !dropdownMenu || !links) return;
+    toggleButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('hidden');
+    });
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const selectedLang = link.getAttribute('data-lang');
+            if (selectedLang !== currentLang) {
+                currentLang = selectedLang;
+                localStorage.setItem('language', currentLang);
+                applyTranslations(currentLang);
+            }
+            dropdownMenu.classList.add('hidden');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && dropdownMenu === mobileLangDropdown) {
+                 mobileMenu.classList.add('hidden');
+                 mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+}
 setupLangSwitcher(langToggle, langDropdown, langLinks); setupLangSwitcher(mobileLangToggle, mobileLangDropdown, mobileLangLinks);
-document.addEventListener('click', (e) => { /* ... (keep existing document click listener) ... */ });
+
+// Keep existing document click listener
+document.addEventListener('click', (e) => {
+    if (langDropdown && !langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+        langDropdown.classList.add('hidden');
+    }
+    if (mobileLangDropdown && !mobileLangToggle.contains(e.target) && !mobileLangDropdown.contains(e.target)) {
+         if (!e.target.closest('#mobile-menu') && !mobileMenuButton.contains(e.target)) {
+             mobileLangDropdown.classList.add('hidden');
+         }
+     }
+});
 
 // Apply initial states on page load
 document.addEventListener('DOMContentLoaded', () => {
