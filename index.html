@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-
     <link rel="stylesheet" href="index.css">
 
 </head>
@@ -25,9 +24,9 @@
                 <a href="#about" class="nav-link">关于我</a>
                 <a href="#photos" class="nav-link">照片展览</a>
                 <a href="#contact" class="nav-link">联系我</a>
-            </div>
+                </div>
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-200 focus:outline-none p-2 rounded hover:bg-gray-700 transition">
+                <button id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false" class="text-gray-200 focus:outline-none p-2 rounded hover:bg-gray-700 transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
@@ -37,7 +36,7 @@
             <a href="#about" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">关于我</a>
             <a href="#photos" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">照片展览</a>
             <a href="#contact" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">联系我</a>
-        </div>
+             </div>
     </nav>
 
     <header id="home" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden px-4 z-10">
@@ -49,10 +48,14 @@
                 </h1>
             </div>
             <p class="text-lg md:text-2xl text-gray-300 mb-8 fade-in-up">北京市第二外国语学院 学生 | 热爱创造与探索</p>
-            <a href="#about" class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full border-2 transition duration-300 fade-in-up" style="animation-delay: 4s;">
-                了解更多 &darr;
+
+            <a href="blog.html" class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full border-2 transition duration-300 fade-in-up mb-2" style="animation-delay: 4s;">
+                进入博客
             </a>
-        </div>
+            <a href="#about" class="block text-sm text-gray-400 mt-3 hover:text-gray-200 transition-colors duration-300 fade-in-up" style="animation-delay: 4.2s;">
+                下滑了解更多 &darr;
+            </a>
+            </div>
     </header>
 
     <section id="about" class="py-20 md:py-32 bg-[var(--sky-mid)] bg-opacity-80 backdrop-blur-sm relative z-10">
@@ -99,7 +102,7 @@
             </div>
 
             <p class="text-center text-sm text-gray-400 mt-8 reveal" style="transition-delay: 0.3s;">
-                其实是主包丢AI创作出来的逆天二刺螈
+                其实是主包丢AI创作出来的卡哇伊二刺螈
             </p>
 
         </div>
