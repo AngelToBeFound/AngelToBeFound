@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么要做这个个人网站？ - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- Base Styles & Theme Variables (Same as blog.html) --- */
+        :root {
+            /* ... Theme variables ... */
+             --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
+        }
+        body.light-theme {
+            /* ... Light theme overrides ... */
+             --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+        }
+        body {
+            background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative;
+        }
+        body::before { /* Gradient */
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease;
+        }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { /* Particles */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        .glass-effect { /* Glass */
+            background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #blog-header { /* Header */
+            position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { /* Gradient Text */
+            background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } /* Scrollbar */
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); }
+        ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+
+        /* Styles for Post Content Area */
+        .post-content-area {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem; /* p-8 */
+            margin-top: -2rem; /* Overlap header slightly visually */
+            position: relative;
+            z-index: 10; /* Above background effects */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .post-content-area {
+                padding: 3rem; /* p-12 */
+                 margin-top: -3rem;
+            }
+        }
+        /* Basic styling for content within the post */
+        .post-content-area h1, .post-content-area h2, .post-content-area h3 {
+            color: var(--text-primary);
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+            font-weight: 600;
+        }
+         .post-content-area h1 { font-size: 2.25rem; line-height: 2.5rem; /* text-4xl */ }
+         .post-content-area h2 { font-size: 1.875rem; line-height: 2.25rem; /* text-3xl */ }
+         .post-content-area h3 { font-size: 1.5rem; line-height: 2rem; /* text-2xl */ }
+        .post-content-area p {
+            color: var(--text-secondary);
+            line-height: 1.75; /* leading-relaxed */
+            margin-bottom: 1.25em;
+        }
+        .post-content-area a {
+            color: var(--text-accent);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+        }
+        .post-content-area a:hover {
+            opacity: 0.8;
+        }
+        .post-content-area ul, .post-content-area ol {
+             margin-left: 1.5rem;
+             margin-bottom: 1.25em;
+             color: var(--text-secondary);
+        }
+         .post-content-area li { margin-bottom: 0.5em; }
+         .post-content-area ul { list-style: disc; }
+         .post-content-area ol { list-style: decimal; }
+         .post-content-area blockquote {
+             border-left: 4px solid var(--text-accent);
+             padding-left: 1rem;
+             margin-left: 0;
+             margin-right: 0;
+             margin-bottom: 1.25em;
+             font-style: italic;
+             color: var(--text-secondary);
+         }
+         .post-content-area code {
+             background-color: var(--bg-glass);
+             padding: 0.2em 0.4em;
+             border-radius: 0.25rem;
+             font-size: 0.9em;
+             color: var(--text-primary);
+         }
+          .post-content-area pre {
+             background-color: var(--bg-glass);
+             padding: 1em;
+             border-radius: 0.5rem;
+             overflow-x: auto;
+             margin-bottom: 1.25em;
+         }
+         .post-content-area pre code {
+             background-color: transparent;
+             padding: 0;
+             border-radius: 0;
+             font-size: 0.9em;
+         }
+
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="blog_title">麦青春的博客</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 relative z-10">
+         <div class="mb-6 md:mb-8">
+            <a href="blog.html" class="text-sm text-[var(--text-accent)] hover:underline">
+                &larr; <span data-translate-key="back_to_blog">返回博客列表</span>
+            </a>
+        </div>
+
+        <article class="post-content-area glass-effect">
+            <header class="mb-8 md:mb-12 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gradient" data-translate-key="post_why_title">
+                    为什么要做这个个人网站？
+                </h1>
+                <p class="text-sm text-[var(--text-secondary)]">
+                    <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="life_category">生活</a>
+                    <span class="mx-2">|</span>
+                    <span data-translate-key="posted_on">发布于</span>: <time datetime="2025-04-20">2025年4月20日</time>
+                    </p>
+            </header>
+
+            <div class="post-body">
+                <p class="text-lg font-semibold text-[var(--text-primary)]" data-translate-key="placeholder_heading">
+                    [ 在这里开始写你的正文内容... ]
+                </p>
+                <p data-translate-key="placeholder_para1">
+                    这是一个占位符段落。你可以删除这些内容，然后开始写作。介绍一下你创建这个网站的初衷、目标，或者任何你想分享的想法。
+                </p>
+                <p data-translate-key="placeholder_para2">
+                    可以随意使用 Markdown 语法或者直接写 HTML。例如，你可以添加列表：
+                </p>
+                <ul>
+                    <li data-translate-key="placeholder_li1">记录学习过程</li>
+                    <li data-translate-key="placeholder_li2">分享个人项目</li>
+                    <li data-translate-key="placeholder_li3">表达想法和观点</li>
+                </ul>
+                <h2 data-translate-key="placeholder_h2">一个二级标题示例</h2>
+                <p data-translate-key="placeholder_para3">
+                    继续在这里添加更多内容。可以插入图片、代码片段等。
+                </p>
+                <blockquote>
+                    <p data-translate-key="placeholder_quote">
+                        这是一个引用的示例。—— MaxCaulfield
+                    </p>
+                </blockquote>
+                <pre><code data-translate-key="placeholder_code">console.log('Hello, Blog!');</code></pre>
+                <p data-translate-key="placeholder_para4">
+                    祝你写作愉快！完成后记得保存文件。
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Translations (Specific for this post page) ---
+        const translations = {
+            'en': {
+                'blog_title': "MaxCaulfield's Blog", 'category': "Category", 'life_category': "Life", 'posted_on': "Posted on", 'author': "Author",
+                'post_why_title': "Why Build This Personal Website?",
+                'back_to_blog': "Back to Blog List",
+                'placeholder_heading': "[ Start writing your content here... ]",
+                'placeholder_para1': "This is a placeholder paragraph. You can delete this content and start writing. Introduce the reasons and goals for creating this website, or any thoughts you want to share.",
+                'placeholder_para2': "Feel free to use Markdown syntax or write HTML directly. For example, you can add lists:",
+                'placeholder_li1': "Document learning process",
+                'placeholder_li2': "Share personal projects",
+                'placeholder_li3': "Express ideas and opinions",
+                'placeholder_h2': "Example Level 2 Heading",
+                'placeholder_para3': "Continue adding more content here. You can insert images, code snippets, etc.",
+                'placeholder_quote': "This is an example blockquote. — MaxCaulfield",
+                'placeholder_code': "console.log('Hello, Blog!');",
+                'placeholder_para4': "Happy writing! Remember to save the file when you're done.",
+                'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN"
+            },
+            'zh-CN': {
+                 'blog_title': "麦青春的博客", 'category': "分类", 'life_category': "生活", 'posted_on': "发布于", 'author': "作者",
+                 'post_why_title': "为什么要做这个个人网站？",
+                 'back_to_blog': "返回博客列表",
+                 'placeholder_heading': "[ 在这里开始写你的正文内容... ]",
+                 'placeholder_para1': "这是一个占位符段落。你可以删除这些内容，然后开始写作。介绍一下你创建这个网站的初衷、目标，或者任何你想分享的想法。",
+                 'placeholder_para2': "可以随意使用 Markdown 语法或者直接写 HTML。例如，你可以添加列表：",
+                 'placeholder_li1': "记录学习过程",
+                 'placeholder_li2': "分享个人项目",
+                 'placeholder_li3': "表达想法和观点",
+                 'placeholder_h2': "一个二级标题示例",
+                 'placeholder_para3': "继续在这里添加更多内容。可以插入图片、代码片段等。",
+                 'placeholder_quote': "这是一个引用的示例。—— MaxCaulfield",
+                 'placeholder_code': "console.log('Hello, Blog!');",
+                 'placeholder_para4': "祝你写作愉快！完成后记得保存文件。",
+                 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简"
+             },
+             'zh-TW': {
+                 'blog_title': "麥青春的部落格", 'category': "分類", 'life_category': "生活", 'posted_on': "發佈於", 'author': "作者",
+                 'post_why_title': "為什麼要做這個個人網站？",
+                 'back_to_blog': "返回部落格列表",
+                 'placeholder_heading': "[ 在這裡開始寫你的正文內容... ]",
+                 'placeholder_para1': "這是一個佔位符段落。你可以刪除這些內容，然後開始寫作。介紹一下你創建這個網站的初衷、目標，或者任何你想分享的想法。",
+                 'placeholder_para2': "可以隨意使用 Markdown 語法或者直接寫 HTML。例如，你可以添加列表：",
+                 'placeholder_li1': "記錄學習過程",
+                 'placeholder_li2': "分享個人專案",
+                 'placeholder_li3': "表達想法和觀點",
+                 'placeholder_h2': "一個二級標題範例",
+                 'placeholder_para3': "繼續在這裡添加更多內容。可以插入圖片、程式碼片段等。",
+                 'placeholder_quote': "這是一個引用的範例。—— MaxCaulfield",
+                 'placeholder_code': "console.log('Hello, Blog!');",
+                 'placeholder_para4': "祝你寫作愉快！完成後記得保存檔案。",
+                 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁"
+             }
+        };
+
+        // --- Theme Switching Logic (Same as blog.html) ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = themeToggle.querySelector('.fa-sun');
+        const moonIcon = themeToggle.querySelector('.fa-moon');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        function applyTheme(theme) { /* ... */ } applyTheme(currentTheme); themeToggle.addEventListener('click', () => { /* ... */ });
+        function applyTheme(theme) { if (theme === 'light') { document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme'); sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); } else { document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme'); sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); } } applyTheme(currentTheme); themeToggle.addEventListener('click', () => { const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light'; applyTheme(newTheme); localStorage.setItem('theme', newTheme); });
+
+
+        // --- Language Switching Logic (Same as blog.html) ---
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+        function applyTranslations(lang) { /* ... */ } applyTranslations(currentLang); langToggle.addEventListener('click', (e) => { /* ... */ }); document.addEventListener('click', (e) => { /* ... */ }); langLinks.forEach(link => { link.addEventListener('click', (e) => { /* ... */ }); });
+        function applyTranslations(lang) { if (!translations[lang]) return; document.documentElement.lang = lang.split('-')[0]; const elements = document.querySelectorAll('[data-translate-key]'); elements.forEach(el => { const key = el.getAttribute('data-translate-key'); if (translations[lang][key] !== undefined) { if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; } else if (el.title) { el.title = translations[lang][key]; } else { el.textContent = translations[lang][key]; } } else { console.warn(`Translation key "${key}" not found for language "${lang}"`); } }); if(translations[lang]['current_lang_display']) { currentLangSpan.textContent = translations[lang]['current_lang_display']; } else { currentLangSpan.textContent = lang.split('-')[0].toUpperCase(); } } applyTranslations(currentLang); langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); }); document.addEventListener('click', (e) => { if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) { langDropdown.classList.add('hidden'); } }); langLinks.forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const selectedLang = link.getAttribute('data-lang'); if (selectedLang !== currentLang) { currentLang = selectedLang; localStorage.setItem('language', currentLang); applyTranslations(currentLang); } langDropdown.classList.add('hidden'); }); });
+
+
+         // --- Header Scroll Effect (Same as blog.html) ---
+         const header = document.getElementById('blog-header');
+         window.addEventListener('scroll', () => { /* ... */ });
+         window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+
+
+         // --- tsParticles Initialization (Same as blog.html) ---
+         if (typeof tsParticles !== 'undefined') { /* ... */ } else { console.warn("tsParticles library not found."); }
+         if (typeof tsParticles !== 'undefined') { tsParticles.load("tsparticles", { fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 } }).catch(error => { console.error("Error loading tsParticles:", error); }); } else { console.warn("tsParticles library not found."); }
+
+    </script>
+
+</body>
+</html>
