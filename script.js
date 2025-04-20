@@ -33,17 +33,23 @@ window.addEventListener('scroll', updateActiveLink);
 // DOMContentLoaded listener at the end
 
 
-// --- tsParticles Initialization (Interaction Re-enabled, Faster Emitter) ---
+// --- tsParticles Initialization (Tuned Density, Interaction, and Emitter Speed) ---
 if (typeof tsParticles !== 'undefined') {
     tsParticles.load("tsparticles", {
         fpsLimit: 60,
-        // particles: Configures the main background (e.g., linked circles)
+        // particles: Configures the main background (LINKED particles)
         particles: {
-            number: { value: 50, density: { enable: true, area: 800 } },
+            number: {
+                value: 35, // *** Reduced value for lower density ***
+                density: { enable: true, area: 800 }
+            },
             color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF"] },
-            shape: { type: "circle" },
+            shape: {
+                type: ["circle", "star"] // *** Allow circle or star for linked/pushed particles ***
+            },
             opacity: { value: { min: 0.1, max: 0.4 }, animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false } },
             size: { value: { min: 1, max: 3 } },
+            // Links ENABLED for this background layer
             links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.15, width: 1 },
             collisions: { enable: false },
             move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.4, straight: false }
@@ -51,27 +57,26 @@ if (typeof tsParticles !== 'undefined') {
         // interactivity: Applies to all particles unless specified by group
         interactivity: {
             events: {
-                onHover: {
-                    enable: true, // Hover interaction remains enabled
-                    mode: "repulse"
-                 },
+                onHover: { enable: true, mode: "repulse" },
                 onClick: {
-                    enable: true, // *** Re-enabled click interaction ***
-                    mode: "push"
+                    enable: true, // *** Click interaction IS enabled ***
+                    mode: "push"   // *** Mode is push (adds particles based on main config) ***
                 },
                 resize: true
             },
             modes: {
                 repulse: { distance: 80, duration: 0.4 },
-                push: { quantity: 3 } // Keep push quantity (adjust if needed)
+                push: {
+                    quantity: 3 // Adds 3 linked particles on click (adjust if needed)
+                }
             }
         },
-        // Emitter for Scattered Unlinked Stars
+        // Emitter for Scattered UNLINKED Stars
         emitters: {
             direction: "none",
             rate: {
                 quantity: 1,
-                delay: 0.2 // *** Decreased delay for faster generation ***
+                delay: 0.05 // *** Significantly decreased delay for much faster generation ***
             },
             size: { width: 100, height: 100, mode: "percent" },
             position: { x: 50, y: 50 },
@@ -81,7 +86,7 @@ if (typeof tsParticles !== 'undefined') {
                 size: { value: { min: 1, max: 3 } },
                 color: { value: ["#FFFFFF", "#86efac", "#67e8f9", "#a7c7e7"] },
                 opacity: { value: { min: 0.3, max: 0.8 }, animation: { enable: true, speed: 0.9, minimumValue: 0.3 } },
-                links: { enable: false }, // Keep links disabled for emitted stars
+                links: { enable: false }, // Links remain disabled for emitted stars
                 move: { speed: 0.8, decay: 0.05, direction: "none", straight: false, random: true, outModes: { default: "destroy" } },
                 life: { duration: { min: 5, max: 10 }, count: 1 }
             }
@@ -89,7 +94,7 @@ if (typeof tsParticles !== 'undefined') {
         detectRetina: true,
         background: { opacity: 0 }
     }).then(container => {
-        console.log("tsParticles loaded (linked bg + faster stars + interaction)"); // Updated log
+        console.log("tsParticles loaded (tuned linked density, click push, faster stars)"); // Updated log
     }).catch(error => {
         console.error("Error loading tsParticles:", error);
     });
