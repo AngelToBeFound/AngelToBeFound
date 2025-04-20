@@ -78,9 +78,9 @@ const translations = {
 // --- Wait for DOM to be fully loaded ---
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Theme Switching Logic (REMOVED) ---
-    // const themeToggle = document.getElementById('theme-toggle');
-    // ... (rest of theme logic removed)
+    // --- Theme Switching Logic REMOVED ---
+    // No theme toggle button or logic needed for permanent dark theme.
+    // Ensure the <body> tag has the 'dark-theme' class by default in HTML.
 
     // --- Language Switching Logic ---
     const langToggle = document.getElementById('lang-toggle');
@@ -92,41 +92,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (langToggle && langDropdown && currentLangSpan) {
         const langLinks = langDropdown.querySelectorAll('a[data-lang]');
-        let currentLang = localStorage.getItem('language') || 'zh-CN';
+        // Detect browser language or default to 'zh-CN'
+        let currentLang = localStorage.getItem('language') || navigator.language || 'zh-CN';
+        // Simplify language code if needed (e.g., 'zh-Hans-CN' -> 'zh-CN')
+        if (currentLang.length > 5) {
+            currentLang = currentLang.slice(0, 5);
+        }
+        // Fallback if detected language isn't supported
+        if (!translations[currentLang]) {
+            currentLang = 'zh-CN';
+        }
+
 
         function applyTranslations(lang) {
             if (!translations[lang]) {
                 console.warn(`Translations for language "${lang}" not found.`);
                 return;
             }
+            // Set HTML lang attribute
             document.documentElement.lang = lang.startsWith('zh') ? lang : lang.split('-')[0];
             const elements = document.querySelectorAll('[data-translate-key]');
             elements.forEach(el => {
                 const key = el.getAttribute('data-translate-key');
                 if (translations[lang][key] !== undefined) {
+                    // Handle different element types
                     if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
                     else if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; }
                     else if (el.title) { el.title = translations[lang][key]; }
                     else { el.textContent = translations[lang][key]; }
                 } else {
+                    // Warn if a key is missing for the selected language
                     console.warn(`Translation key "${key}" not found for language "${lang}"`);
                 }
             });
+            // Update the language display text in the button
              if(translations[lang]['current_lang_display']) {
                 currentLangSpan.textContent = translations[lang]['current_lang_display'];
              } else {
+                 // Fallback to uppercase language code if display text is missing
                  currentLangSpan.textContent = lang.split('-')[0].toUpperCase();
              }
         }
 
+        // Apply initial translations on page load
         applyTranslations(currentLang);
 
+        // Toggle dropdown visibility on button click
         langToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // Prevent click from closing the dropdown immediately
             langDropdown.classList.toggle('show');
             langDropdown.classList.toggle('hidden');
         });
 
+        // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
             if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
                 langDropdown.classList.add('hidden');
@@ -134,16 +152,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Handle language selection from dropdown
         langLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
+                e.preventDefault(); // Prevent default link behavior
                 const selectedLang = link.getAttribute('data-lang');
                 if (selectedLang !== currentLang) {
                     currentLang = selectedLang;
-                    localStorage.setItem('language', currentLang);
+                    localStorage.setItem('language', currentLang); // Save preference
                     applyTranslations(currentLang);
-                    setTimeout(updateActiveLink, 50); // Update active link after text change
+                    // Update active nav link after text content might change width
+                    setTimeout(updateActiveLink, 50);
                 }
+                // Hide dropdown after selection
                 langDropdown.classList.add('hidden');
                 langDropdown.classList.remove('show');
             });
@@ -158,26 +179,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.getElementById('navbar');
     if (nav) {
         window.addEventListener('scroll', () => {
+            // Add 'scrolled' class when scrolled down, remove otherwise
             nav.classList.toggle('scrolled', window.scrollY > 30);
         });
     }
 
     // --- Active Navigation Link Highlighting ---
-    const sections = document.querySelectorAll('section[id], header[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const mobileNavLinks = document.querySelectorAll('.mobile-menu-item');
+    const sections = document.querySelectorAll('section[id], header[id]'); // Sections to track
+    const navLinks = document.querySelectorAll('.nav-link'); // Desktop nav links
+    const mobileNavLinks = document.querySelectorAll('.mobile-menu-item'); // Mobile nav links
 
     if (sections.length > 0 && (navLinks.length > 0 || mobileNavLinks.length > 0)) {
-         updateActiveLink = () => { // Assign actual function
-            let currentSectionId = 'home';
+         // Define the function to update active links
+         updateActiveLink = () => {
+            let currentSectionId = 'home'; // Default to home
             let minDistance = Infinity;
 
             sections.forEach(section => {
                 const rect = section.getBoundingClientRect();
                 const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-                const isInViewport = !(rect.bottom < 50 || rect.top - viewHeight >= -50);
+                // Check if section is roughly in the viewport (adjust offset as needed)
+                const isInViewport = !(rect.bottom < 100 || rect.top - viewHeight >= -100);
 
                 if (isInViewport) {
+                    // Find the section closest to the top of the viewport (adjust offset)
                     const distanceToTop = Math.abs(rect.top - 100);
                     if (distanceToTop < minDistance) {
                         minDistance = distanceToTop;
@@ -186,54 +211,142 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
+            // Update desktop links
             navLinks.forEach(link => {
                 link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
             });
+            // Update mobile links
             mobileNavLinks.forEach(link => {
                  link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
             });
         };
-        updateActiveLink(); // Initial call
-        window.addEventListener('scroll', updateActiveLink); // Update on scroll
+        updateActiveLink(); // Call initially to set the state
+        window.addEventListener('scroll', updateActiveLink); // Update on scroll events
     }
 
 
-    // --- tsParticles Initialization ---
+    // --- tsParticles Initialization (Updated Configuration) ---
     if (typeof tsParticles !== 'undefined') {
         tsParticles.load("tsparticles", {
-            fpsLimit: 60,
+            fpsLimit: 60, // Limit FPS for performance
             particles: {
-                number: { value: 70, density: { enable: false } },
-                color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] },
-                shape: { type: ["circle", "star"] },
-                opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } },
-                size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } },
-                links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false },
-                collisions: { enable: false },
-                move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } }
+                number: {
+                    value: 80, // Number of particles
+                    density: {
+                        enable: true, // Enable density calculation
+                        value_area: 800 // Area for density calculation
+                    }
+                },
+                color: {
+                    // Array of possible colors for particles
+                    value: ["#ffffff", "#a7c7e7", "#60a5fa", "#ADD8E6", "#F0F8FF", "#E0FFFF"]
+                },
+                shape: {
+                    type: "star", // Shape of the particles
+                },
+                opacity: {
+                    value: { min: 0.2, max: 0.8 }, // Random opacity between 0.2 and 0.8
+                    animation: { // Animate opacity
+                        enable: true,
+                        speed: 1,
+                        minimumValue: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: { min: 0.5, max: 2.5 }, // Random size between 0.5 and 2.5
+                    animation: { // Animate size (subtle pulsing)
+                        enable: true,
+                        speed: 2,
+                        minimumValue: 0.5,
+                        sync: false
+                    }
+                },
+                links: {
+                    enable: true, // Enable links between particles
+                    distance: 150, // Max distance to draw a link
+                    color: "random", // Use random colors from the particle color array for links
+                    opacity: 0.4, // Link opacity
+                    width: 1, // Link width
+                    warp: false // Don't warp links at edges
+                },
+                collisions: {
+                    enable: false // Disable particle collisions
+                },
+                move: {
+                    enable: true, // Enable particle movement
+                    direction: "none", // Random direction
+                    outModes: {
+                        default: "out" // Particles disappear when hitting edges
+                    },
+                    random: true, // Random movement
+                    speed: 0.6, // Movement speed
+                    straight: false, // Non-straight paths
+                    attract: { // No attraction between particles
+                        enable: false
+                    }
+                }
             },
             interactivity: {
-                events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true },
-                modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 } }
+                detect_on: "canvas", // Detect interactions on the canvas
+                events: {
+                    onHover: {
+                        enable: true, // Enable hover effect
+                        mode: "repulse" // Repulse particles on hover
+                    },
+                    onClick: {
+                        enable: true, // Enable click effect
+                        mode: "push" // Push particles on click
+                    },
+                    resize: true // Re-adjust on window resize
+                },
+                modes: {
+                    repulse: {
+                        distance: 100, // Repulsion distance
+                        duration: 0.4, // Repulsion duration
+                        speed: 1 // Repulsion speed
+                    },
+                    push: {
+                        quantity: 4 // Number of particles to push on click
+                    }
+                }
             },
-            detectRetina: true,
-            background: { opacity: 0 }
-        }).catch(error => { console.error("Error loading tsParticles:", error); });
+            detectRetina: true, // Enable retina display support
+            background: {
+                opacity: 0 // Make the tsParticles canvas background transparent
+            }
+        }).catch(error => {
+            // Log error if tsParticles fails to load
+            console.error("Error loading tsParticles:", error);
+        });
     } else {
+        // Warn if the library wasn't found
         console.warn("tsParticles library not found.");
     }
 
 
     // --- Scroll Reveal Animation ---
     const revealElements = document.querySelectorAll('.reveal');
+    // Check if IntersectionObserver is supported
     if ('IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+                // If element is intersecting (visible)
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible'); // Add 'visible' class to trigger animation
+                    // Optional: Stop observing once visible to save resources
+                    // revealObserver.unobserve(entry.target);
+                }
             });
-        }, { threshold: 0.1 });
-        revealElements.forEach(el => { revealObserver.observe(el); });
+        }, {
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        });
+        // Observe each reveal element
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
     } else {
+        // Fallback for older browsers: make all elements visible immediately
         revealElements.forEach(el => el.classList.add('visible'));
     }
 
@@ -241,16 +354,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Hero Content Parallax Effect ---
     const heroContent = document.getElementById('hero-content');
     if (heroContent) {
-        let rafId = null; let mouseX = 0; let mouseY = 0; const factor = 0.01;
+        let rafId = null; // RequestAnimationFrame ID
+        let mouseX = 0;
+        let mouseY = 0;
+        const factor = 0.01; // Movement intensity factor
+
+        // Update mouse coordinates on mouse move
         document.addEventListener('mousemove', (e) => {
-            const centerX = window.innerWidth / 2; const centerY = window.innerHeight / 2;
-            mouseX = e.clientX - centerX; mouseY = e.clientY - centerY;
-            if (!rafId) { rafId = requestAnimationFrame(updateHeroPosition); }
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            mouseX = e.clientX - centerX;
+            mouseY = e.clientY - centerY;
+            // Request animation frame if not already requested
+            if (!rafId) {
+                rafId = requestAnimationFrame(updateHeroPosition);
+            }
         });
+
+        // Function to update hero position based on mouse coordinates
         function updateHeroPosition() {
-            const moveX = mouseX * factor; const moveY = mouseY * factor;
+            const moveX = mouseX * factor;
+            const moveY = mouseY * factor;
+            // Apply 3D transform for smoother animation
             heroContent.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
-            rafId = null;
+            rafId = null; // Reset RAF ID
         }
     }
 
@@ -259,14 +386,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     if (mobileMenuButton && mobileMenu) {
+        // Toggle menu visibility on button click
         mobileMenuButton.addEventListener('click', () => {
             const isHidden = mobileMenu.classList.toggle('hidden');
+            // Update ARIA attribute for accessibility
             mobileMenuButton.setAttribute('aria-expanded', !isHidden);
         });
+        // Close menu when a link inside it is clicked
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
+                // Update active link highlight after closing menu
                 setTimeout(updateActiveLink, 50);
             });
         });
@@ -276,16 +407,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxOverlay = document.getElementById('lightbox-overlay');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxClose = document.getElementById('lightbox-close');
-    const photoItems = document.querySelectorAll('.photo-item img');
+    const photoItems = document.querySelectorAll('.photo-item img'); // Select images within photo items
+
     if (lightboxOverlay && lightboxImg && lightboxClose && photoItems.length > 0) {
-        const openLightbox = (imgSrc, imgAlt) => { lightboxImg.setAttribute('src', imgSrc); lightboxImg.setAttribute('alt', imgAlt || 'Enlarged photo'); lightboxOverlay.classList.remove('hidden'); setTimeout(() => lightboxOverlay.classList.add('visible'), 10); document.body.style.overflow = 'hidden'; };
-        const closeLightbox = () => { lightboxOverlay.classList.remove('visible'); setTimeout(() => { lightboxOverlay.classList.add('hidden'); lightboxImg.setAttribute('src', ''); lightboxImg.setAttribute('alt', ''); document.body.style.overflow = ''; }, 350); };
-        photoItems.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.getAttribute('src'), img.getAttribute('alt')); }); });
-        lightboxClose.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
-        lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) { closeLightbox(); } });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightboxOverlay.classList.contains('visible')) { closeLightbox(); } });
+        // Function to open the lightbox
+        const openLightbox = (imgSrc, imgAlt) => {
+            lightboxImg.setAttribute('src', imgSrc);
+            lightboxImg.setAttribute('alt', imgAlt || 'Enlarged photo');
+            lightboxOverlay.classList.remove('hidden'); // Make overlay block-level
+            // Use setTimeout to allow CSS transition for opacity
+            setTimeout(() => lightboxOverlay.classList.add('visible'), 10);
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        };
+
+        // Function to close the lightbox
+        const closeLightbox = () => {
+            lightboxOverlay.classList.remove('visible'); // Start fade-out transition
+            // Wait for transition to finish before hiding and resetting
+            setTimeout(() => {
+                lightboxOverlay.classList.add('hidden');
+                lightboxImg.setAttribute('src', ''); // Clear image source
+                lightboxImg.setAttribute('alt', '');
+                document.body.style.overflow = ''; // Restore background scrolling
+            }, 350); // Match transition duration in CSS
+        };
+
+        // Add click listener to each photo image
+        photoItems.forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent triggering clicks on parent elements
+                openLightbox(img.getAttribute('src'), img.getAttribute('alt'));
+            });
+        });
+
+        // Add click listener to close button
+        lightboxClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeLightbox();
+        });
+
+        // Add click listener to overlay (close when clicking outside the image)
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) { // Check if click was directly on the overlay
+                closeLightbox();
+            }
+        });
+
+        // Add keyboard listener (close on Escape key)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightboxOverlay.classList.contains('visible')) {
+                closeLightbox();
+            }
+        });
     } else {
-        console.warn("Lightbox elements not found.");
+        console.warn("Lightbox elements not found or no photo items present.");
     }
 
 }); // End DOMContentLoaded
