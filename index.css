@@ -15,21 +15,21 @@
     --skill-tag-bg-dark: rgba(30, 41, 59, 0.7); /* Default tag bg */
     --skill-tag-text-dark: #cbd5e1; /* Default tag text */
 
-    /* === MODIFICATION START: Re-Adjusted Light Theme Colors === */
-    /* --- Light Theme Colors (Re-Adjusted for better contrast/separation) --- */
-    --bg-primary-light: #f8fafc; /* slate-50 (Very light base) */
-    --bg-secondary-light: rgba(255, 255, 255, 0.9); /* white with higher opacity (Section BG) */
-    --bg-glass-light: rgba(241, 245, 249, 0.85); /* slate-100 with higher opacity (Glass elements) */
-    --bg-footer-light: #f1f5f9; /* slate-100 (Footer BG) */
-    --text-primary-light: #1e293b; /* slate-800 (Dark text) */
-    --text-secondary-light: #475569; /* slate-600 (Medium gray text - reverted) */
-    --text-accent-light: #3b82f6; /* blue-500 (Brighter blue accent - reverted) */
+    /* === MODIFICATION START: 3rd Attempt Light Theme Colors === */
+    /* --- Light Theme Colors (Focus on Contrast) --- */
+    --bg-primary-light: #f8fafc; /* slate-50 (Keep very light base) */
+    --bg-secondary-light: #ffffff; /* white (Opaque white for section BG) */
+    --bg-glass-light: rgba(255, 255, 255, 0.75); /* white with blur */
+    --bg-footer-light: #f1f5f9; /* slate-100 (Slightly darker footer BG) */
+    --text-primary-light: #0f172a; /* slate-900 (Even darker primary text) */
+    --text-secondary-light: #334155; /* slate-700 (Even darker secondary text) */
+    --text-accent-light: #2563eb; /* blue-600 (Deeper blue accent) */
     --text-cta-light: #FFFFFF; /* White text on blue button */
-    --border-color-light: rgba(203, 213, 225, 0.8); /* slate-300 more opaque (Clearer border) */
+    --border-color-light: rgba(156, 163, 175, 0.7); /* gray-400 more opaque (Stronger border) */
     --glow-color-light: rgba(59, 130, 246, 0.6); /* blue-500 */
-    --accent-color-light: #3b82f6; /* blue-500 (Brighter blue button - reverted) */
-    --skill-tag-bg-light: rgba(226, 232, 240, 0.8); /* slate-200 */
-    --skill-tag-text-light: #334155; /* slate-700 */
+    --accent-color-light: #2563eb; /* blue-600 (Deeper blue button) */
+    --skill-tag-bg-light: rgba(229, 231, 235, 0.8); /* gray-200 */
+    --skill-tag-text-light: #1f2937; /* gray-800 */
     /* === MODIFICATION END === */
 
     /* --- Default Theme Assignment (Dark) --- */
@@ -90,7 +90,7 @@ body::before {
     transition: opacity 0.3s ease;
 }
 body.light-theme::before {
-    opacity: 0.2; /* Make gradient even fainter in light mode */
+    opacity: 0.15; /* Make gradient very faint in light mode */
 }
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
@@ -114,7 +114,10 @@ body.light-theme::before {
     border: 1px solid var(--border-color);
     border-radius: 0.75rem; /* rounded-xl */
     transition: background-color 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+}
+body.light-theme .glass-effect {
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); /* Slightly stronger shadow in light mode */
 }
 
 
@@ -126,80 +129,63 @@ body.light-theme::before {
 #navbar.scrolled {
     background-color: var(--bg-glass);
     backdrop-filter: blur(16px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
     border-bottom-color: var(--border-color);
 }
 .nav-link {
     position: relative;
     transition: color 0.3s ease;
     color: var(--text-accent);
-    padding-bottom: 8px; /* Add padding for the underline */
+    padding-bottom: 8px;
 }
 .nav-link::after {
     content: ''; position: absolute; width: 0; height: 2px;
-    bottom: 0px; /* Position underline correctly */
-    left: 50%; transform: translateX(-50%);
+    bottom: 0px; left: 50%; transform: translateX(-50%);
     background-color: var(--glow-color);
     transition: width 0.3s ease;
     box-shadow: 0 0 8px var(--glow-color);
 }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-.nav-link:hover, .nav-link.active { color: var(--text-primary); } /* Hover/active color */
+.nav-link:hover, .nav-link.active { color: var(--text-primary); }
 
 /* --- Theme/Lang Toggle Buttons --- */
 .theme-lang-button {
-    padding: 0.5rem; /* p-2 */
-    border-radius: 9999px; /* rounded-full */
+    padding: 0.5rem; border-radius: 9999px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: var(--text-secondary);
-    background-color: transparent;
+    color: var(--text-secondary); background-color: transparent;
 }
 .theme-lang-button:hover {
-    background-color: var(--bg-glass);
-    color: var(--text-primary);
+    background-color: var(--bg-glass); color: var(--text-primary);
 }
 /* Language Dropdown */
 .lang-dropdown {
-    position: absolute;
-    right: 0;
-    margin-top: 0.5rem; /* mt-2 */
-    width: 8rem; /* w-32 */
-    border-radius: 0.375rem; /* rounded-md */
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
-    display: none; /* hidden */
+    position: absolute; right: 0; margin-top: 0.5rem; width: 8rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    display: none;
     /* Glass effect applied via class */
 }
-.lang-dropdown.show { /* Use 'show' class instead of toggling 'hidden' directly */
-    display: block;
-}
+.lang-dropdown.show { display: block; }
 .lang-dropdown-item {
-    display: block;
-    padding: 0.5rem 1rem; /* px-4 py-2 */
-    font-size: 0.875rem; /* text-sm */
+    display: block; padding: 0.5rem 1rem; font-size: 0.875rem;
     color: var(--text-secondary);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 .lang-dropdown-item:hover {
-    background-color: var(--bg-glass);
-    color: var(--text-primary);
+    background-color: var(--bg-glass); color: var(--text-primary);
 }
 
 /* Mobile Menu */
 .mobile-menu {
-    /* Glass effect applied via class */
-    background-color: var(--bg-glass); /* Ensure background for mobile */
-    backdrop-filter: blur(16px);
+    background-color: var(--bg-glass); backdrop-filter: blur(16px);
 }
 .mobile-menu-item {
-    display: block;
-    padding: 0.75rem 1rem; /* py-3 px-4 */
-    font-size: 0.875rem; /* text-sm */
+    display: block; padding: 0.75rem 1rem; font-size: 0.875rem;
     color: var(--text-accent);
     transition: background-color 0.15s ease, color 0.15s ease;
 }
-.mobile-menu-item:hover, .mobile-menu-item.active { /* Add active state style */
-    color: var(--text-primary);
-    background-color: rgba(127, 127, 127, 0.1); /* Subtle hover */
+.mobile-menu-item:hover, .mobile-menu-item.active {
+    color: var(--text-primary); background-color: rgba(127, 127, 127, 0.1);
 }
 
 
@@ -223,19 +209,19 @@ body.light-theme::before {
 .cta-button {
     position: relative; overflow: hidden; z-index: 1;
     transition: all 0.3s var(--ease-out-smooth, ease-out);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slightly reduced shadow */
     background-color: var(--accent-color);
     border-color: var(--accent-color);
     color: var(--text-cta);
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    border-width: 2px;
-    font-weight: 600;
-    display: inline-block;
+    padding: 0.75rem 2rem; border-radius: 9999px; border-width: 2px;
+    font-weight: 600; display: inline-block;
+}
+body.light-theme .cta-button {
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme button */
 }
 .cta-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 0 15px var(--glow-color);
     background-color: transparent;
     border-color: var(--glow-color);
     color: var(--text-primary);
@@ -248,20 +234,12 @@ body.light-theme::before {
     transition: background-color 0.3s ease;
 }
 .section-title {
-    font-size: 1.875rem; /* text-3xl */
-    line-height: 2.25rem;
-    font-weight: 700; /* font-bold */
-    text-align: center;
-    margin-bottom: 3rem; /* mb-12 */
-    color: var(--text-primary);
-    transition: color 0.3s ease;
+    font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;
+    text-align: center; margin-bottom: 3rem;
+    color: var(--text-primary); transition: color 0.3s ease;
 }
 @media (min-width: 768px) {
-    .section-title {
-        font-size: 2.25rem; /* text-4xl */
-        line-height: 2.5rem;
-        margin-bottom: 4rem; /* mb-16 */
-    }
+    .section-title { font-size: 2.25rem; line-height: 2.5rem; margin-bottom: 4rem; }
 }
 
 /* === ADDED: Section Divider Lines === */
@@ -274,87 +252,70 @@ body.light-theme::before {
 
 /* --- About Section --- */
 .skill-tag {
-    font-size: 0.75rem; /* text-xs */
-    font-weight: 600; /* font-semibold */
-    padding: 0.25rem 0.75rem; /* px-3 py-1 */
-    border-radius: 9999px; /* rounded-full */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
-    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions */
-    background-color: var(--skill-tag-bg);
-    color: var(--skill-tag-text);
+    font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem;
+    border-radius: 9999px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--skill-tag-bg); color: var(--skill-tag-text);
 }
 /* Specific overrides for unique tag colors (optional) */
 .skill-tag.bg-blue-800 { background-color: #1e40af; color: #dbeafe; }
-body.light-theme .skill-tag.bg-blue-800 { background-color: #bfdbfe; color: #1e3a8a; }
+body.light-theme .skill-tag.bg-blue-800 { background-color: #dbeafe; color: #1e3a8a; } /* Adjusted light theme blue tag */
 .skill-tag.bg-purple-800 { background-color: #581c87; color: #e9d5ff; }
-body.light-theme .skill-tag.bg-purple-800 { background-color: #e9d5ff; color: #581c87; }
+body.light-theme .skill-tag.bg-purple-800 { background-color: #f3e8ff; color: #581c87; } /* Adjusted light theme purple tag */
 .skill-tag.bg-gray-700 { background-color: #374151; color: #f3f4f6; }
-body.light-theme .skill-tag.bg-gray-700 { background-color: #d1d5db; color: #374151; }
+body.light-theme .skill-tag.bg-gray-700 { background-color: #e5e7eb; color: #374151; } /* Adjusted light theme gray tag */
 
-.skill-tag:hover {
-    transform: scale(1.05);
-}
+.skill-tag:hover { transform: scale(1.05); }
 
 /* --- Photos Section --- */
 .photo-item {
     overflow: hidden; position: relative; border-radius: 0.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Reduced shadow */
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     border: 1px solid var(--border-color);
-    background-color: var(--bg-glass);
-    backdrop-filter: blur(2px);
+    background-color: var(--bg-glass); backdrop-filter: blur(2px);
+}
+body.light-theme .photo-item {
+     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Lighter shadow */
 }
 .photo-item:hover {
-     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 15px var(--glow-color);
+     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 15px var(--glow-color); /* Adjusted hover shadow */
      transform: translateY(-5px);
 }
 .photo-img {
     display: block; width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s ease;
-    cursor: zoom-in;
+    transition: transform 0.4s ease; cursor: zoom-in;
 }
-.photo-item:hover .photo-img {
-    transform: scale(1.05);
-}
+.photo-item:hover .photo-img { transform: scale(1.05); }
 
 /* --- Contact Section --- */
 .contact-icon a {
     transition: transform 0.35s ease-out, color 0.3s ease-out;
-    display: inline-block;
-    color: var(--text-accent);
+    display: inline-block; color: var(--text-accent);
 }
 .contact-icon a:hover {
-    transform: scale(1.15) translateY(-3px);
-    color: var(--text-primary);
+    transform: scale(1.15) translateY(-3px); color: var(--text-primary);
 }
 .contact-icon span {
-    transition: opacity 0.3s ease-out;
-    opacity: 0.8;
-    color: var(--text-secondary);
+    transition: opacity 0.3s ease-out; opacity: 0.8; color: var(--text-secondary);
 }
  .contact-icon a:hover span { opacity: 1; }
  .contact-icon-group svg {
-     color: var(--accent-color);
-     transition: color 0.3s ease;
+     color: var(--accent-color); transition: color 0.3s ease;
  }
 
 /* --- Footer --- */
 .footer-bg {
-    background-color: var(--bg-footer);
-    transition: background-color 0.3s ease;
+    background-color: var(--bg-footer); transition: background-color 0.3s ease;
     /* border-top is now handled by the general section rule */
 }
 
 /* --- Scroll Reveal --- */
 .reveal {
-    opacity: 0;
-    transform: translateY(50px) scale(0.98);
+    opacity: 0; transform: translateY(50px) scale(0.98);
     transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
+.reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
 
 /* --- Scrollbar --- */
 ::-webkit-scrollbar { width: 8px; }
