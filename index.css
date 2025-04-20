@@ -15,22 +15,20 @@
     --skill-tag-bg-dark: rgba(30, 41, 59, 0.7); /* Default tag bg */
     --skill-tag-text-dark: #cbd5e1; /* Default tag text */
 
-    /* === MODIFICATION START: Adjusted Light Theme Colors === */
-    /* --- Light Theme Colors (Adjusted for better contrast) --- */
-    --bg-primary-light: #f1f5f9; /* slate-100 (Was slate-50) */
-    --bg-secondary-light: rgba(241, 245, 249, 0.85); /* slate-100 with opacity (Was white) */
-    --bg-glass-light: rgba(226, 232, 240, 0.75); /* slate-200 with opacity (Was slate-100) */
-    --bg-footer-light: #e2e8f0; /* slate-200 (Kept same) */
-    --text-primary-light: #1e293b; /* slate-800 (Kept same - dark text) */
-    --text-secondary-light: #475569; /* slate-600 (Kept same - medium gray text) */
-    --text-accent-light: #2563eb; /* blue-600 (Slightly darker blue for better contrast) */
-    --text-cta-light: #FFFFFF; /* White text on blue button (Kept same) */
-    --border-color-light: rgba(156, 163, 175, 0.5); /* gray-400 with lower opacity (Was slate-300) - Darker border */
-    --glow-color-light: rgba(59, 130, 246, 0.6); /* blue-500 (Kept same) */
-    --accent-color-light: #2563eb; /* blue-600 (Slightly darker blue button) */
-    --skill-tag-bg-light: rgba(203, 213, 225, 0.7); /* slate-300 with opacity (Was slate-200) */
-    --skill-tag-text-light: #1e293b; /* slate-800 (Darker tag text) */
-    /* === MODIFICATION END === */
+    /* --- Light Theme Colors --- */
+    --bg-primary-light: #f8fafc; /* slate-50 */
+    --bg-secondary-light: rgba(255, 255, 255, 0.85); /* white with opacity */
+    --bg-glass-light: rgba(241, 245, 249, 0.7); /* slate-100 more transparent */
+    --bg-footer-light: #e2e8f0; /* slate-200 */
+    --text-primary-light: #1e293b; /* slate-800 */
+    --text-secondary-light: #475569; /* slate-600 */
+    --text-accent-light: #3b82f6; /* blue-500 */
+    --text-cta-light: #FFFFFF;
+    --border-color-light: rgba(203, 213, 225, 0.6); /* slate-300 */
+    --glow-color-light: rgba(59, 130, 246, 0.6); /* blue-500 */
+    --accent-color-light: #3b82f6; /* blue-500 */
+    --skill-tag-bg-light: rgba(226, 232, 240, 0.7); /* slate-200 */
+    --skill-tag-text-light: #334155; /* slate-700 */
 
     /* --- Default Theme Assignment (Dark) --- */
     --bg-primary: var(--bg-primary-dark);
@@ -120,6 +118,8 @@ body.light-theme::before {
 
 /* --- Navigation Bar --- */
 #navbar {
+    /* Uses sticky positioning via HTML class */
+    /* Background applied conditionally via JS/scrolled class */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border-bottom: 1px solid transparent; /* Start transparent */
 }
@@ -206,11 +206,11 @@ body.light-theme::before {
 /* --- Hero Section --- */
 /* Typewriter uses inline styles/animation from HTML/CSS */
 .typewriter h1 {
+    /* Existing styles */
      overflow: hidden; border-right: .15em solid var(--glow-color); white-space: nowrap;
      margin: 0 auto; letter-spacing: .1em;
      animation: typing 3.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
-     /* Adjust text shadow for light theme */
-     text-shadow: 0 0 8px var(--glow-color);
+     text-shadow: 0 0 10px rgba(173, 216, 230, 0.4); /* Keep existing shadow */
 }
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--glow-color); } }
@@ -274,19 +274,9 @@ body.light-theme::before {
     border-radius: 9999px; /* rounded-full */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
     transition: transform 0.3s ease;
-    /* Use theme variables for default skill tags */
-    background-color: var(--skill-tag-bg);
-    color: var(--skill-tag-text);
+    /* Background and text color set by inline classes for uniqueness, */
+    /* but could be standardized with variables if preferred */
 }
-/* Specific overrides if needed, but prefer variables */
-.skill-tag.bg-blue-800 { background-color: #1e40af; color: #dbeafe; } /* Example override */
-body.light-theme .skill-tag.bg-blue-800 { background-color: #bfdbfe; color: #1e3a8a; } /* Light theme override */
-/* Repeat for purple and gray or remove overrides and rely on variables */
-.skill-tag.bg-purple-800 { background-color: #581c87; color: #e9d5ff; }
-body.light-theme .skill-tag.bg-purple-800 { background-color: #e9d5ff; color: #581c87; }
-.skill-tag.bg-gray-700 { background-color: #374151; color: #f3f4f6; }
-body.light-theme .skill-tag.bg-gray-700 { background-color: #d1d5db; color: #374151; }
-
 .skill-tag:hover {
     transform: scale(1.05);
 }
@@ -301,7 +291,7 @@ body.light-theme .skill-tag.bg-gray-700 { background-color: #d1d5db; color: #374
     backdrop-filter: blur(2px);
 }
 .photo-item:hover {
-     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 15px var(--glow-color);
+     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
      transform: translateY(-5px);
 }
 .photo-img { /* Renamed from photo-item img */
@@ -329,11 +319,6 @@ body.light-theme .skill-tag.bg-gray-700 { background-color: #d1d5db; color: #374
     color: var(--text-secondary); /* Use theme variable */
 }
  .contact-icon a:hover span { opacity: 1; }
- /* Ensure SVG color uses theme variable */
- .contact-icon-group svg {
-     color: var(--accent-color);
-     transition: color 0.3s ease;
- }
 
 /* --- Footer --- */
 .footer-bg {
@@ -363,4 +348,3 @@ body.light-theme .skill-tag.bg-gray-700 { background-color: #d1d5db; color: #374
 #lightbox-overlay.visible { opacity: 1; visibility: visible; }
 #lightbox-img { transition: transform 0.3s ease-out; }
 #lightbox-close { transition: color 0.2s ease-out; line-height: 1; }
-
