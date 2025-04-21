@@ -26,7 +26,7 @@
         body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
         body.light-theme::before { opacity: 0.4; }
         @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; } /* 确保特效在背景 */
         .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
         #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
         #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -153,100 +153,36 @@
 
             <div class="post-body">
                 <p data-translate-key="post_gh_pages_intro">你好，我是MaxCaulfield。这期分享一下如何利用 GitHub Pages 免费搭建一个不需要额外购买服务器的个人网站。</p>
-
                 <h2 data-translate-key="post_gh_pages_step1_title">第一步：准备 GitHub 账号</h2>
                 <p data-translate-key="post_gh_pages_step1_para1">首先，你需要能够访问 GitHub。前往 <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub 官网</a> 注册一个账号，推荐使用个人常用邮箱进行注册。</p>
-                <figure>
-                    <img src="images/gh-pages-step1-1.png" alt="GitHub 首页截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step1_img1_caption">点击右上角的 "Sign up" 开始注册。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step1-1.png" alt="GitHub 首页截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step1_img1_caption">点击右上角的 "Sign up" 开始注册。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step1_para2">按照提示填写注册所需的个人信息，包括邮箱、密码、用户名等。</p>
-                <figure>
-                     <img src="images/gh-pages-step1-2.png" alt="GitHub 注册表单截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step1_img2_caption">填写注册信息。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step1-2.png" alt="GitHub 注册表单截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step1_img2_caption">填写注册信息。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step1_para3">注册过程中，GitHub 会向你的邮箱发送一封验证邮件。登录你的邮箱（例如 QQ 邮箱），找到这封邮件。</p>
-                 <figure>
-                     <img src="images/gh-pages-step1-3.png" alt="邮箱收到 GitHub 邮件截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step1_img3_caption">查找 GitHub 验证邮件。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step1-3.png" alt="邮箱收到 GitHub 邮件截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step1_img3_caption">查找 GitHub 验证邮件。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step1_para4">从邮件中获取 GitHub 发送给你的验证码（通常是一串数字）。</p>
-                 <figure>
-                     <img src="images/gh-pages-step1-4.png" alt="GitHub 邮件中的验证码截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step1_img4_caption">获取验证码。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step1-4.png" alt="GitHub 邮件中的验证码截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step1_img4_caption">获取验证码。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step1_para5">回到 GitHub 注册页面，将获取到的验证码输入到指定的框内，完成账号验证。</p>
-                 <figure>
-                     <img src="images/gh-pages-step1-5.png" alt="输入 GitHub 验证码截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step1_img5_caption">输入验证码完成注册。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step1-5.png" alt="输入 GitHub 验证码截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step1_img5_caption">输入验证码完成注册。</figcaption> </figure>
                 <h2 data-translate-key="post_gh_pages_step2_title">第二步：创建 GitHub Pages 仓库</h2>
                 <p data-translate-key="post_gh_pages_step2_para1">成功登录 GitHub 后，点击页面右上角的你的头像，在下拉菜单中选择 "Your repositories"（我的仓库）。</p>
-                 <figure>
-                     <img src="images/gh-pages-step2-1.png" alt="GitHub 右上角菜单截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step2_img1_caption">导航到 "Your repositories"。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step2-1.png" alt="GitHub 右上角菜单截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step2_img1_caption">导航到 "Your repositories"。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step2_para2">在你的仓库页面，点击绿色的 "New"（新建）按钮来创建一个新的代码仓库。</p>
-                 <figure>
-                     <img src="images/gh-pages-step2-2.png" alt="GitHub 仓库页面截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step2_img2_caption">点击 "New" 创建新仓库。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step2-2.png" alt="GitHub 仓库页面截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step2_img2_caption">点击 "New" 创建新仓库。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step2_para3">这是关键的一步：填写仓库名称 (Repository name)。</p>
-                <blockquote>
-                  <p data-translate-key="post_gh_pages_step2_tip1">重要提示：仓库名称必须严格按照 `<你的用户名>.github.io` 的格式来填写。例如，如果你的 GitHub 用户名是 `MaxCaulfield`，那么仓库名就必须是 `MaxCaulfield.github.io`。</p>
-                </blockquote>
-                 <figure>
-                     <img src="images/gh-pages-step2-3.png" alt="GitHub 创建新仓库页面截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step2_img3_caption">按照 `<用户名>.github.io` 格式填写仓库名称。</figcaption>
-                </figure>
-
+                <blockquote> <p data-translate-key="post_gh_pages_step2_tip1">重要提示：仓库名称必须严格按照 `<你的用户名>.github.io` 的格式来填写。例如，如果你的 GitHub 用户名是 `MaxCaulfield`，那么仓库名就必须是 `MaxCaulfield.github.io`。</p> </blockquote>
+                <figure> <img src="images/gh-pages-step2-3.png" alt="GitHub 创建新仓库页面截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step2_img3_caption">按照 `<用户名>.github.io` 格式填写仓库名称。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step2_para4">向下滚动页面，进行以下设置：</p>
-                <ul>
-                    <li data-translate-key="post_gh_pages_step2_setting1">确保仓库设置为 "Public"（公开）。私有仓库无法用于 GitHub Pages 免费托管。</li>
-                    <li data-translate-key="post_gh_pages_step2_setting2">勾选 "Add a README file"（添加一个 README 文件）。这是一个好习惯，用于说明你的项目。</li>
-                </ul>
-                 <figure>
-                     <img src="images/gh-pages-step2-4.png" alt="GitHub 仓库设置截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step2_img4_caption">确保设置为 Public 并添加 README。</figcaption>
-                </figure>
+                <ul> <li data-translate-key="post_gh_pages_step2_setting1">确保仓库设置为 "Public"（公开）。私有仓库无法用于 GitHub Pages 免费托管。</li> <li data-translate-key="post_gh_pages_step2_setting2">勾选 "Add a README file"（添加一个 README 文件）。这是一个好习惯，用于说明你的项目。</li> </ul>
+                <figure> <img src="images/gh-pages-step2-4.png" alt="GitHub 仓库设置截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step2_img4_caption">确保设置为 Public 并添加 README。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step2_para5">点击 "Create repository"（创建仓库）按钮完成创建。</p>
-
                 <h2 data-translate-key="post_gh_pages_step3_title">第三步：准备网站主页文件</h2>
                 <p data-translate-key="post_gh_pages_step3_para1">现在我们需要创建网站的入口文件。回到你的电脑桌面，新建一个文本文档。</p>
-                 <figure>
-                     <img src="images/gh-pages-step3-1.png" alt="新建文本文档截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step3_img1_caption">新建一个文本文档。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step3-1.png" alt="新建文本文档截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step3_img1_caption">新建一个文本文档。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step3_para2">将这个文本文档命名为 <code>index</code>（注意是小写），然后用文本编辑器（如记事本、VS Code、Sublime Text 等）打开它。</p>
-
                 <p data-translate-key="post_gh_pages_step3_para3">接下来，我们需要编写主页的 HTML 代码。你可以自己编写，也可以借助 AI 工具快速生成一个基础模板。这里以 DeepSeek AI 为例，你可以向它提出类似这样的要求：</p>
-                <blockquote>
-                  <p data-translate-key="post_gh_pages_step3_prompt">"我现在要创建个人网站主页，请你生成一个节约优雅的个人主页 HTML 代码，内容需要包含：我的头像占位符、我的名字、我的兴趣和爱好、我的联系方式。"</p>
-                </blockquote>
-                 <figure>
-                     <img src="images/gh-pages-step3-2.png" alt="AI 生成代码截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step3_img2_caption">使用 AI 工具生成基础 HTML 代码。</figcaption>
-                </figure>
-
+                <blockquote> <p data-translate-key="post_gh_pages_step3_prompt">"我现在要创建个人网站主页，请你生成一个节约优雅的个人主页 HTML 代码，内容需要包含：我的头像占位符、我的名字、我的兴趣和爱好、我的联系方式。"</p> </blockquote>
+                <figure> <img src="images/gh-pages-step3-2.png" alt="AI 生成代码截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step3_img2_caption">使用 AI 工具生成基础 HTML 代码。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step3_para4">下面是一个 AI 可能生成的示例代码（你可以根据自己的需求修改）：</p>
                 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="zh-CN"&gt;
@@ -278,23 +214,17 @@
             &lt;h1&gt;你的名字&lt;/h1&gt;
             &lt;p class="subtitle"&gt;你的职业或简介&lt;/p&gt;
         &lt;/header&gt;
-
         &lt;section id="about"&gt;
             &lt;h2&gt;关于我&lt;/h2&gt;
             &lt;p&gt;在这里写一段关于你自己的介绍。可以包括你的专业背景、技能、目标或者任何你想分享的有趣的事情。&lt;/p&gt;
         &lt;/section&gt;
-
         &lt;section id="interests"&gt;
             &lt;h2&gt;兴趣爱好&lt;/h2&gt;
             &lt;div class="interests"&gt;
                 &lt;!-- 修改或添加你的兴趣标签 --&gt;
-                &lt;span&gt;编程&lt;/span&gt;
-                &lt;span&gt;阅读&lt;/span&gt;
-                &lt;span&gt;旅行&lt;/span&gt;
-                &lt;span&gt;摄影&lt;/span&gt;
+                &lt;span&gt;编程&lt;/span&gt; &lt;span&gt;阅读&lt;/span&gt; &lt;span&gt;旅行&lt;/span&gt; &lt;span&gt;摄影&lt;/span&gt;
             &lt;/div&gt;
         &lt;/section&gt;
-
         &lt;section id="contact"&gt;
             &lt;h2&gt;联系方式&lt;/h2&gt;
             &lt;ul class="contact-list"&gt;
@@ -305,48 +235,24 @@
             &lt;/ul&gt;
         &lt;/section&gt;
     &lt;/div&gt;
-
     &lt;footer&gt;
         &lt;p&gt;&amp;copy; 2025 你的名字. 保留所有权利.&lt;/p&gt;
     &lt;/footer&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-                <blockquote>
-                  <p data-translate-key="post_gh_pages_step3_tip2">提示：这只是一个非常基础的模板。你可以使用我们之前做的那个更炫酷的个人网站 `index.html` 文件作为你的主页！只需确保文件名是 `index.html` 即可。</p>
-                </blockquote>
-
+                <blockquote> <p data-translate-key="post_gh_pages_step3_tip2">提示：这只是一个非常基础的模板。你可以使用我们之前做的那个更炫酷的个人网站 `index.html` 文件作为你的主页！只需确保文件名是 `index.html` 即可。</p> </blockquote>
                 <p data-translate-key="post_gh_pages_step3_para5">将你准备好的 HTML 代码复制粘贴到刚才打开的 `index.txt` 文件中，然后按 `Ctrl + S` (或 `Cmd + S`) 保存文件。</p>
-                 <figure>
-                     <img src="images/gh-pages-step3-3.png" alt="复制代码到文本编辑器截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step3_img3_caption">将 HTML 代码粘贴并保存。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step3-3.png" alt="复制代码到文本编辑器截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step3_img3_caption">将 HTML 代码粘贴并保存。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step3_para6">关闭文本编辑器。现在，找到你桌面上那个 `index.txt` 文件，将它的后缀名从 `.txt` 重命名为 `.html`。系统可能会提示你修改后缀名可能导致文件不可用，选择“是”即可。</p>
-                 <figure>
-                     <img src="images/gh-pages-step3-4.png" alt="重命名文件截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step3_img4_caption">将文件重命名为 `index.html`。</figcaption>
-                </figure>
-                <blockquote>
-                    <p data-translate-key="post_gh_pages_step3_tip3">注意：如果你看不到文件的后缀名（如 `.txt`），你可能需要在文件资源管理器的“查看”选项中勾选“文件扩展名”。</p>
-                </blockquote>
-
+                <figure> <img src="images/gh-pages-step3-4.png" alt="重命名文件截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step3_img4_caption">将文件重命名为 `index.html`。</figcaption> </figure>
+                <blockquote> <p data-translate-key="post_gh_pages_step3_tip3">注意：如果你看不到文件的后缀名（如 `.txt`），你可能需要在文件资源管理器的“查看”选项中勾选“文件扩展名”。</p> </blockquote>
                 <h2 data-translate-key="post_gh_pages_step4_title">第四步：上传文件到 GitHub 仓库</h2>
                 <p data-translate-key="post_gh_pages_step4_para1">回到你刚才在 GitHub 上创建的 `<用户名>.github.io` 仓库页面。点击 "Add file"（添加文件）按钮，然后选择 "Upload files"（上传文件）。</p>
-                 <figure>
-                     <img src="images/gh-pages-step4-1.png" alt="GitHub 仓库上传文件截图" loading="lazy"
-                         class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image">
-                    <figcaption data-translate-key="post_gh_pages_step4_img1_caption">选择上传文件。</figcaption>
-                </figure>
-
+                <figure> <img src="images/gh-pages-step4-1.png" alt="GitHub 仓库上传文件截图" loading="lazy" class="block mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.03] cursor-pointer clickable-image"> <figcaption data-translate-key="post_gh_pages_step4_img1_caption">选择上传文件。</figcaption> </figure>
                 <p data-translate-key="post_gh_pages_step4_para2">你可以直接将你电脑桌面上的 `index.html` 文件（以及包含头像、照片等资源的 `images` 文件夹，如果你的 `index.html` 引用了它们的话）拖拽到上传区域，或者点击 "choose your files" 来浏览并选择文件。</p>
-                 <blockquote>
-                     <p data-translate-key="post_gh_pages_step4_tip1">重要：如果你的 `index.html` 文件引用了本地图片（例如放在 `images` 文件夹下），你需要将整个 `images` 文件夹也一并上传到仓库的根目录下，以保持文件结构一致。</p>
-                 </blockquote>
+                <blockquote> <p data-translate-key="post_gh_pages_step4_tip1">重要：如果你的 `index.html` 文件引用了本地图片（例如放在 `images` 文件夹下），你需要将整个 `images` 文件夹也一并上传到仓库的根目录下，以保持文件结构一致。</p> </blockquote>
                 <p data-translate-key="post_gh_pages_step4_para3">文件选择完毕后，页面下方会显示你即将上传的文件列表。你可以添加一个提交说明（Commit message），例如 "Add initial website files"，然后点击 "Commit changes"（提交更改）按钮。</p>
-
                 <h2 data-translate-key="post_gh_pages_step5_title">第五步：访问你的网站</h2>
                 <p data-translate-key="post_gh_pages_step5_para1">上传完成后，等待几分钟（有时 GitHub Pages 需要一点时间来部署）。</p>
                 <p data-translate-key="post_gh_pages_step5_para2">然后，在你的浏览器地址栏中输入你的 GitHub Pages 域名：</p>
@@ -354,11 +260,10 @@
                 <p data-translate-key="post_gh_pages_step5_para3">例如：<code>https://MaxCaulfield.github.io</code></p>
                 <p data-translate-key="post_gh_pages_step5_para4">按下回车键访问。如果第一次访问显示 404 页面或者不是最新的内容，请稍等片刻再刷新页面。</p>
                 <p data-translate-key="post_gh_pages_step5_para5">恭喜！你的无需服务器的个人网站现在应该已经成功部署并可以公开访问了！</p>
-
                 <h2 data-translate-key="post_gh_pages_conclusion_title">总结</h2>
                 <p data-translate-key="post_gh_pages_conclusion_para1">通过 GitHub Pages，我们可以非常方便地免费托管静态网站（由 HTML, CSS, JavaScript 文件组成）。这对于个人博客、项目展示页或简单的在线简历来说是一个绝佳的选择。后续你只需要更新仓库中的文件，GitHub Pages 会自动重新部署。</p>
-
-            </div> </article>
+            </div>
+         </article>
     </div>
 
     <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
@@ -375,7 +280,7 @@
 
 
     <script>
-        // --- Translations (Ensure all keys are present for en, zh-CN, zh-TW) ---
+        // --- Translations (FIXED: Ensure all keys are present) ---
         const translations = {
             'en': {
                 'blog_title': "MaxCaulfield's Blog", 'category': "Category", 'life_category': "Life", 'posted_on': "Posted on", 'author': "Author", 'back_to_blog': "Back to Blog List", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN", 'tech_category': "Tech", 'misc_category': "Misc",
@@ -554,14 +459,7 @@
         };
 
         // --- Theme Switching Logic ---
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            const sunIcon = themeToggle.querySelector('.fa-sun');
-            const moonIcon = themeToggle.querySelector('.fa-moon');
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            function applyTheme(theme) { /* ... */ } applyTheme(currentTheme); themeToggle.addEventListener('click', () => { /* ... */ });
-        } else { console.warn("Theme toggle button not found."); }
-
+        // (Moved inside DOMContentLoaded)
 
         // --- Language Switching Logic ---
         const langToggle = document.getElementById('lang-toggle');
@@ -582,8 +480,7 @@
                      else if (el.title) { el.title = translations[lang][key]; }
                      else { el.innerHTML = translations[lang][key]; }
                  } else {
-                     // 移除: 不再打印所有缺失键的警告
-                     // console.warn(`Translation key "${key}" not found for language "${lang}"`);
+                     // console.warn(`Translation key "${key}" not found for language "${lang}"`); // Keep this commented unless debugging
                  }
              });
              if (currentLangSpan) {
@@ -628,6 +525,7 @@
             });
         }
 
+        // Close dropdown outside click listener remains global
         document.addEventListener('click', (e) => {
             if (langToggle && langDropdown && !langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
                 langDropdown.classList.add('hidden');
@@ -645,20 +543,66 @@
         document.addEventListener('DOMContentLoaded', () => {
             console.log("DOMContentLoaded event fired.");
 
-            // 初始化语言切换器
-            console.log("Attempting to set up language switcher...");
-            setupLangSwitcher(langToggle, langDropdown);
+            // --- Theme Switching Setup ---
+            console.log("Attempting to set up theme switcher...");
+            const themeToggle = document.getElementById('theme-toggle'); // Define inside DOMContentLoaded
+            if (themeToggle) {
+                const sunIcon = themeToggle.querySelector('.fa-sun');
+                const moonIcon = themeToggle.querySelector('.fa-moon');
+                const currentTheme = localStorage.getItem('theme') || 'dark'; // Get theme pref
 
-            // 应用初始翻译
+                // Define applyTheme function locally or ensure it's accessible
+                function applyTheme(theme) {
+                    if (!sunIcon || !moonIcon) {
+                        console.warn("Sun or Moon icon not found in theme toggle button.");
+                        return;
+                    }
+                    if (theme === 'light') {
+                        document.body.classList.add('light-theme');
+                        document.body.classList.remove('dark-theme');
+                        sunIcon.classList.add('hidden');
+                        moonIcon.classList.remove('hidden');
+                    } else {
+                        document.body.classList.add('dark-theme');
+                        document.body.classList.remove('light-theme');
+                        sunIcon.classList.remove('hidden');
+                        moonIcon.classList.add('hidden');
+                    }
+                     console.log(`Theme applied: ${theme}`);
+                }
+
+                applyTheme(currentTheme); // Apply theme on load
+
+                themeToggle.addEventListener('click', () => {
+                    const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    console.log(`Theme toggled to: ${newTheme}`);
+                });
+                console.log("Theme switcher setup complete.");
+            } else {
+                console.warn("Theme toggle button not found.");
+            }
+
+            // --- Language Switching Setup ---
+            console.log("Attempting to set up language switcher...");
+            // Select elements needed for language switching here as well
+            const langToggleInstance = document.getElementById('lang-toggle');
+            const langDropdownInstance = document.getElementById('lang-dropdown');
+            setupLangSwitcher(langToggleInstance, langDropdownInstance); // Call setup
+
+            // Apply initial translation
             console.log("Attempting to apply initial translations...");
-            applyTranslations(currentLang);
+            applyTranslations(currentLang); // Apply based on currentLang
 
             // --- tsParticles Initialization ---
             console.log("Attempting to load tsParticles...");
             if (typeof tsParticles !== 'undefined') {
                 const particlesContainer = document.getElementById('tsparticles');
                 if (particlesContainer) {
-                    tsParticles.load("tsparticles", { /* ... tsParticles config ... */ }).then(container => { console.log("tsParticles loaded successfully."); }).catch(error => { console.error("Error loading tsParticles:", error); });
+                    tsParticles.load("tsparticles", {
+                         fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 }
+                    }).then(container => { console.log("tsParticles loaded successfully."); }).catch(error => { console.error("Error loading tsParticles:", error); });
                 } else { console.warn("tsParticles container element '#tsparticles' not found."); }
             } else { console.warn("tsParticles library not found."); }
             console.log("After tsParticles load attempt");
@@ -672,13 +616,26 @@
 
             if (lightboxOverlay && lightboxImg && lightboxClose && clickableImages.length > 0) {
                 console.log(`Found ${clickableImages.length} clickable images for lightbox.`);
-                clickableImages.forEach(img => { /* ... lightbox listeners ... */ });
-                const closeLightbox = () => { /* ... close function ... */ }
-                lightboxOverlay.addEventListener('click', (e) => { /* ... */ });
+                clickableImages.forEach(img => {
+                    const addClickListener = (targetImage) => {
+                        if (window.getComputedStyle(targetImage).display !== 'none') {
+                            targetImage.addEventListener('click', (e) => { e.stopPropagation(); console.log("Lightbox opened for:", targetImage.src); lightboxImg.src = targetImage.src; lightboxOverlay.classList.add('visible'); });
+                        } else { console.log("Skipping click listener for hidden image:", targetImage.src); }
+                    };
+                    if (img.complete && img.naturalWidth > 0) { console.log("Image already complete, adding listener:", img.src); addClickListener(img); }
+                    else { img.addEventListener('load', () => { console.log("Image loaded, adding listener:", img.src); addClickListener(img) }); img.addEventListener('error', () => { console.error("Image failed to load, cannot add lightbox listener:", img.src); }); }
+                });
+                const closeLightbox = () => { console.log("Lightbox closed"); lightboxOverlay.classList.remove('visible'); setTimeout(() => { if (!lightboxOverlay.classList.contains('visible')) { lightboxImg.src = ""; } }, 300); }
+                lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) { closeLightbox(); } });
                 lightboxClose.addEventListener('click', closeLightbox);
-                document.addEventListener('keydown', (e) => { /* ... */ });
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightboxOverlay.classList.contains('visible')) { closeLightbox(); } });
                 console.log("Lightbox event listeners added.");
-            } else { /* ... warnings ... */ }
+            } else {
+                 if (!lightboxOverlay) console.warn("Lightbox overlay element not found.");
+                 if (!lightboxImg) console.warn("Lightbox image element not found.");
+                 if (!lightboxClose) console.warn("Lightbox close element not found.");
+                 if (clickableImages.length === 0) console.warn("No clickable images found in .post-body with class 'clickable-image'.");
+            }
             // --- End Lightbox Logic ---
 
         }); // End DOMContentLoaded
