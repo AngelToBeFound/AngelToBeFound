@@ -154,7 +154,7 @@
         .blog-post-card img.card-image { /* Style for card image */
              border-bottom: 1px solid var(--border-color);
         }
-        .blog-post-card .card-header-block { /* Style for the new header block */
+        .blog-post-card .card-header-block { /* Style for the colored header block */
              border-bottom: 1px solid var(--border-color);
         }
 
@@ -236,9 +236,9 @@
         <main class="md:col-span-2 space-y-8 md:space-y-12 stagger-fade">
 
             <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.05s;">
-                 <img src="images/gh-pages-card-preview.png"
-                     alt="如何搭建不用服务器的个人网站？"
-                     class="w-full h-48 object-cover card-image" onerror="this.style.display='none'">
+                 <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block">
+                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="post_gh_pages_card_header"></h3>
+                 </div>
                  <div class="p-6 md:p-8">
                     <p class="text-sm text-[var(--text-secondary)] mb-2">
                         <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="tech_category">技术</a> | <time datetime="2025-04-21">2025年4月21日</time>
@@ -254,9 +254,11 @@
             </article>
 
             <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.1s;">
-                <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="post_why_card_header">Why This Site?</h3>
-                </div>
-                <div class="p-6 md:p-8">
+                 <img src="https://placehold.co/800x400/483d8b/F0F8FF?text=Why+This+Site%3F"
+                      alt="为什么要做这个个人网站？"
+                      class="w-full h-48 object-cover card-image"
+                      onerror="this.onerror=null; this.src='https://placehold.co/800x400/cccccc/FFFFFF?text=Image+Error';">
+                 <div class="p-6 md:p-8">
                     <p class="text-sm text-[var(--text-secondary)] mb-2">
                         <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="life_category">生活</a> | <time datetime="2025-04-20">2025年4月20日</time>
                     </p>
@@ -312,7 +314,7 @@
     </footer>
 
     <script>
-        // --- Translations (Added card header key) ---
+        // --- Translations (Set card header to English only) ---
         const translations = {
             'en': {
                 'blog_title': "MaxCaulfield's Blog", 'about_me': "About Me", 'about_me_text': "Hi! I'm MaxCaulfield, a student passionate about exploring tech and design. Welcome to my little blog!", 'learn_more_about_me': "Learn more about me →", 'categories': "Categories", 'tech_category': "Tech", 'life_category': "Life", 'misc_category': "Misc", 'tags': "Tags", 'recent_posts': "Recent Posts", 'category': "Category", 'posted_on': "Posted on", 'read_more': "Read More →",
@@ -320,7 +322,8 @@
                 'post_why_excerpt': "Hello, I'm Mai Qingchun. This site is part of my learning journey, a place to share thoughts and resources, with more updates to come. It's partly built with AI, and the source code is open on GitHub...",
                 'post_gh_pages_title': "How to Build a Personal Website Without a Server?",
                 'post_gh_pages_excerpt': "This time, I'll share how to build a personal website without needing an extra server, using GitHub Pages for free. Detailed steps from GitHub registration to deployment...",
-                'post_why_card_header': "Why This Site?", // 新增键
+                // 修改: 强制所有语言都显示英文
+                'post_gh_pages_card_header': "GitHub Pages Tutorial",
                 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN"
             },
             'zh-CN': {
@@ -329,7 +332,8 @@
                 'post_why_excerpt': "你好，我是麦青春。这个网站是学习过程中的产物，用来记录想法、分享资料，未来会持续更新。部分内容由 AI 辅助搭建，源码已在 GitHub 开源...",
                 'post_gh_pages_title': "如何搭建不用服务器的个人网站呢？",
                 'post_gh_pages_excerpt': "这期分享一下如何利用 GitHub Pages 免费搭建一个不需要额外购买服务器的个人网站，从注册 GitHub 到部署完成的详细步骤...",
-                'post_why_card_header': "Why This Site?", // 新增键
+                 // 修改: 强制所有语言都显示英文
+                'post_gh_pages_card_header': "GitHub Pages Tutorial",
                 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简"
             },
             'zh-TW': {
@@ -338,7 +342,8 @@
                 'post_why_excerpt': "你好，我是麥青春。這個網站是學習過程中的產物，用來記錄想法、分享資料，未來會持續更新。部分內容由 AI 輔助搭建，源碼已在 GitHub 開源...",
                 'post_gh_pages_title': "如何搭建不用伺服器的個人網站呢？",
                 'post_gh_pages_excerpt': "這期分享一下如何利用 GitHub Pages 免費搭建一個不需要額外購買伺服器的個人網站，從註冊 GitHub 到部署完成的詳細步驟...",
-                'post_why_card_header': "Why This Site?", // 新增键
+                 // 修改: 强制所有语言都显示英文
+                'post_gh_pages_card_header': "GitHub Pages Tutorial",
                 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁"
             }
         };
