@@ -39,7 +39,6 @@
     git clone [https://github.com/AngelToBeFound/AngelToBeFound.git](https://github.com/AngelToBeFound/AngelToBeFound.git)
     cd AngelToBeFound
     ```
-    *(请将上面的仓库 URL 替换为你自己的)* *(Replace the repository URL above with your own)*
 
 2.  **启动本地服务器 (Start a local server):**
 
@@ -80,7 +79,16 @@
 
 ## 📂 文件结构 (File Structure)
 
-.├── index.html          # 网站主页 (Main homepage)├── blog.html           # 博客列表页 (Blog list page)├── post-why-website.html # 示例博客文章页 (Example blog post page)├── index.css           # 主页的自定义样式 (Custom styles for homepage)├── script.js           # 主页的 JavaScript 代码 (JavaScript for homepage)├── images/             # 存放图片资源 (Contains image assets)│   ├── avatar.jpg      # 头像 (Avatar)│   ├── photo1.jpg      # 照片展览图片 (Gallery photos)│   └── ...└── README.md           # 项目说明文件 (This file)
+├── index.html          # 网站主页 (Main homepage)
+├── blog.html           # 博客列表页 (Blog list page)
+├── post-why-website.html # 示例博客文章页 (Example blog post page)
+├── index.css           # 主页的自定义样式 (Custom styles for homepage)
+├── script.js           # 主页的 JavaScript 代码 (JavaScript for homepage)
+├── images/             # 存放图片资源 (Contains image assets)
+│   ├── avatar.jpg      # 头像 (Avatar)
+│   ├── photo1.jpg      # 照片展览图片 (Gallery photos)
+│   └── ...             # 其他图片 (Other images)
+└── README.md           # 项目说明文件 (This file)
 ## 📄 许可证 (License)
 
 本项目采用 [MIT](LICENSE) 许可证。 (This project is licensed under the MIT License.)
