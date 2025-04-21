@@ -151,6 +151,13 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 0 15px var(--glow-color);
         }
+        .blog-post-card img.card-image { /* Style for card image */
+             border-bottom: 1px solid var(--border-color);
+        }
+        .blog-post-card .card-header-block { /* Style for the new header block */
+             border-bottom: 1px solid var(--border-color);
+        }
+
 
         /* Sidebar Module Styles */
         .sidebar-module {
@@ -228,8 +235,27 @@
     <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative z-10">
         <main class="md:col-span-2 space-y-8 md:space-y-12 stagger-fade">
 
+            <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.05s;">
+                 <img src="images/gh-pages-card-preview.png"
+                     alt="如何搭建不用服务器的个人网站？"
+                     class="w-full h-48 object-cover card-image" onerror="this.style.display='none'">
+                 <div class="p-6 md:p-8">
+                    <p class="text-sm text-[var(--text-secondary)] mb-2">
+                        <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="tech_category">技术</a> | <time datetime="2025-04-21">2025年4月21日</time>
+                    </p>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-3">
+                        <a href="post-github-pages-tutorial.html" class="hover:text-[var(--text-accent)] transition-colors" data-translate-key="post_gh_pages_title">如何搭建不用服务器的个人网站呢？</a>
+                    </h2>
+                    <p class="text-[var(--text-secondary)] mb-4 line-clamp-3" data-translate-key="post_gh_pages_excerpt">
+                        这期分享一下如何利用 GitHub Pages 免费搭建一个不需要额外购买服务器的个人网站，从注册 GitHub 到部署完成的详细步骤...
+                    </p>
+                    <a href="post-github-pages-tutorial.html" class="font-semibold text-[var(--text-accent)] hover:underline" data-translate-key="read_more">阅读全文 &rarr;</a>
+                </div>
+            </article>
+
             <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.1s;">
-                <img src="https://placehold.co/800x400/483d8b/F0F8FF?text=Why+This+Site%3F" alt="为什么要做这个个人网站？" class="w-full h-48 object-cover">
+                <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="post_why_card_header">Why This Site?</h3>
+                </div>
                 <div class="p-6 md:p-8">
                     <p class="text-sm text-[var(--text-secondary)] mb-2">
                         <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="life_category">生活</a> | <time datetime="2025-04-20">2025年4月20日</time>
@@ -244,7 +270,7 @@
                 </div>
             </article>
 
-        </main>
+            </main>
 
         <aside class="md:col-span-1 space-y-8 md:space-y-10 stagger-fade">
              <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.15s;">
@@ -259,19 +285,19 @@
                 <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="categories">文章分类</h3>
                 <ul class="space-y-2">
                     <li><a href="#" class="flex justify-between items-center text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors"><span data-translate-key="life_category">生活</span> <span class="text-xs bg-[var(--bg-glass)] px-2 py-0.5 rounded-full border border-[var(--border-color)]">1</span></a></li>
-                    <li><a href="#" class="flex justify-between items-center text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors"><span data-translate-key="tech_category">技术</span> <span class="text-xs bg-[var(--bg-glass)] px-2 py-0.5 rounded-full border border-[var(--border-color)]">0</span></a></li>
+                    <li><a href="#" class="flex justify-between items-center text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors"><span data-translate-key="tech_category">技术</span> <span class="text-xs bg-[var(--bg-glass)] px-2 py-0.5 rounded-full border border-[var(--border-color)]">1</span></a></li>
                      <li><a href="#" class="flex justify-between items-center text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors"><span data-translate-key="misc_category">随笔</span> <span class="text-xs bg-[var(--bg-glass)] px-2 py-0.5 rounded-full border border-[var(--border-color)]">0</span></a></li>
                 </ul>
             </div>
             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.35s;">
                  <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="tags">标签云</h3>
                  <div class="tag-cloud">
-                     <a href="#">个人网站</a> <a href="#">博客</a> <a href="#">学习</a> <a href="#">前端</a> <a href="#">设计</a> <a href="#">AI</a> <a href="#">开源</a>
-                 </div>
+                     <a href="#">个人网站</a> <a href="#">博客</a> <a href="#">学习</a> <a href="#">前端</a> <a href="#">设计</a> <a href="#">AI</a> <a href="#">开源</a> <a href="#">GitHub</a> <a href="#">教程</a> </div>
             </div>
             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.45s;">
                 <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="recent_posts">近期文章</h3>
                 <ul class="space-y-3">
+                    <li><a href="post-github-pages-tutorial.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_gh_pages_title">如何搭建不用服务器的个人网站？</a></li>
                     <li><a href="post-why-website.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_why_title">为什么要做这个个人网站？</a></li>
                 </ul>
             </div>
@@ -286,31 +312,34 @@
     </footer>
 
     <script>
-        // --- Translations (Updated excerpt) ---
+        // --- Translations (Added card header key) ---
         const translations = {
             'en': {
-                'blog_title': "MaxCaulfield's Blog", 'about_me': "About Me", 'about_me_text': "Hi! I'm MaxCaulfield, a student passionate about exploring tech and design. Welcome to my little blog!", 'learn_more_about_me': "Learn more about me →", 'categories': "Categories", 'tech_category': "Tech", 'life_category': "Life", 'misc_category': "Misc", 'tags': "Tags", 'recent_posts': "Recent Posts", 'category': "Category",
+                'blog_title': "MaxCaulfield's Blog", 'about_me': "About Me", 'about_me_text': "Hi! I'm MaxCaulfield, a student passionate about exploring tech and design. Welcome to my little blog!", 'learn_more_about_me': "Learn more about me →", 'categories': "Categories", 'tech_category': "Tech", 'life_category': "Life", 'misc_category': "Misc", 'tags': "Tags", 'recent_posts': "Recent Posts", 'category': "Category", 'posted_on': "Posted on", 'read_more': "Read More →",
                 'post_why_title': "Why Build This Personal Website?",
-                // === MODIFICATION START: Updated Excerpt ===
                 'post_why_excerpt': "Hello, I'm Mai Qingchun. This site is part of my learning journey, a place to share thoughts and resources, with more updates to come. It's partly built with AI, and the source code is open on GitHub...",
-                // === MODIFICATION END ===
-                'read_more': "Read More →", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN"
+                'post_gh_pages_title': "How to Build a Personal Website Without a Server?",
+                'post_gh_pages_excerpt': "This time, I'll share how to build a personal website without needing an extra server, using GitHub Pages for free. Detailed steps from GitHub registration to deployment...",
+                'post_why_card_header': "Why This Site?", // 新增键
+                'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN"
             },
             'zh-CN': {
-                'blog_title': "麦青春的博客", 'about_me': "关于博主", 'about_me_text': "你好！我是 MaxCaulfield，一个热爱探索技术和设计的学生。欢迎来到我的小小博客！", 'learn_more_about_me': "了解更多关于我 →", 'categories': "文章分类", 'tech_category': "技术", 'life_category': "生活", 'misc_category': "随笔", 'tags': "标签云", 'recent_posts': "近期文章", 'category': "分类",
+                'blog_title': "麦青春的博客", 'about_me': "关于博主", 'about_me_text': "你好！我是 MaxCaulfield，一个热爱探索技术和设计的学生。欢迎来到我的小小博客！", 'learn_more_about_me': "了解更多关于我 →", 'categories': "文章分类", 'tech_category': "技术", 'life_category': "生活", 'misc_category': "随笔", 'tags': "标签云", 'recent_posts': "近期文章", 'category': "分类", 'posted_on': "发布于", 'read_more': "阅读全文 →",
                 'post_why_title': "为什么要做这个个人网站？",
-                 // === MODIFICATION START: Updated Excerpt ===
                 'post_why_excerpt': "你好，我是麦青春。这个网站是学习过程中的产物，用来记录想法、分享资料，未来会持续更新。部分内容由 AI 辅助搭建，源码已在 GitHub 开源...",
-                 // === MODIFICATION END ===
-                'read_more': "阅读全文 →", 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简"
+                'post_gh_pages_title': "如何搭建不用服务器的个人网站呢？",
+                'post_gh_pages_excerpt': "这期分享一下如何利用 GitHub Pages 免费搭建一个不需要额外购买服务器的个人网站，从注册 GitHub 到部署完成的详细步骤...",
+                'post_why_card_header': "Why This Site?", // 新增键
+                'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简"
             },
             'zh-TW': {
-                'blog_title': "麥青春的部落格", 'about_me': "關於博主", 'about_me_text': "你好！我是 MaxCaulfield，一個熱愛探索技術和設計的學生。歡迎來到我的小小部落格！", 'learn_more_about_me': "了解更多關於我 →", 'categories': "文章分類", 'tech_category': "技術", 'life_category': "生活", 'misc_category': "隨筆", 'tags': "標籤雲", 'recent_posts': "近期文章", 'category': "分類",
+                'blog_title': "麥青春的部落格", 'about_me': "關於博主", 'about_me_text': "你好！我是 MaxCaulfield，一個熱愛探索技術和設計的學生。歡迎來到我的小小部落格！", 'learn_more_about_me': "了解更多關於我 →", 'categories': "文章分類", 'tech_category': "技術", 'life_category': "生活", 'misc_category': "隨筆", 'tags': "標籤雲", 'recent_posts': "近期文章", 'category': "分類", 'posted_on': "發佈於", 'read_more': "閱讀全文 →",
                 'post_why_title': "為什麼要做這個個人網站？",
-                 // === MODIFICATION START: Updated Excerpt ===
                 'post_why_excerpt': "你好，我是麥青春。這個網站是學習過程中的產物，用來記錄想法、分享資料，未來會持續更新。部分內容由 AI 輔助搭建，源碼已在 GitHub 開源...",
-                 // === MODIFICATION END ===
-                'read_more': "閱讀全文 →", 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁"
+                'post_gh_pages_title': "如何搭建不用伺服器的個人網站呢？",
+                'post_gh_pages_excerpt': "這期分享一下如何利用 GitHub Pages 免費搭建一個不需要額外購買伺服器的個人網站，從註冊 GitHub 到部署完成的詳細步驟...",
+                'post_why_card_header': "Why This Site?", // 新增键
+                'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁"
             }
         };
 
@@ -327,14 +356,14 @@
         const currentLangSpan = document.getElementById('current-lang');
         const langLinks = langDropdown.querySelectorAll('a[data-lang]');
         let currentLang = localStorage.getItem('language') || 'zh-CN';
-        function applyTranslations(lang) { if (!translations[lang]) return; document.documentElement.lang = lang.split('-')[0]; const elements = document.querySelectorAll('[data-translate-key]'); elements.forEach(el => { const key = el.getAttribute('data-translate-key'); if (translations[lang][key] !== undefined) { if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; } else if (el.title) { el.title = translations[lang][key]; } else { el.textContent = translations[lang][key]; } } else { console.warn(`Translation key "${key}" not found for language "${lang}"`); } }); if(translations[lang]['current_lang_display']) { currentLangSpan.textContent = translations[lang]['current_lang_display']; } else { currentLangSpan.textContent = lang.split('-')[0].toUpperCase(); } } applyTranslations(currentLang); langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); }); document.addEventListener('click', (e) => { if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) { langDropdown.classList.add('hidden'); } }); langLinks.forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const selectedLang = link.getAttribute('data-lang'); if (selectedLang !== currentLang) { currentLang = selectedLang; localStorage.setItem('language', currentLang); applyTranslations(currentLang); } langDropdown.classList.add('hidden'); }); });
+        function applyTranslations(lang) { if (!translations[lang]) return; document.documentElement.lang = lang.startsWith('zh') ? lang : lang.split('-')[0]; const elements = document.querySelectorAll('[data-translate-key]'); elements.forEach(el => { const key = el.getAttribute('data-translate-key'); if (translations[lang][key] !== undefined) { if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; } else if (el.title) { el.title = translations[lang][key]; } else { el.innerHTML = translations[lang][key]; } } else { console.warn(`Translation key "${key}" not found for language "${lang}"`); } }); if(translations[lang]['current_lang_display']) { currentLangSpan.textContent = translations[lang]['current_lang_display']; } else { currentLangSpan.textContent = lang.split('-')[0].toUpperCase(); } } applyTranslations(currentLang); langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); }); document.addEventListener('click', (e) => { if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) { langDropdown.classList.add('hidden'); } }); langLinks.forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const selectedLang = link.getAttribute('data-lang'); if (selectedLang !== currentLang) { currentLang = selectedLang; localStorage.setItem('language', currentLang); applyTranslations(currentLang); } langDropdown.classList.add('hidden'); }); });
 
          // --- Header Scroll Effect ---
          const header = document.getElementById('blog-header');
          window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
 
          // --- Staggered Fade-In Animation ---
-         function applyStaggeredFadeIn() { const containers = document.querySelectorAll('.stagger-fade'); containers.forEach(container => { const items = container.querySelectorAll('.fade-in'); items.forEach((item, index) => { item.style.opacity = '0'; let delay = item.style.animationDelay ? parseFloat(item.style.animationDelay) : 0; if (delay === 0) { delay = index * 0.1; item.style.animationDelay = `${delay}s`; } item.style.animationName = 'fadeInAnimation'; }); }); } document.addEventListener('DOMContentLoaded', applyStaggeredFadeIn);
+         function applyStaggeredFadeIn() { const containers = document.querySelectorAll('.stagger-fade'); containers.forEach(container => { const items = container.querySelectorAll('.fade-in'); items.forEach((item, index) => { item.style.opacity = '0'; let delay = item.style.animationDelay ? parseFloat(item.style.animationDelay) : 0; if (delay === 0) { delay = index * 0.05; item.style.animationDelay = `${delay}s`; } item.style.animationName = 'fadeInAnimation'; }); }); } document.addEventListener('DOMContentLoaded', applyStaggeredFadeIn);
 
          // --- tsParticles Initialization (Optimized) ---
          if (typeof tsParticles !== 'undefined') { tsParticles.load("tsparticles", { fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 } }).catch(error => { console.error("Error loading tsParticles:", error); }); } else { console.warn("tsParticles library not found."); }
