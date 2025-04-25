@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国经济2025：韧性、风险与再平衡 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <style>
+        :root { --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth; }
+        body.light-theme { --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light); }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+        .post-content-area { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 2rem; position: relative; z-index: 10; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        @media (min-width: 768px) { .post-content-area { padding: 3rem; } }
+        .post-body h1, .post-body h2, .post-body h3 { color: var(--text-primary); margin-top: 1.5em; margin-bottom: 0.75em; font-weight: 600; }
+        .post-body h1 { font-size: 2.25rem; line-height: 2.5rem; }
+        .post-body h2 { font-size: 1.875rem; line-height: 2.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .post-body h3 { font-size: 1.5rem; line-height: 2rem; }
+        .post-body p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25em; }
+        .post-body a { color: var(--text-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+        .post-body a:hover { opacity: 0.8; }
+        .post-body ul, .post-body ol { margin-left: 1.5rem; margin-bottom: 1.25em; color: var(--text-secondary); }
+        .post-body li { margin-bottom: 0.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+        .post-body blockquote { border-left: 4px solid var(--text-accent); padding-left: 1rem; margin-left: 0; margin-right: 0; margin-bottom: 1.25em; font-style: italic; color: var(--text-secondary); }
+        .post-body code { background-color: var(--bg-glass); padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.9em; color: var(--text-primary); }
+        .post-body pre { background-color: var(--bg-glass); padding: 1em; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.25em; }
+        .post-body pre code { background-color: transparent; padding: 0; border-radius: 0; font-size: 0.9em; }
+        .post-body img { max-width: 100%; height: auto; border-radius: 0.5rem; margin-top: 1.5em; margin-bottom: 1.5em; border: 1px solid var(--border-color); transition: transform 0.3s ease-in-out; }
+        .post-body figure { margin: 1.5em 0; text-align: center; }
+        .post-body figure img { display: inline-block; margin-left: auto; margin-right: auto; }
+        .post-body figcaption { text-align: center; font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5em; }
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient">麦青春的博客</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container mx-auto px-6 relative z-10">
+         <div class="mb-6 md:mb-8">
+            <a href="blog.html" class="text-sm text-[var(--text-accent)] hover:underline">
+                &larr; 返回博客列表
+            </a>
+        </div>
+         <article class="post-content-area glass-effect">
+            <header class="mb-8 md:mb-12 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gradient">
+                    中国经济2025：韧性、风险与再平衡
+                </h1>
+                <p class="text-sm text-[var(--text-secondary)]">
+                    <span>分类</span>: <a href="#" class="hover:text-[var(--text-accent)]">经济</a>
+                    <span class="mx-2">|</span>
+                    <span>发布于</span>: <time datetime="2025-04-24">2025年4月24日</time>
+                </p>
+            </header>
+            <div class="post-body">
+                <p>你好，我是MaxCaulfield。今天我们来聊聊2025年中国经济的最新趋势、风险与政策应对。</p>
+                <h2>一、开局强劲，隐忧犹存</h2>
+                <p>2025年一季度中国GDP同比增长5.4%，超出市场预期，表面上展现出强大韧性。工业产出和出口（尤其是受关税前置影响的出口激增）是主要拉动力量。但国内需求依然偏弱，进口收缩、消费和投资信心不足，房地产持续低迷，CPI和PPI均陷入通缩区间，反映出经济复苏基础并不牢固。</p>
+                <h2>二、主要经济指标简析</h2>
+                <ul>
+                    <li>工业增加值：同比+6.5%，高技术制造业和装备制造业表现突出。</li>
+                    <li>社会消费品零售总额：同比+4.6%，虽有回升但仍落后于GDP和工业增速。</li>
+                    <li>固定资产投资：同比+4.2%，制造业和基建投资强劲，房地产投资大幅下滑（-9.9%）。</li>
+                    <li>失业率：城镇调查失业率5.2%，青年就业压力依然较大。</li>
+                    <li>CPI：-0.1%，PPI：-2.3%，通缩压力持续。</li>
+                </ul>
+                <h2>三、外贸与地缘风险</h2>
+                <p>一季度出口同比大增5.8%，但主要受企业抢跑美方加税影响，后续可持续性存疑。进口同比下降7%，反映内需疲软。中美贸易摩擦升级，关税轮番加码，科技出口管制趋严，外部环境极具不确定性。中国政府加大对高新技术、出口信贷、外资吸引等领域的政策支持，力图稳外贸、促创新。</p>
+                <h2>四、结构性挑战与政策应对</h2>
+                <ul>
+                    <li>债务：地方政府隐性债务高企，地产企业违约频发，金融系统风险需警惕。</li>
+                    <li>人口：老龄化加速，劳动力萎缩，长期增长潜力受限。</li>
+                    <li>信心：居民消费和民企投资信心不足，储蓄率高，消费复苏缓慢。</li>
+                </ul>
+                <p>政策层面，货币宽松、财政扩张（专项债、超长期国债）、房地产“保交楼”、高新技术产业补贴、消费品以旧换新等多管齐下，但效果仍待观察。政府强调“新质生产力”、科技自立、扩大内需和风险防控的平衡。</p>
+                <h2>五、展望与建议</h2>
+                <ul>
+                    <li>国际机构普遍预测2025全年中国GDP增速将回落至4.5%-4.8%，2026年进一步放缓。</li>
+                    <li>主要风险：地产下行超预期、地缘冲突升级、内需持续低迷、金融系统压力。</li>
+                    <li>关注重点：消费、房地产、信贷、政策落地、外部环境变化。</li>
+                </ul>
+                <blockquote>企业和投资者建议：聚焦政策支持领域（高端制造、绿色科技、国产品牌等），加强供应链韧性，密切跟踪政策和市场信号，做好风险管理。</blockquote>
+                <h2>六、结语</h2>
+                <p>2025年中国经济“表面强劲、内里承压”，政策托底与结构性难题交织。未来走势取决于内需恢复、地产企稳、科技创新突破及外部环境变化。对于所有关注中国经济的朋友，建议持续关注核心数据和政策动向，理性评估风险与机遇。</p>
+                <div class="my-10 text-center">
+                    <img src="images/photo2.jpg" alt="中国城市夜景" class="max-w-full md:max-w-lg mx-auto rounded-lg shadow-lg border border-[var(--border-color)]">
+                    <p class="text-center text-sm text-[var(--text-secondary)] mt-3">中国城市夜景</p>
+                </div>
+                <div class="github-link-container">
+                    <a href="https://www.stats.gov.cn/english/PressRelease/202504/t20250416_1959313.html" target="_blank" rel="noopener noreferrer" class="github-link" title="数据来源：国家统计局">
+                        <i class="fas fa-link mr-2"></i>
+                        <span>数据来源：国家统计局</span>
+                    </a>
+                </div>
+            </div>
+         </article>
+    </div>
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span>用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]">返回主页</a></p>
+        </div>
+    </footer>
+</body>
+</html>
