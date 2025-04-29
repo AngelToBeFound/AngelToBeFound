@@ -15,6 +15,7 @@
         /* --- Base Styles & Theme Variables --- */
         :root {
              --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
+             /* RGB versions for rgba background */
              --text-accent-rgb: 167, 199, 231;
              --text-accent-rgb-light: 59, 130, 246;
         }
@@ -58,45 +59,14 @@
         body.light-theme .post-body blockquote.warning { border-left-color: #d97706; background-color: rgba(245, 158, 11, 0.08); }
 
         .post-body code { background-color: var(--bg-glass); padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.9em; color: var(--text-primary); font-family: monospace; }
-        /* 修改: pre 标签的包裹 div */
         .code-block-wrapper { position: relative; margin-bottom: 1.25em; }
-        .post-body pre { background-color: var(--bg-glass); padding: 1em; border-radius: 0.5rem; overflow-x: auto; border: 1px solid var(--border-color); /* 移除 margin-bottom */ }
+        .post-body pre { background-color: var(--bg-glass); padding: 1em; border-radius: 0.5rem; overflow-x: auto; border: 1px solid var(--border-color); }
         .post-body pre code { background-color: transparent; padding: 0; border-radius: 0; font-size: 0.9em; border: none; }
-        /* 新增: 复制按钮样式 */
-        .copy-button {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            padding: 0.3rem 0.5rem;
-            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-            font-size: 0.75rem; /* 更小字体 */
-            line-height: 1; /* 确保图标垂直居中 */
-        }
-        .copy-button:hover {
-            opacity: 1;
-            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.4);
-            color: var(--text-primary);
-        }
-        .copy-button i { /* 图标和文字间距 */
-             margin-right: 0.25rem;
-        }
-        .copy-button.copied { /* 复制成功后的样式 */
-             background-color: rgba(74, 222, 128, 0.2); /* 绿色背景 */
-             color: #16a34a; /* 绿色文字 */
-        }
-        body.light-theme .copy-button.copied {
-             background-color: rgba(34, 197, 94, 0.1);
-             color: #15803d;
-        }
-
-
-        /* 参考文献区域样式 */
+        .copy-button { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.3rem 0.5rem; background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 0.375rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease; font-size: 0.75rem; line-height: 1; }
+        .copy-button:hover { opacity: 1; background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.4); color: var(--text-primary); }
+        .copy-button i { margin-right: 0.25rem; }
+        .copy-button.copied { background-color: rgba(74, 222, 128, 0.2); color: #16a34a; }
+        body.light-theme .copy-button.copied { background-color: rgba(34, 197, 94, 0.1); color: #15803d; }
         .references ol { list-style: decimal; margin-left: 1.5rem; }
         .references li { margin-bottom: 0.75rem; font-size: 0.875rem; line-height: 1.4; }
         .references li a { word-break: break-all; }
@@ -151,10 +121,10 @@
 
             <div class="post-body">
                 <blockquote class="warning">
-                    <p data-translate-key="post_xray_hint1"><strong>提示1：</strong>这篇文章假定您已拥有合适的网络环境、支付手段以及用于接收邮件通知的邮箱配置。</p>
+                    <p data-translate-key="post_xray_hint1"><strong>提示1：</strong>这篇文章已经假定您拥有合适的网络环境、支付手段、收信配置。</p>
                 </blockquote>
                 <blockquote class="warning">
-                    <p data-translate-key="post_xray_hint2"><strong>提示2：</strong>请您严格遵守您所在地区及服务器所在地区的相关法律法规。如在中国大陆地区使用，请确保服务器已按规定完成备案，并仅用于合法合规用途。如您因未遵守本条提示而产生任何问题（包括但不限于法律问题），本站及其所有人将不承担任何责任。</p>
+                    <p data-translate-key="post_xray_hint2"><strong>提示2：</strong>请您严格遵守相关法律，并将服务器做备案与合法化处理。如您因未遵守本条提示产生了任何其他问题（包括但不限于法律问题），本站及其所有人将不承担对于您过失行为的任何责任。</p>
                 </blockquote>
 
                 <h2 data-translate-key="post_xray_target">目标</h2>
@@ -171,7 +141,8 @@
                 <h2 data-translate-key="post_xray_prereq">前置要求</h2>
                 <ul>
                     <li data-translate-key="post_xray_prereq_ip">服务器拥有一个公网 IPv4 地址。</li>
-                    <li data-translate-key="post_xray_prereq_firewall"><strong>防火墙配置:</strong> 确保所有相关防火墙已允许外部访问 Xray 服务所需的 TCP 端口（本教程默认使用 443）以及 SSH 端口（TCP 22）。这可能包括：
+                    <li>
+                        <p data-translate-key="post_xray_prereq_firewall"><strong>防火墙配置:</strong> 确保所有相关防火墙已允许外部访问 Xray 服务所需的 TCP 端口（本教程默认使用 443）以及 SSH 端口（TCP 22）。这可能包括：</p>
                         <ul>
                             <li data-translate-key="post_xray_prereq_fw_cloud"><strong>云服务商防火墙/安全组:</strong> 如果你使用 AWS, GCP, Azure, DigitalOcean, Vultr 等云服务商，你需要在他们的管理控制台中配置防火墙/安全组规则，放行所需端口的入站流量（例如，TCP 443 端口来源设为 0.0.0.0/0，TCP 22 端口来源限制为你的 IP 地址）。</li>
                             <li data-translate-key="post_xray_prereq_fw_os"><strong>操作系统防火墙:</strong> 服务器操作系统自带的防火墙（如 ufw, firewalld）也需要配置。具体步骤见教程 Step 6。</li>
@@ -469,7 +440,7 @@ sudo firewall-cmd --reload</code></pre>
 
 
     <script>
-        // --- Translations (Add keys for this new post) ---
+        // --- Translations (FIXED: Added all missing keys) ---
         const translations = {
             'en': {
                 'blog_title': "MaxCaulfield's Blog", 'category': "Category", 'life_category': "Life", 'posted_on': "Posted on", 'author': "Author", 'back_to_blog': "Back to Blog List", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN", 'tech_category': "Tech", 'misc_category': "Misc", 'ai_category': "AI Talk", 'econ_category': "Economy Watch",
@@ -553,8 +524,8 @@ sudo firewall-cmd --reload</code></pre>
                 'post_xray_client_flow': "<strong>(Optional) Flow:</strong> Usually leave blank",
                 'post_xray_client_dest': "<strong>(Optional) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (Match server `dest` config)",
                 'post_xray_complete': "Deployment complete. Please use these parameters to configure your client and test the connection.",
-                'copy_button_text': "Copy", // 新增
-                'copy_button_copied_text': "Copied!" // 新增
+                'copy_button_text': "Copy",
+                'copy_button_copied_text': "Copied!"
             },
             'zh-CN': {
                  'blog_title': "麦青春的博客", 'category': "分类", 'life_category': "生活", 'posted_on': "发布于", 'author': "作者", 'back_to_blog': "返回博客列表", 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简", 'tech_category': "技术", 'misc_category': "随笔", 'ai_category': "AI杂谈", 'econ_category': "经济观察",
@@ -638,8 +609,8 @@ sudo firewall-cmd --reload</code></pre>
                  'post_xray_client_flow': "<strong>(可选) Flow:</strong> 通常留空",
                  'post_xray_client_dest': "<strong>(可选) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (与服务器 dest 配置匹配)",
                  'post_xray_complete': "部署完成。请使用这些参数配置客户端并测试连接。",
-                 'copy_button_text': "复制", // 新增
-                 'copy_button_copied_text': "已复制!" // 新增
+                 'copy_button_text': "复制",
+                 'copy_button_copied_text': "已复制!"
              },
              'zh-TW': {
                  'blog_title': "麥青春的部落格", 'category': "分類", 'life_category': "生活", 'posted_on': "發佈於", 'author': "作者", 'back_to_blog': "返回部落格列表", 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁", 'tech_category': "技術", 'misc_category': "隨筆", 'ai_category': "AI雜談", 'econ_category': "經濟觀察",
@@ -723,8 +694,8 @@ sudo firewall-cmd --reload</code></pre>
                  'post_xray_client_flow': "<strong>(可選) Flow:</strong> 通常留空",
                  'post_xray_client_dest': "<strong>(可選) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (與伺服器 dest 配置匹配)",
                  'post_xray_complete': "部署完成。請使用這些參數配置客戶端並測試連接。",
-                 'copy_button_text': "複製", // 新增
-                 'copy_button_copied_text': "已複製!" // 新增
+                 'copy_button_text': "複製",
+                 'copy_button_copied_text': "已複製!"
              }
         };
 
@@ -735,7 +706,7 @@ sudo firewall-cmd --reload</code></pre>
         const langToggle = document.getElementById('lang-toggle');
         const langDropdown = document.getElementById('lang-dropdown');
         const currentLangSpan = document.getElementById('current-lang');
-        let currentLang = localStorage.getItem('language') || 'zh-CN'; // 默认设置为中文
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
 
         function applyTranslations(lang) {
              if (!translations || !translations[lang]) { console.warn(`Translations for language '${lang}' not found.`); return; }
@@ -836,7 +807,7 @@ sudo firewall-cmd --reload</code></pre>
 
             // Apply initial translation
             console.log("Attempting to apply initial translations...");
-            applyTranslations(currentLang);
+            applyTranslations(currentLang); // Apply based on currentLang
 
             // --- tsParticles Initialization ---
             console.log("Attempting to load tsParticles...");
