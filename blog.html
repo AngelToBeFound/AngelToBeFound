@@ -236,7 +236,9 @@
         <main class="md:col-span-2 space-y-8 md:space-y-12 stagger-fade">
 
             <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0s;">
-                 <div class="h-48 bg-sky-700 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="post_xray_card_header">Xray Tutorial</h3> </div>
+                 <div class="h-48 bg-sky-700 flex items-center justify-center p-6 card-header-block">
+                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="post_xray_card_header">Xray Tutorial</h3>
+                 </div>
                  <div class="p-6 md:p-8">
                     <p class="text-sm text-[var(--text-secondary)] mb-2">
                         <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="tech_category">技术</a> | <time datetime="2025-04-29">2025年4月29日</time>
@@ -251,14 +253,13 @@
                 </div>
             </article>
 
-            <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.05s;">
+             <article class="blog-post-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.05s;">
                  <img src="images/economy-card-preview.png" alt="中国经济轨迹 (2025)"
                       class="w-full h-48 object-cover card-image"
                       onerror="this.onerror=null; this.src='https://placehold.co/800x400/1f2937/e5e7eb?text=Economy+Preview';">
                  <div class="p-6 md:p-8">
                     <p class="text-sm text-[var(--text-secondary)] mb-2">
-                        <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="econ_category">经济观察</a> | <time datetime="2025-04-23">2025年4月23日</time>
-                    </p>
+                        <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="econ_category">经济观察</a> | <time datetime="2025-04-29">2025年4月29日</time> </p>
                     <h2 class="text-2xl md:text-3xl font-bold mb-3">
                         <a href="post-economy-trends-zh-CN.html" class="hover:text-[var(--text-accent)] transition-colors" data-translate-key="post_econ_title">China's Economic Trajectory: Navigating Resilience, Risks, and Rebalancing in 2025</a>
                     </h2>
@@ -334,8 +335,8 @@
             <div class="sidebar-module glass-effect fade-in" style="animation-delay: 0.35s;">
                 <h3 class="text-xl font-semibold mb-4 border-b border-[var(--border-color)] pb-2 text-gradient" data-translate-key="recent_posts">近期文章</h3>
                 <ul class="space-y-3">
-                    <li><a href="post-xray-tutorial.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_xray_title">通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程</a></li>
                     <li><a href="post-economy-trends-zh-CN.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_econ_title">China's Economic Trajectory: Navigating Resilience, Risks, and Rebalancing in 2025</a></li>
+                    <li><a href="post-xray-tutorial.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_xray_title">通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程</a></li>
                     <li><a href="post-github-pages-tutorial.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_gh_pages_title">如何搭建不用服务器的个人网站？</a></li>
                     <li><a href="post-why-website.html" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-accent)] transition-colors line-clamp-1" data-translate-key="post_why_title">为什么要做这个个人网站？</a></li>
                 </ul>
@@ -360,12 +361,11 @@
                 'post_gh_pages_title': "How to Build a Personal Website Without a Server?",
                 'post_gh_pages_excerpt': "This time, I'll share how to build a personal website without needing an extra server, using GitHub Pages for free. Detailed steps from GitHub registration to deployment...",
                 'post_gh_pages_card_header': "GitHub Pages Tutorial",
-                // 新增键
                 'post_econ_title': "China's Economic Trajectory: Navigating Resilience, Risks, and Rebalancing in 2025",
                 'post_econ_excerpt': "Analysis of China's economic performance in early 2025, discussing risks, challenges, policy responses, and future trends... (Original in English)",
                 'post_xray_title': "Standard Tutorial for Deploying Xray (VLESS + REALITY) Node on a General Linux Server",
                 'post_xray_excerpt': "Standard steps to install and configure Xray-core on a Linux server using VLESS protocol and REALITY security features for network proxy service...",
-                'post_xray_card_header': "Xray Tutorial", // 保持英文
+                'post_xray_card_header': "Xray Tutorial",
                 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN"
             },
             'zh-CN': {
@@ -374,13 +374,12 @@
                 'post_why_excerpt': "你好，我是麦青春。这个网站是学习过程中的产物，用来记录想法、分享资料，未来会持续更新。部分内容由 AI 辅助搭建，源码已在 GitHub 开源...",
                 'post_gh_pages_title': "如何搭建不用服务器的个人网站呢？",
                 'post_gh_pages_excerpt': "这期分享一下如何利用 GitHub Pages 免费搭建一个不需要额外购买服务器的个人网站，从注册 GitHub 到部署完成的详细步骤...",
-                'post_gh_pages_card_header': "GitHub Pages Tutorial", // 保持英文
-                 // 新增键
+                'post_gh_pages_card_header': "GitHub Pages Tutorial",
                 'post_econ_title': "中国经济轨迹：驾驭韧性、风险与再平衡 (2025)",
                 'post_econ_excerpt': "分析中国2025年初的经济表现，探讨韧性背后的风险、挑战以及政策应对，展望未来趋势... (原文为英文)",
                 'post_xray_title': "通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程",
                 'post_xray_excerpt': "在 Linux 服务器上安装并配置 Xray-core，使用 VLESS 协议和 REALITY 安全特性，实现网络代理服务的标准步骤...",
-                'post_xray_card_header': "Xray Tutorial", // 保持英文
+                'post_xray_card_header': "Xray Tutorial",
                 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简"
             },
             'zh-TW': {
@@ -389,13 +388,12 @@
                 'post_why_excerpt': "你好，我是麥青春。這個網站是學習過程中的產物，用來記錄想法、分享資料，未來會持續更新。部分內容由 AI 輔助搭建，源碼已在 GitHub 開源...",
                 'post_gh_pages_title': "如何搭建不用伺服器的個人網站呢？",
                 'post_gh_pages_excerpt': "這期分享一下如何利用 GitHub Pages 免費搭建一個不需要額外購買伺服器的個人網站，從註冊 GitHub 到部署完成的詳細步驟...",
-                'post_gh_pages_card_header': "GitHub Pages Tutorial", // 保持英文
-                 // 新增键
+                'post_gh_pages_card_header': "GitHub Pages Tutorial",
                 'post_econ_title': "中國經濟軌跡：駕馭韌性、風險與再平衡 (2025)",
                 'post_econ_excerpt': "分析中國2025年初的經濟表現，探討韌性背後的風險、挑戰以及政策應對，展望未來趨勢... (原文為英文)",
                 'post_xray_title': "通用 Linux 伺服器部署 Xray (VLESS + REALITY) 節點標準教學",
                 'post_xray_excerpt': "在 Linux 伺服器上安裝並配置 Xray-core，使用 VLESS 協議和 REALITY 安全特性，實現網路代理服務的標準步驟...",
-                'post_xray_card_header': "Xray Tutorial", // 保持英文
+                'post_xray_card_header': "Xray Tutorial",
                 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁"
             }
         };
