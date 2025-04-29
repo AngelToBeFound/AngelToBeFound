@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="post_xray_title_seo">通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- Base Styles & Theme Variables --- */
+        :root {
+             --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
+             --text-accent-rgb: 167, 199, 231;
+             --text-accent-rgb-light: 59, 130, 246;
+        }
+        body.light-theme {
+             --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+
+        /* Styles for Post Content Area */
+        .post-content-area { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 2rem; position: relative; z-index: 10; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        @media (min-width: 768px) { .post-content-area { padding: 3rem; } }
+
+        /* Basic styling for content within the post */
+        .post-body h1, .post-body h2, .post-body h3, .post-body h4 { color: var(--text-primary); margin-top: 1.75em; margin-bottom: 0.75em; font-weight: 600; line-height: 1.3; }
+        .post-body h1 { font-size: 2.25rem; line-height: 2.5rem; margin-top: 0; }
+        .post-body h2 { font-size: 1.875rem; line-height: 2.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .post-body h3 { font-size: 1.5rem; line-height: 2rem; }
+        .post-body h4 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 500; }
+        .post-body p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25em; }
+        .post-body a { color: var(--text-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; transition: opacity 0.2s ease; word-break: break-all; }
+        .post-body a:hover { opacity: 0.8; }
+        .post-body ul, .post-body ol { margin-left: 1.5rem; margin-bottom: 1.25em; color: var(--text-secondary); }
+        .post-body li { margin-bottom: 0.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+        .post-body strong { font-weight: 600; color: var(--text-primary); }
+        .post-body blockquote { margin: 1.5em 0; padding: 1em 1.5em; border-left: 4px solid var(--text-accent); background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.1); color: var(--text-secondary); border-radius: 0.25rem; font-style: normal; }
+        body.light-theme .post-body blockquote { background-color: rgba(var(--text-accent-rgb-light, 59, 130, 246), 0.08); border-left-color: var(--text-accent-light); }
+        .post-body blockquote p { margin-bottom: 0.5em; }
+        .post-body blockquote p:last-child { margin-bottom: 0; }
+        .post-body blockquote.warning { border-left-color: #f59e0b; background-color: rgba(245, 158, 11, 0.1); }
+        body.light-theme .post-body blockquote.warning { border-left-color: #d97706; background-color: rgba(245, 158, 11, 0.08); }
+
+        .post-body code { background-color: var(--bg-glass); padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.9em; color: var(--text-primary); font-family: monospace; }
+        /* 修改: pre 标签的包裹 div */
+        .code-block-wrapper { position: relative; margin-bottom: 1.25em; }
+        .post-body pre { background-color: var(--bg-glass); padding: 1em; border-radius: 0.5rem; overflow-x: auto; border: 1px solid var(--border-color); /* 移除 margin-bottom */ }
+        .post-body pre code { background-color: transparent; padding: 0; border-radius: 0; font-size: 0.9em; border: none; }
+        /* 新增: 复制按钮样式 */
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+            font-size: 0.75rem; /* 更小字体 */
+            line-height: 1; /* 确保图标垂直居中 */
+        }
+        .copy-button:hover {
+            opacity: 1;
+            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.4);
+            color: var(--text-primary);
+        }
+        .copy-button i { /* 图标和文字间距 */
+             margin-right: 0.25rem;
+        }
+        .copy-button.copied { /* 复制成功后的样式 */
+             background-color: rgba(74, 222, 128, 0.2); /* 绿色背景 */
+             color: #16a34a; /* 绿色文字 */
+        }
+        body.light-theme .copy-button.copied {
+             background-color: rgba(34, 197, 94, 0.1);
+             color: #15803d;
+        }
+
+
+        /* 参考文献区域样式 */
+        .references ol { list-style: decimal; margin-left: 1.5rem; }
+        .references li { margin-bottom: 0.75rem; font-size: 0.875rem; line-height: 1.4; }
+        .references li a { word-break: break-all; }
+
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="blog_title">麦青春的博客</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1 z-30">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 relative z-10">
+         <div class="mb-6 md:mb-8">
+            <a href="blog.html" class="text-sm text-[var(--text-accent)] hover:underline">
+                &larr; <span data-translate-key="back_to_blog">返回博客列表</span>
+            </a>
+        </div>
+         <article class="post-content-area glass-effect">
+            <header class="mb-8 md:mb-12 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gradient" data-translate-key="post_xray_title">
+                    通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程
+                </h1>
+                <p class="text-sm text-[var(--text-secondary)]">
+                    <span data-translate-key="category">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="tech_category">技术</a>
+                    <span class="mx-2">|</span>
+                    <span data-translate-key="posted_on">发布于</span>: <time datetime="2025-04-29">2025年4月29日</time>
+                </p>
+            </header>
+
+            <div class="post-body">
+                <blockquote class="warning">
+                    <p data-translate-key="post_xray_hint1"><strong>提示1：</strong>这篇文章假定您已拥有合适的网络环境、支付手段以及用于接收邮件通知的邮箱配置。</p>
+                </blockquote>
+                <blockquote class="warning">
+                    <p data-translate-key="post_xray_hint2"><strong>提示2：</strong>请您严格遵守您所在地区及服务器所在地区的相关法律法规。如在中国大陆地区使用，请确保服务器已按规定完成备案，并仅用于合法合规用途。如您因未遵守本条提示而产生任何问题（包括但不限于法律问题），本站及其所有人将不承担任何责任。</p>
+                </blockquote>
+
+                <h2 data-translate-key="post_xray_target">目标</h2>
+                <p data-translate-key="post_xray_target_desc">在 Linux 服务器上安装并配置 Xray-core，使用 VLESS 协议和 REALITY 安全特性，实现网络代理服务。</p>
+
+                <h2 data-translate-key="post_xray_env">适用环境</h2>
+                <ul>
+                    <li data-translate-key="post_xray_env_server">任何 VPS 或物理服务器</li>
+                    <li data-translate-key="post_xray_env_os">操作系统: Linux (本教程命令主要基于 Ubuntu/Debian，会提供 CentOS/Fedora 等系统的命令提示)</li>
+                    <li data-translate-key="post_xray_env_user">具有 root 或 sudo 权限的用户账户</li>
+                    <li data-translate-key="post_xray_env_access">可通过 SSH 远程访问服务器</li>
+                </ul>
+
+                <h2 data-translate-key="post_xray_prereq">前置要求</h2>
+                <ul>
+                    <li data-translate-key="post_xray_prereq_ip">服务器拥有一个公网 IPv4 地址。</li>
+                    <li data-translate-key="post_xray_prereq_firewall"><strong>防火墙配置:</strong> 确保所有相关防火墙已允许外部访问 Xray 服务所需的 TCP 端口（本教程默认使用 443）以及 SSH 端口（TCP 22）。这可能包括：
+                        <ul>
+                            <li data-translate-key="post_xray_prereq_fw_cloud"><strong>云服务商防火墙/安全组:</strong> 如果你使用 AWS, GCP, Azure, DigitalOcean, Vultr 等云服务商，你需要在他们的管理控制台中配置防火墙/安全组规则，放行所需端口的入站流量（例如，TCP 443 端口来源设为 0.0.0.0/0，TCP 22 端口来源限制为你的 IP 地址）。</li>
+                            <li data-translate-key="post_xray_prereq_fw_os"><strong>操作系统防火墙:</strong> 服务器操作系统自带的防火墙（如 ufw, firewalld）也需要配置。具体步骤见教程 Step 6。</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h2 data-translate-key="post_xray_step1_title">步骤 1: 系统环境准备</h2>
+                <h3 data-translate-key="post_xray_step1_1_title">1.1. 更新系统软件包:</h3>
+                <p data-translate-key="post_xray_step1_1_desc">对于 Ubuntu/Debian 系统:</p>
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo apt update && sudo apt upgrade -y</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step1_1_desc_centos">对于 CentOS/RHEL/Fedora 系统:</p>
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo yum update -y # 或者 sudo dnf update -y (适用于较新 Fedora/RHEL)</code></pre>
+                </div>
+
+                <h3 data-translate-key="post_xray_step1_2_title">1.2. 安装必要工具:</h3>
+                <p data-translate-key="post_xray_step1_2_desc">对于 Ubuntu/Debian 系统:</p>
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo apt install curl wget socat unzip -y</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step1_2_desc_centos">对于 CentOS/RHEL/Fedora 系统:</p>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo yum install curl wget socat unzip -y # 或者 sudo dnf install curl wget socat unzip -y</code></pre>
+                </div>
+
+                <h2 data-translate-key="post_xray_step2_title">步骤 2: 安装 Xray-core</h2>
+                <p data-translate-key="post_xray_step2_desc">使用官方提供的安装脚本进行安装。该脚本通常能兼容多数主流 Linux 发行版（如 Ubuntu, Debian, CentOS, Fedora 等）。</p>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step2_info">脚本会自动检测系统并进行安装，同时设置 systemd 服务。</p>
+                <ul>
+                    <li data-translate-key="post_xray_step2_path_bin">Xray 主程序路径: <code>/usr/local/bin/xray</code></li>
+                    <li data-translate-key="post_xray_step2_path_config">配置文件目录: <code>/usr/local/etc/xray/</code></li>
+                    <li data-translate-key="post_xray_step2_path_service">服务名称: <code>xray</code></li>
+                </ul>
+
+                <h2 data-translate-key="post_xray_step3_title">步骤 3: 生成所需参数</h2>
+                <p data-translate-key="post_xray_step3_desc">VLESS + REALITY 配置需要以下独一无二的参数，请在服务器上生成并务必安全保存。</p>
+                <h3 data-translate-key="post_xray_step3_1_title">3.1. 生成 UUID (用户 ID):</h3>
+                 <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">/usr/local/bin/xray uuid</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step3_1_action">复制输出的 UUID 字符串 (格式: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)。将其记为 <code class="font-bold">YOUR_UUID</code>。</p>
+                <h3 data-translate-key="post_xray_step3_2_title">3.2. 生成 REALITY 密钥对:</h3>
+                 <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">/usr/local/bin/xray x25519</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step3_2_action">复制输出的 <code>Private key:</code> 和 <code>Public key:</code>。将私钥记为 <code class="font-bold">YOUR_PRIVATE_KEY</code>，公钥记为 <code class="font-bold">YOUR_PUBLIC_KEY</code>。</p>
+                <h3 data-translate-key="post_xray_step3_3_title">3.3. (可选) 生成 Short ID:</h3>
+                 <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">openssl rand -hex 8</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step3_3_action">生成一个或多个 16 进制短 ID。将其记为 <code class="font-bold">YOUR_SHORT_ID</code> (如果生成多个，则区分)。如果不用，则配置中保持 <code>""</code>。</p>
+
+                <h2 data-translate-key="post_xray_step4_title">步骤 4: 配置 Xray 服务器 (config.json)</h2>
+                <h3 data-translate-key="post_xray_step4_1_title">4.1. 编辑配置文件:</h3>
+                 <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo nano /usr/local/etc/xray/config.json</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step4_1_vim">(如果你偏好 vim，请使用 <code>sudo vim ...</code>)</p>
+                <h3 data-translate-key="post_xray_step4_2_title">4.2. 写入配置:</h3>
+                <p data-translate-key="post_xray_step4_2_desc">删除文件内所有内容，粘贴以下 JSON 模板，并替换其中的占位符。</p>
+                 <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-json">{
+  "log": {
+    "loglevel": "warning"
+  },
+  "api": {
+    "tag": "api",
+    "services": [
+      "StatsService"
+    ]
+  },
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api"
+      }
+    ]
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserUplink": true,
+        "statsUserDownlink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 443,                  // **确保此端口已在所有防火墙中放行**
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "YOUR_UUID",      // ***替换为你的 UUID***
+            "flow": ""
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "www.microsoft.com:443", // **目标伪装域名 (可按需更换)**
+          "xver": 0,
+          "serverNames": [
+            "www.microsoft.com"     // **需包含 dest 中的域名**
+          ],
+          "privateKey": "YOUR_PRIVATE_KEY", // ***替换为你的 Private Key***
+          "minClientVer": "",
+          "maxClientVer": "",
+          "maxTimeDiff": 60000,
+          "shortIds": [
+             ""                     // ***替换为你的 Short ID(s)，或保持 ""***
+          ],
+          "fingerprint": "chrome"     // **TLS 指纹 (需与客户端一致)**
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls", "quic"]
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 62789,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "api"
+    }
+  ],
+  "stats": {}
+}
+</code></pre>
+                </div>
+                <h3 data-translate-key="post_xray_step4_3_title">4.3. 保存并退出:</h3>
+                <p data-translate-key="post_xray_step4_3_nano">(在 nano 中: <code>Ctrl + X</code>, <code>Y</code>, <code>Enter</code>)。</p>
+
+                <h2 data-translate-key="post_xray_step5_title">步骤 5: 管理 Xray 服务</h2>
+                <p data-translate-key="post_xray_step5_desc">以下命令适用于使用 systemd 的系统 (目前绝大多数主流 Linux 发行版)。</p>
+                <h3 data-translate-key="post_xray_step5_1_title">5.1. 测试配置:</h3>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo /usr/local/bin/xray -test -config /usr/local/etc/xray/config.json</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step5_1_check">确保输出 <code>Configuration OK.</code>。</p>
+                <h3 data-translate-key="post_xray_step5_2_title">5.2. 重启 Xray 服务:</h3>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo systemctl restart xray</code></pre>
+                </div>
+                <h3 data-translate-key="post_xray_step5_3_title">5.3. 设置开机自启:</h3>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo systemctl enable xray</code></pre>
+                </div>
+                <h3 data-translate-key="post_xray_step5_4_title">5.4. 检查运行状态:</h3>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo systemctl status xray</code></pre>
+                </div>
+                <p data-translate-key="post_xray_step5_4_check">确保状态是 <code>active (running)</code>。</p>
+
+                <h2 data-translate-key="post_xray_step6_title">步骤 6: 配置操作系统防火墙</h2>
+                <p data-translate-key="post_xray_step6_desc"><strong>重要:</strong> 你必须同时确保云服务商的防火墙（如果使用云服务器）和服务器操作系统的防火墙都允许 Xray 端口（例如 443）的入站 TCP 连接。云服务商防火墙请在其网页控制台配置。</p>
+                <p data-translate-key="post_xray_step6_desc2">以下是配置操作系统防火墙的常用方法：</p>
+                <h3 data-translate-key="post_xray_step6_1_title">6.1. 对于 Ubuntu/Debian (使用 ufw):</h3>
+                <p data-translate-key="post_xray_step6_1_check">检查状态: <code>sudo ufw status</code></p>
+                <p data-translate-key="post_xray_step6_1_inactive">如果是 <code>inactive</code>，则无需操作。</p>
+                <p data-translate-key="post_xray_step6_1_active">如果是 <code>active</code>，确保端口已允许。如果未允许，执行:</p>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo ufw allow 443/tcp
+sudo ufw reload</code></pre>
+                </div>
+                <h3 data-translate-key="post_xray_step6_2_title">6.2. 对于 CentOS/RHEL/Fedora (使用 firewalld):</h3>
+                <p data-translate-key="post_xray_step6_2_check">检查状态: <code>sudo systemctl status firewalld</code></p>
+                <p data-translate-key="post_xray_step6_2_inactive">如果是 <code>inactive</code>，则无需操作 (除非你想启用它)。</p>
+                <p data-translate-key="post_xray_step6_2_active">如果是 <code>active</code>，执行以下命令永久允许端口 443 并重载规则:</p>
+                <div class="code-block-wrapper">
+                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
+                        <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
+                    </button>
+                    <pre><code class="language-bash">sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --reload</code></pre>
+                </div>
+
+                <h2 data-translate-key="post_xray_step7_title">步骤 7: 客户端配置参数汇总</h2>
+                <p data-translate-key="post_xray_step7_desc">你需要以下信息来配置你的客户端软件：</p>
+                <ul>
+                    <li data-translate-key="post_xray_client_type"><strong>类型 (Type/Protocol):</strong> VLESS</li>
+                    <li data-translate-key="post_xray_client_address"><strong>地址 (Address/Host):</strong> <code>YOUR_SERVER_IP</code> (你的服务器的公网 IP 地址)</li>
+                    <li data-translate-key="post_xray_client_port"><strong>端口 (Port):</strong> <code>443</code> (或你在 config.json 中设置的端口)</li>
+                    <li data-translate-key="post_xray_client_uuid"><strong>用户 ID (UUID):</strong> <code>YOUR_UUID</code> (步骤 3.1 生成的 UUID)</li>
+                    <li data-translate-key="post_xray_client_encryption"><strong>加密 (Encryption):</strong> <code>none</code></li>
+                    <li data-translate-key="post_xray_client_network"><strong>传输协议 (Network):</strong> <code>tcp</code></li>
+                    <li data-translate-key="post_xray_client_security"><strong>安全 (Security/Type):</strong> <code>reality</code></li>
+                    <li data-translate-key="post_xray_client_sni"><strong>SNI (Server Name Indication / Host / Peer):</strong> <code>www.microsoft.com</code> (或你在服务器配置中使用的域名)</li>
+                    <li data-translate-key="post_xray_client_pbk"><strong>公钥 (Public Key / pbk):</strong> <code>YOUR_PUBLIC_KEY</code> (步骤 3.2 生成的 Public Key)</li>
+                    <li data-translate-key="post_xray_client_fp"><strong>指纹 (Fingerprint / fp):</strong> <code>chrome</code> (或你在服务器配置中使用的指纹)</li>
+                    <li data-translate-key="post_xray_client_sid"><strong>Short ID (sid):</strong> (与服务器 shortIds 配置匹配，如果服务器是 <code>[""]</code>，客户端通常留空)</li>
+                    <li data-translate-key="post_xray_client_flow"><strong>(可选) Flow:</strong> 通常留空</li>
+                    <li data-translate-key="post_xray_client_dest"><strong>(可选) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (与服务器 dest 配置匹配)</li>
+                </ul>
+                <p data-translate-key="post_xray_complete">部署完成。请使用这些参数配置客户端并测试连接。</p>
+
+            </div>
+         </article>
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+
+    <div id="lightbox-overlay" class="fixed inset-0 bg-black bg-opacity-85 hidden items-center justify-center z-[100] transition-opacity duration-300 ease-in-out cursor-zoom-out">
+        <span id="lightbox-close" class="absolute top-6 right-8 text-white text-4xl font-bold cursor-pointer hover:text-gray-400 transition-colors leading-none p-2">&times;</span>
+        <img id="lightbox-img" src="" alt="放大的图片" class="max-w-[95%] max-h-[95%] object-contain rounded-lg shadow-xl cursor-default">
+    </div>
+
+
+    <script>
+        // --- Translations (Add keys for this new post) ---
+        const translations = {
+            'en': {
+                'blog_title': "MaxCaulfield's Blog", 'category': "Category", 'life_category': "Life", 'posted_on': "Posted on", 'author': "Author", 'back_to_blog': "Back to Blog List", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN", 'tech_category': "Tech", 'misc_category': "Misc", 'ai_category': "AI Talk", 'econ_category': "Economy Watch",
+                // Keys for this post
+                'post_xray_title_seo': "Standard Tutorial for Deploying Xray (VLESS + REALITY) Node on Linux Server - MaxCaulfield's Blog",
+                'post_xray_title': "Standard Tutorial for Deploying Xray (VLESS + REALITY) Node on a General Linux Server",
+                'post_xray_hint1': "<strong>Hint 1:</strong> This article assumes you already have a suitable network environment, payment methods, and email configuration for receiving notifications.",
+                'post_xray_hint2': "<strong>Hint 2:</strong> Please strictly abide by relevant laws and regulations. If used in mainland China, ensure the server is properly registered and used for legal purposes only. This site and its owner assume no responsibility for any issues (including but not limited to legal issues) arising from your failure to comply with this notice.",
+                'post_xray_target': "Objective",
+                'post_xray_target_desc': "Install and configure Xray-core on a Linux server using the VLESS protocol and REALITY security features to implement a network proxy service.",
+                'post_xray_env': "Applicable Environment",
+                'post_xray_env_server': "Any VPS or physical server",
+                'post_xray_env_os': "Operating System: Linux (Commands in this tutorial are primarily based on Ubuntu/Debian, with notes for CentOS/Fedora etc.)",
+                'post_xray_env_user': "User account with root or sudo privileges",
+                'post_xray_env_access': "Remote access to the server via SSH",
+                'post_xray_prereq': "Prerequisites",
+                'post_xray_prereq_ip': "The server has a public IPv4 address.",
+                'post_xray_prereq_firewall': "<strong>Firewall Configuration:</strong> Ensure all relevant firewalls allow external access to the TCP port required by the Xray service (default 443 in this tutorial) and the SSH port (TCP 22). This may include:",
+                'post_xray_prereq_fw_cloud': "<strong>Cloud Provider Firewall/Security Group:</strong> If using cloud providers like AWS, GCP, Azure, DigitalOcean, Vultr, etc., configure firewall/security group rules in their management console to allow inbound traffic on the required ports (e.g., TCP 443 from source 0.0.0.0/0, TCP 22 limited to your IP address).",
+                'post_xray_prereq_fw_os': "<strong>Operating System Firewall:</strong> The server's built-in firewall (e.g., ufw, firewalld) also needs configuration. See Step 6 for details.",
+                'post_xray_step1_title': "Step 1: System Environment Preparation",
+                'post_xray_step1_1_title': "1.1. Update System Packages:",
+                'post_xray_step1_1_desc': "For Ubuntu/Debian systems:",
+                'post_xray_step1_1_desc_centos': "For CentOS/RHEL/Fedora systems:",
+                'post_xray_step1_2_title': "1.2. Install Necessary Tools:",
+                'post_xray_step1_2_desc': "For Ubuntu/Debian systems:",
+                'post_xray_step1_2_desc_centos': "For CentOS/RHEL/Fedora systems:",
+                'post_xray_step2_title': "Step 2: Install Xray-core",
+                'post_xray_step2_desc': "Use the official installation script. This script is generally compatible with most major Linux distributions (like Ubuntu, Debian, CentOS, Fedora, etc.).",
+                'post_xray_step2_info': "The script will automatically detect the system, perform the installation, and set up the systemd service.",
+                'post_xray_step2_path_bin': "Xray main program path: <code>/usr/local/bin/xray</code>",
+                'post_xray_step2_path_config': "Configuration file directory: <code>/usr/local/etc/xray/</code>",
+                'post_xray_step2_path_service': "Service name: <code>xray</code>",
+                'post_xray_step3_title': "Step 3: Generate Required Parameters",
+                'post_xray_step3_desc': "VLESS + REALITY configuration requires the following unique parameters. Please generate them on the server and save them securely.",
+                'post_xray_step3_1_title': "3.1. Generate UUID (User ID):",
+                'post_xray_step3_1_action': "Copy the output UUID string (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx). Note it down as <code class=\"font-bold\">YOUR_UUID</code>.",
+                'post_xray_step3_2_title': "3.2. Generate REALITY Key Pair:",
+                'post_xray_step3_2_action': "Copy the output <code>Private key:</code> and <code>Public key:</code>. Note down the private key as <code class=\"font-bold\">YOUR_PRIVATE_KEY</code> and the public key as <code class=\"font-bold\">YOUR_PUBLIC_KEY</code>.",
+                'post_xray_step3_3_title': "3.3. (Optional) Generate Short ID(s):",
+                'post_xray_step3_3_action': "Generate one or more 16-character hexadecimal short IDs. Note them down as <code class=\"font-bold\">YOUR_SHORT_ID</code> (distinguish if multiple). If not used, keep <code>\"\"</code> in the configuration.",
+                'post_xray_step4_title': "Step 4: Configure Xray Server (config.json)",
+                'post_xray_step4_1_title': "4.1. Edit Configuration File:",
+                'post_xray_step4_1_vim': "(If you prefer vim, use <code>sudo vim ...</code>)",
+                'post_xray_step4_2_title': "4.2. Write Configuration:",
+                'post_xray_step4_2_desc': "Delete all content in the file, paste the following JSON template, and replace the placeholders.",
+                'post_xray_step4_3_title': "4.3. Save and Exit:",
+                'post_xray_step4_3_nano': "(In nano: <code>Ctrl + X</code>, <code>Y</code>, <code>Enter</code>).",
+                'post_xray_step5_title': "Step 5: Manage Xray Service",
+                'post_xray_step5_desc': "The following commands apply to systems using systemd (most major Linux distributions today).",
+                'post_xray_step5_1_title': "5.1. Test Configuration:",
+                'post_xray_step5_1_check': "Ensure the output is <code>Configuration OK.</code>.",
+                'post_xray_step5_2_title': "5.2. Restart Xray Service:",
+                'post_xray_step5_3_title': "5.3. Enable Start on Boot:",
+                'post_xray_step5_4_title': "5.4. Check Running Status:",
+                'post_xray_step5_4_check': "Ensure the status is <code>active (running)</code>.",
+                'post_xray_step6_title': "Step 6: Configure Operating System Firewall",
+                'post_xray_step6_desc': "<strong>Important:</strong> You must ensure both your cloud provider's firewall (if applicable) and the server's OS firewall allow inbound TCP connections on the Xray port (e.g., 443). Configure the cloud provider firewall via their web console.",
+                'post_xray_step6_desc2': "Here are common methods for configuring the OS firewall:",
+                'post_xray_step6_1_title': "6.1. For Ubuntu/Debian (using ufw):",
+                'post_xray_step6_1_check': "Check status: <code>sudo ufw status</code>",
+                'post_xray_step6_1_inactive': "If inactive, no action needed.",
+                'post_xray_step6_1_active': "If active, ensure the port is allowed. If not, execute:",
+                'post_xray_step6_2_title': "6.2. For CentOS/RHEL/Fedora (using firewalld):",
+                'post_xray_step6_2_check': "Check status: <code>sudo systemctl status firewalld</code>",
+                'post_xray_step6_2_inactive': "If inactive, no action needed (unless you want to enable it).",
+                'post_xray_step6_2_active': "If active, execute the following to permanently allow port 443 and reload rules:",
+                'post_xray_step7_title': "Step 7: Client Configuration Parameters Summary",
+                'post_xray_step7_desc': "You will need the following information to configure your client software:",
+                'post_xray_client_type': "<strong>Type (Type/Protocol):</strong> VLESS",
+                'post_xray_client_address': "<strong>Address (Address/Host):</strong> <code>YOUR_SERVER_IP</code> (Your server's public IP address)",
+                'post_xray_client_port': "<strong>Port (Port):</strong> <code>443</code> (or the port set in config.json)",
+                'post_xray_client_uuid': "<strong>User ID (UUID):</strong> <code>YOUR_UUID</code> (UUID generated in Step 3.1)",
+                'post_xray_client_encryption': "<strong>Encryption:</strong> <code>none</code>",
+                'post_xray_client_network': "<strong>Network (Network):</strong> <code>tcp</code>",
+                'post_xray_client_security': "<strong>Security (Security/Type):</strong> <code>reality</code>",
+                'post_xray_client_sni': "<strong>SNI (Server Name Indication / Host / Peer):</strong> <code>www.microsoft.com</code> (or the domain used in server config)",
+                'post_xray_client_pbk': "<strong>Public Key (Public Key / pbk):</strong> <code>YOUR_PUBLIC_KEY</code> (Public Key generated in Step 3.2)",
+                'post_xray_client_fp': "<strong>Fingerprint (Fingerprint / fp):</strong> <code>chrome</code> (or the fingerprint used in server config)",
+                'post_xray_client_sid': "<strong>Short ID (sid):</strong> (Match server `shortIds` config; usually leave blank if server is <code>[\"\"]</code>)",
+                'post_xray_client_flow': "<strong>(Optional) Flow:</strong> Usually leave blank",
+                'post_xray_client_dest': "<strong>(Optional) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (Match server `dest` config)",
+                'post_xray_complete': "Deployment complete. Please use these parameters to configure your client and test the connection.",
+                'copy_button_text': "Copy", // 新增
+                'copy_button_copied_text': "Copied!" // 新增
+            },
+            'zh-CN': {
+                 'blog_title': "麦青春的博客", 'category': "分类", 'life_category': "生活", 'posted_on': "发布于", 'author': "作者", 'back_to_blog': "返回博客列表", 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简", 'tech_category': "技术", 'misc_category': "随笔", 'ai_category': "AI杂谈", 'econ_category': "经济观察",
+                 // 本文相关键
+                 'post_xray_title_seo': "通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程 - 麦青春的博客",
+                 'post_xray_title': "通用 Linux 服务器部署 Xray (VLESS + REALITY) 节点标准教程",
+                 'post_xray_hint1': "<strong>提示1：</strong>这篇文章已经假定您拥有合适的网络环境、支付手段、收信配置。",
+                 'post_xray_hint2': "<strong>提示2：</strong>请您严格遵守相关法律，并将服务器做备案与合法化处理。如您因未遵守本条提示产生了任何其他问题（包括但不限于法律问题），本站及其所有人将不承担对于您过失行为的任何责任。",
+                 'post_xray_target': "目标",
+                 'post_xray_target_desc': "在 Linux 服务器上安装并配置 Xray-core，使用 VLESS 协议和 REALITY 安全特性，实现网络代理服务。",
+                 'post_xray_env': "适用环境",
+                 'post_xray_env_server': "任何 VPS 或物理服务器",
+                 'post_xray_env_os': "操作系统: Linux (本教程命令主要基于 Ubuntu/Debian，会提供 CentOS/Fedora 等系统的命令提示)",
+                 'post_xray_env_user': "具有 root 或 sudo 权限的用户账户",
+                 'post_xray_env_access': "可通过 SSH 远程访问服务器",
+                 'post_xray_prereq': "前置要求",
+                 'post_xray_prereq_ip': "服务器拥有一个公网 IPv4 地址。",
+                 'post_xray_prereq_firewall': "<strong>防火墙配置:</strong> 确保所有相关防火墙已允许外部访问 Xray 服务所需的 TCP 端口（本教程默认使用 443）以及 SSH 端口（TCP 22）。这可能包括：",
+                 'post_xray_prereq_fw_cloud': "<strong>云服务商防火墙/安全组:</strong> 如果你使用 AWS, GCP, Azure, DigitalOcean, Vultr 等云服务商，你需要在他们的管理控制台中配置防火墙/安全组规则，放行所需端口的入站流量（例如，TCP 443 端口来源设为 0.0.0.0/0，TCP 22 端口来源限制为你的 IP 地址）。",
+                 'post_xray_prereq_fw_os': "<strong>操作系统防火墙:</strong> 服务器操作系统自带的防火墙（如 ufw, firewalld）也需要配置。具体步骤见教程 Step 6。",
+                 'post_xray_step1_title': "步骤 1: 系统环境准备",
+                 'post_xray_step1_1_title': "1.1. 更新系统软件包:",
+                 'post_xray_step1_1_desc': "对于 Ubuntu/Debian 系统:",
+                 'post_xray_step1_1_desc_centos': "对于 CentOS/RHEL/Fedora 系统:",
+                 'post_xray_step1_2_title': "1.2. 安装必要工具:",
+                 'post_xray_step1_2_desc': "对于 Ubuntu/Debian 系统:",
+                 'post_xray_step1_2_desc_centos': "对于 CentOS/RHEL/Fedora 系统:",
+                 'post_xray_step2_title': "步骤 2: 安装 Xray-core",
+                 'post_xray_step2_desc': "使用官方提供的安装脚本进行安装。该脚本通常能兼容多数主流 Linux 发行版（如 Ubuntu, Debian, CentOS, Fedora 等）。",
+                 'post_xray_step2_info': "脚本会自动检测系统并进行安装，同时设置 systemd 服务。",
+                 'post_xray_step2_path_bin': "Xray 主程序路径: <code>/usr/local/bin/xray</code>",
+                 'post_xray_step2_path_config': "配置文件目录: <code>/usr/local/etc/xray/</code>",
+                 'post_xray_step2_path_service': "服务名称: <code>xray</code>",
+                 'post_xray_step3_title': "步骤 3: 生成所需参数",
+                 'post_xray_step3_desc': "VLESS + REALITY 配置需要以下独一无二的参数，请在服务器上生成并务必安全保存。",
+                 'post_xray_step3_1_title': "3.1. 生成 UUID (用户 ID):",
+                 'post_xray_step3_1_action': "复制输出的 UUID 字符串 (格式: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)。将其记为 <code class=\"font-bold\">YOUR_UUID</code>。",
+                 'post_xray_step3_2_title': "3.2. 生成 REALITY 密钥对:",
+                 'post_xray_step3_2_action': "复制输出的 <code>Private key:</code> 和 <code>Public key:</code>。将私钥记为 <code class=\"font-bold\">YOUR_PRIVATE_KEY</code>，公钥记为 <code class=\"font-bold\">YOUR_PUBLIC_KEY</code>。",
+                 'post_xray_step3_3_title': "3.3. (可选) 生成 Short ID:",
+                 'post_xray_step3_3_action': "生成一个或多个 16 进制短 ID。将其记为 <code class=\"font-bold\">YOUR_SHORT_ID</code> (如果生成多个，则区分)。如果不用，则配置中保持 <code>\"\"</code>。",
+                 'post_xray_step4_title': "步骤 4: 配置 Xray 服务器 (config.json)",
+                 'post_xray_step4_1_title': "4.1. 编辑配置文件:",
+                 'post_xray_step4_1_vim': "(如果你偏好 vim，请使用 <code>sudo vim ...</code>)",
+                 'post_xray_step4_2_title': "4.2. 写入配置:",
+                 'post_xray_step4_2_desc': "删除文件内所有内容，粘贴以下 JSON 模板，并替换其中的占位符。",
+                 'post_xray_step4_3_title': "4.3. 保存并退出:",
+                 'post_xray_step4_3_nano': "(在 nano 中: <code>Ctrl + X</code>, <code>Y</code>, <code>Enter</code>)。",
+                 'post_xray_step5_title': "步骤 5: 管理 Xray 服务",
+                 'post_xray_step5_desc': "以下命令适用于使用 systemd 的系统 (目前绝大多数主流 Linux 发行版)。",
+                 'post_xray_step5_1_title': "5.1. 测试配置:",
+                 'post_xray_step5_1_check': "确保输出 <code>Configuration OK.</code>。",
+                 'post_xray_step5_2_title': "5.2. 重启 Xray 服务:",
+                 'post_xray_step5_3_title': "5.3. 设置开机自启:",
+                 'post_xray_step5_4_title': "5.4. 检查运行状态:",
+                 'post_xray_step5_4_check': "确保状态是 <code>active (running)</code>。",
+                 'post_xray_step6_title': "步骤 6: 配置操作系统防火墙",
+                 'post_xray_step6_desc': "<strong>重要:</strong> 你必须同时确保云服务商的防火墙（如果使用云服务器）和服务器操作系统的防火墙都允许 Xray 端口（例如 443）的入站 TCP 连接。云服务商防火墙请在其网页控制台配置。",
+                 'post_xray_step6_desc2': "以下是配置操作系统防火墙的常用方法：",
+                 'post_xray_step6_1_title': "6.1. 对于 Ubuntu/Debian (使用 ufw):",
+                 'post_xray_step6_1_check': "检查状态: <code>sudo ufw status</code>",
+                 'post_xray_step6_1_inactive': "如果是 <code>inactive</code>，则无需操作。",
+                 'post_xray_step6_1_active': "如果是 <code>active</code>，确保端口已允许。如果未允许，执行:",
+                 'post_xray_step6_2_title': "6.2. 对于 CentOS/RHEL/Fedora (使用 firewalld):",
+                 'post_xray_step6_2_check': "检查状态: <code>sudo systemctl status firewalld</code>",
+                 'post_xray_step6_2_inactive': "如果是 <code>inactive</code>，则无需操作 (除非你想启用它)。",
+                 'post_xray_step6_2_active': "如果是 <code>active</code>，执行以下命令永久允许端口 443 并重载规则:",
+                 'post_xray_step7_title': "步骤 7: 客户端配置参数汇总",
+                 'post_xray_step7_desc': "你需要以下信息来配置你的客户端软件：",
+                 'post_xray_client_type': "<strong>类型 (Type/Protocol):</strong> VLESS",
+                 'post_xray_client_address': "<strong>地址 (Address/Host):</strong> <code>YOUR_SERVER_IP</code> (你的服务器的公网 IP 地址)",
+                 'post_xray_client_port': "<strong>端口 (Port):</strong> <code>443</code> (或你在 config.json 中设置的端口)",
+                 'post_xray_client_uuid': "<strong>用户 ID (UUID):</strong> <code>YOUR_UUID</code> (步骤 3.1 生成的 UUID)",
+                 'post_xray_client_encryption': "<strong>加密 (Encryption):</strong> <code>none</code>",
+                 'post_xray_client_network': "<strong>传输协议 (Network):</strong> <code>tcp</code>",
+                 'post_xray_client_security': "<strong>安全 (Security/Type):</strong> <code>reality</code>",
+                 'post_xray_client_sni': "<strong>SNI (Server Name Indication / Host / Peer):</strong> <code>www.microsoft.com</code> (或你在服务器配置中使用的域名)",
+                 'post_xray_client_pbk': "<strong>公钥 (Public Key / pbk):</strong> <code>YOUR_PUBLIC_KEY</code> (步骤 3.2 生成的 Public Key)",
+                 'post_xray_client_fp': "<strong>指纹 (Fingerprint / fp):</strong> <code>chrome</code> (或你在服务器配置中使用的指纹)",
+                 'post_xray_client_sid': "<strong>Short ID (sid):</strong> (与服务器 shortIds 配置匹配，如果服务器是 <code>[\"\"]</code>，客户端通常留空)",
+                 'post_xray_client_flow': "<strong>(可选) Flow:</strong> 通常留空",
+                 'post_xray_client_dest': "<strong>(可选) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (与服务器 dest 配置匹配)",
+                 'post_xray_complete': "部署完成。请使用这些参数配置客户端并测试连接。",
+                 'copy_button_text': "复制", // 新增
+                 'copy_button_copied_text': "已复制!" // 新增
+             },
+             'zh-TW': {
+                 'blog_title': "麥青春的部落格", 'category': "分類", 'life_category': "生活", 'posted_on': "發佈於", 'author': "作者", 'back_to_blog': "返回部落格列表", 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁", 'tech_category': "技術", 'misc_category': "隨筆", 'ai_category': "AI雜談", 'econ_category': "經濟觀察",
+                 // 本文相關鍵
+                 'post_xray_title_seo': "通用 Linux 伺服器部署 Xray (VLESS + REALITY) 節點標準教學 - 麥青春的部落格",
+                 'post_xray_title': "通用 Linux 伺服器部署 Xray (VLESS + REALITY) 節點標準教學",
+                 'post_xray_hint1': "<strong>提示1：</strong>本篇文章已假定您擁有合適的網路環境、支付手段、收信配置。",
+                 'post_xray_hint2': "<strong>提示2：</strong>請您嚴格遵守相關法律，並將伺服器做備案與合法化處理。如您因未遵守本條提示產生了任何其他問題（包括但不限於法律問題），本站及其所有人將不承擔對於您過失行為的任何責任。",
+                 'post_xray_target': "目標",
+                 'post_xray_target_desc': "在 Linux 伺服器上安裝並配置 Xray-core，使用 VLESS 協議和 REALITY 安全特性，實現網路代理服務。",
+                 'post_xray_env': "適用環境",
+                 'post_xray_env_server': "任何 VPS 或實體伺服器",
+                 'post_xray_env_os': "作業系統: Linux (本教學命令主要基於 Ubuntu/Debian，會提供 CentOS/Fedora 等系統的命令提示)",
+                 'post_xray_env_user': "具有 root 或 sudo 權限的使用者帳戶",
+                 'post_xray_env_access': "可透過 SSH 遠端存取伺服器",
+                 'post_xray_prereq': "前置要求",
+                 'post_xray_prereq_ip': "伺服器擁有一個公網 IPv4 位址。",
+                 'post_xray_prereq_firewall': "<strong>防火牆配置:</strong> 確保所有相關防火牆已允許外部存取 Xray 服務所需的 TCP 連接埠（本教學預設使用 443）以及 SSH 連接埠（TCP 22）。這可能包括：",
+                 'post_xray_prereq_fw_cloud': "<strong>雲端服務供應商防火牆/安全群組:</strong> 如果你使用 AWS, GCP, Azure, DigitalOcean, Vultr 等雲端服務供應商，你需要在他們的管理主控台中配置防火牆/安全群組規則，放行所需連接埠的入站流量（例如，TCP 443 連接埠來源設為 0.0.0.0/0，TCP 22 連接埠來源限制為你的 IP 位址）。",
+                 'post_xray_prereq_fw_os': "<strong>作業系統防火牆:</strong> 伺服器作業系統自帶的防火牆（如 ufw, firewalld）也需要配置。具體步驟見教學 Step 6。",
+                 'post_xray_step1_title': "步驟 1: 系統環境準備",
+                 'post_xray_step1_1_title': "1.1. 更新系統套件:",
+                 'post_xray_step1_1_desc': "對於 Ubuntu/Debian 系統:",
+                 'post_xray_step1_1_desc_centos': "對於 CentOS/RHEL/Fedora 系統:",
+                 'post_xray_step1_2_title': "1.2. 安裝必要工具:",
+                 'post_xray_step1_2_desc': "對於 Ubuntu/Debian 系統:",
+                 'post_xray_step1_2_desc_centos': "對於 CentOS/RHEL/Fedora 系統:",
+                 'post_xray_step2_title': "步驟 2: 安裝 Xray-core",
+                 'post_xray_step2_desc': "使用官方提供的安裝腳本進行安裝。該腳本通常能相容多數主流 Linux 發行版（如 Ubuntu, Debian, CentOS, Fedora 等）。",
+                 'post_xray_step2_info': "腳本會自動偵測系統並進行安裝，同時設定 systemd 服務。",
+                 'post_xray_step2_path_bin': "Xray 主程式路徑: <code>/usr/local/bin/xray</code>",
+                 'post_xray_step2_path_config': "設定檔目錄: <code>/usr/local/etc/xray/</code>",
+                 'post_xray_step2_path_service': "服務名稱: <code>xray</code>",
+                 'post_xray_step3_title': "步驟 3: 產生所需參數",
+                 'post_xray_step3_desc': "VLESS + REALITY 配置需要以下獨一無二的參數，請在伺服器上產生並務必安全保存。",
+                 'post_xray_step3_1_title': "3.1. 產生 UUID (使用者 ID):",
+                 'post_xray_step3_1_action': "複製輸出的 UUID 字串 (格式: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)。將其記為 <code class=\"font-bold\">YOUR_UUID</code>。",
+                 'post_xray_step3_2_title': "3.2. 產生 REALITY 金鑰對:",
+                 'post_xray_step3_2_action': "複製輸出的 <code>Private key:</code> 和 <code>Public key:</code>。將私鑰記為 <code class=\"font-bold\">YOUR_PRIVATE_KEY</code>，公鑰記為 <code class=\"font-bold\">YOUR_PUBLIC_KEY</code>。",
+                 'post_xray_step3_3_title': "3.3. (可選) 產生 Short ID:",
+                 'post_xray_step3_3_action': "產生一個或多個 16 進位短 ID。將其記為 <code class=\"font-bold\">YOUR_SHORT_ID</code> (如果產生多個，則區分)。如果不用，則配置中保持 <code>\"\"</code>。",
+                 'post_xray_step4_title': "步驟 4: 配置 Xray 伺服器 (config.json)",
+                 'post_xray_step4_1_title': "4.1. 編輯設定檔:",
+                 'post_xray_step4_1_vim': "(如果你偏好 vim，請使用 <code>sudo vim ...</code>)",
+                 'post_xray_step4_2_title': "4.2. 寫入配置:",
+                 'post_xray_step4_2_desc': "刪除檔案內所有內容，貼上以下 JSON 模板，並替換其中的預留位置。",
+                 'post_xray_step4_3_title': "4.3. 儲存並退出:",
+                 'post_xray_step4_3_nano': "(在 nano 中: <code>Ctrl + X</code>, <code>Y</code>, <code>Enter</code>)。",
+                 'post_xray_step5_title': "步驟 5: 管理 Xray 服務",
+                 'post_xray_step5_desc': "以下命令適用於使用 systemd 的系統 (目前絕大多數主流 Linux 發行版)。",
+                 'post_xray_step5_1_title': "5.1. 測試配置:",
+                 'post_xray_step5_1_check': "確保輸出 <code>Configuration OK.</code>。",
+                 'post_xray_step5_2_title': "5.2. 重啟 Xray 服務:",
+                 'post_xray_step5_3_title': "5.3. 設定開機自動啟動:",
+                 'post_xray_step5_4_title': "5.4. 檢查運行狀態:",
+                 'post_xray_step5_4_check': "確保狀態是 <code>active (running)</code>。",
+                 'post_xray_step6_title': "步驟 6: 配置作業系統防火牆",
+                 'post_xray_step6_desc': "<strong>重要:</strong> 您必須同時確保雲端服務供應商的防火牆（如果使用雲端伺服器）和伺服器作業系統的防火牆都允許 Xray 連接埠（例如 443）的入站 TCP 連接。雲端服務供應商防火牆請在其網頁主控台配置。",
+                 'post_xray_step6_desc2': "以下是配置作業系統防火牆的常用方法：",
+                 'post_xray_step6_1_title': "6.1. 對於 Ubuntu/Debian (使用 ufw):",
+                 'post_xray_step6_1_check': "檢查狀態: <code>sudo ufw status</code>",
+                 'post_xray_step6_1_inactive': "如果是 <code>inactive</code>，則無需操作。",
+                 'post_xray_step6_1_active': "如果是 <code>active</code>，確保連接埠已允許。如果未允許，執行:",
+                 'post_xray_step6_2_title': "6.2. 對於 CentOS/RHEL/Fedora (使用 firewalld):",
+                 'post_xray_step6_2_check': "檢查狀態: <code>sudo systemctl status firewalld</code>",
+                 'post_xray_step6_2_inactive': "如果是 <code>inactive</code>，則無需操作 (除非你想啟用它)。",
+                 'post_xray_step6_2_active': "如果是 <code>active</code>，執行以下命令永久允許連接埠 443 並重載規則:",
+                 'post_xray_step7_title': "步驟 7: 客戶端配置參數彙總",
+                 'post_xray_step7_desc': "您需要以下資訊來配置您的客戶端軟體：",
+                 'post_xray_client_type': "<strong>類型 (Type/Protocol):</strong> VLESS",
+                 'post_xray_client_address': "<strong>位址 (Address/Host):</strong> <code>YOUR_SERVER_IP</code> (您的伺服器的公網 IP 位址)",
+                 'post_xray_client_port': "<strong>連接埠 (Port):</strong> <code>443</code> (或您在 config.json 中設定的連接埠)",
+                 'post_xray_client_uuid': "<strong>使用者 ID (UUID):</strong> <code>YOUR_UUID</code> (步驟 3.1 產生的 UUID)",
+                 'post_xray_client_encryption': "<strong>加密 (Encryption):</strong> <code>none</code>",
+                 'post_xray_client_network': "<strong>傳輸協定 (Network):</strong> <code>tcp</code>",
+                 'post_xray_client_security': "<strong>安全 (Security/Type):</strong> <code>reality</code>",
+                 'post_xray_client_sni': "<strong>SNI (Server Name Indication / Host / Peer):</strong> <code>www.microsoft.com</code> (或您在伺服器配置中使用的域名)",
+                 'post_xray_client_pbk': "<strong>公鑰 (Public Key / pbk):</strong> <code>YOUR_PUBLIC_KEY</code> (步驟 3.2 產生的 Public Key)",
+                 'post_xray_client_fp': "<strong>指紋 (Fingerprint / fp):</strong> <code>chrome</code> (或您在伺服器配置中使用的指紋)",
+                 'post_xray_client_sid': "<strong>Short ID (sid):</strong> (與伺服器 shortIds 配置匹配，如果伺服器是 <code>[\"\"]</code>，客戶端通常留空)",
+                 'post_xray_client_flow': "<strong>(可選) Flow:</strong> 通常留空",
+                 'post_xray_client_dest': "<strong>(可選) SpiderX / Dest:</strong> <code>www.microsoft.com:443</code> (與伺服器 dest 配置匹配)",
+                 'post_xray_complete': "部署完成。請使用這些參數配置客戶端並測試連接。",
+                 'copy_button_text': "複製", // 新增
+                 'copy_button_copied_text': "已複製!" // 新增
+             }
+        };
+
+        // --- Theme Switching Logic ---
+        // (保持不变，在 DOMContentLoaded 中初始化)
+
+        // --- Language Switching Logic ---
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        let currentLang = localStorage.getItem('language') || 'zh-CN'; // 默认设置为中文
+
+        function applyTranslations(lang) {
+             if (!translations || !translations[lang]) { console.warn(`Translations for language '${lang}' not found.`); return; }
+             console.log(`Applying translations for: ${lang}`);
+             document.documentElement.lang = lang.startsWith('zh') ? lang : lang.split('-')[0];
+             const elements = document.querySelectorAll('[data-translate-key]');
+             elements.forEach(el => {
+                 const key = el.getAttribute('data-translate-key');
+                 if (translations[lang][key] !== undefined) {
+                     if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
+                     else if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; }
+                     else if (el.title) { el.title = translations[lang][key]; }
+                     else { el.innerHTML = translations[lang][key]; } // Use innerHTML to handle <strong>
+                 } else {
+                     // console.warn(`Translation key "${key}" not found for language "${lang}"`); // Keep commented unless debugging
+                 }
+             });
+             if (currentLangSpan) {
+                if(translations[lang]['current_lang_display']) {
+                    currentLangSpan.textContent = translations[lang]['current_lang_display'];
+                } else {
+                    currentLangSpan.textContent = lang.split('-')[0].toUpperCase();
+                }
+             } else { console.warn("currentLangSpan element not found."); }
+             if (langDropdown) {
+                 const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                 langLinks.forEach(link => {
+                     link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
+                 });
+             }
+        }
+
+        function setupLangSwitcher(toggleButton, dropdownMenu) {
+            if (!toggleButton || !dropdownMenu) { console.warn("Language switcher elements missing."); return; }
+            const links = dropdownMenu.querySelectorAll('a[data-lang]');
+            if (!links || links.length === 0) { console.warn("No language links found."); return; }
+            console.log("Setting up lang switcher for:", toggleButton.id);
+            toggleButton.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('hidden'); });
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedLang = link.getAttribute('data-lang');
+                    if (selectedLang !== currentLang) {
+                        currentLang = selectedLang;
+                        localStorage.setItem('language', currentLang);
+                        applyTranslations(currentLang);
+                    }
+                    dropdownMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (langToggle && langDropdown && !langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.add('hidden');
+            }
+        });
+
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('blog-header');
+        if (header) {
+            window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+        } else { console.warn("Blog header element not found."); }
+
+
+        // --- DOMContentLoaded Listener ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired.");
+
+            // --- Theme Switching Setup ---
+            console.log("Attempting to set up theme switcher...");
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const sunIcon = themeToggle.querySelector('.fa-sun');
+                const moonIcon = themeToggle.querySelector('.fa-moon');
+                const currentTheme = localStorage.getItem('theme') || 'dark';
+                function applyTheme(theme) {
+                    if (!sunIcon || !moonIcon) { console.warn("Sun/Moon icon not found."); return; }
+                    if (theme === 'light') { document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme'); sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); }
+                    else { document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme'); sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); }
+                    console.log(`Theme applied: ${theme}`);
+                }
+                applyTheme(currentTheme);
+                themeToggle.addEventListener('click', () => {
+                    const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    console.log(`Theme toggled to: ${newTheme}`);
+                });
+                console.log("Theme switcher setup complete.");
+            } else { console.warn("Theme toggle button not found."); }
+
+            // --- Language Switching Setup ---
+            console.log("Attempting to set up language switcher...");
+            const langToggleInstance = document.getElementById('lang-toggle');
+            const langDropdownInstance = document.getElementById('lang-dropdown');
+            setupLangSwitcher(langToggleInstance, langDropdownInstance);
+
+            // Apply initial translation
+            console.log("Attempting to apply initial translations...");
+            applyTranslations(currentLang);
+
+            // --- tsParticles Initialization ---
+            console.log("Attempting to load tsParticles...");
+            if (typeof tsParticles !== 'undefined') {
+                const particlesContainer = document.getElementById('tsparticles');
+                if (particlesContainer) {
+                    tsParticles.load("tsparticles", {
+                         fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 }
+                    }).then(container => { console.log("tsParticles loaded successfully."); }).catch(error => { console.error("Error loading tsParticles:", error); });
+                } else { console.warn("tsParticles container element '#tsparticles' not found."); }
+            } else { console.warn("tsParticles library not found."); }
+            console.log("After tsParticles load attempt");
+
+            // --- Lightbox Logic (No images in this post, so no listeners needed) ---
+            // (保持不变)
+
+        }); // End DOMContentLoaded
+
+        // --- 新增: Copy Code Function ---
+        function copyCode(buttonElement) {
+            const preElement = buttonElement.nextElementSibling; // 获取按钮后面的 pre 元素
+            if (preElement && preElement.tagName === 'PRE') {
+                const codeElement = preElement.querySelector('code');
+                if (codeElement) {
+                    const codeText = codeElement.innerText || codeElement.textContent; // 获取代码文本
+                    navigator.clipboard.writeText(codeText).then(() => {
+                        // 复制成功反馈
+                        const originalIcon = buttonElement.querySelector('i');
+                        const originalTextSpan = buttonElement.querySelector('span');
+                        const copiedTextKey = 'copy_button_copied_text';
+                        const originalTextKey = 'copy_button_text';
+
+                        // 获取当前语言的“已复制”文本
+                        const copiedText = (translations[currentLang] && translations[currentLang][copiedTextKey]) || 'Copied!';
+                        const originalText = (translations[currentLang] && translations[currentLang][originalTextKey]) || 'Copy';
+
+                        originalIcon.classList.remove('fa-copy');
+                        originalIcon.classList.add('fa-check');
+                        originalTextSpan.textContent = copiedText;
+                        buttonElement.classList.add('copied');
+
+                        // 1.5秒后恢复原状
+                        setTimeout(() => {
+                            originalIcon.classList.remove('fa-check');
+                            originalIcon.classList.add('fa-copy');
+                            originalTextSpan.textContent = originalText; // 恢复为当前语言的“复制”
+                            buttonElement.classList.remove('copied');
+                        }, 1500);
+
+                    }).catch(err => {
+                        console.error('Failed to copy code: ', err);
+                        // 可以添加复制失败的提示，例如 alert('复制失败!');
+                    });
+                } else {
+                    console.error('Could not find code element within pre tag');
+                }
+            } else {
+                 console.error('Could not find pre element next to button');
+            }
+        }
+
+    </script>
+
+</body>
+</html>
