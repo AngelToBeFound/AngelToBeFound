@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="post_story_heart_title_seo">她说故事是生活的第二颗心脏 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- Base Styles & Theme Variables --- */
+        :root {
+             --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
+             /* RGB versions for rgba background */
+             --text-accent-rgb: 167, 199, 231;
+             --text-accent-rgb-light: 59, 130, 246;
+        }
+        body.light-theme {
+             --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+
+        /* Styles for Post Content Area */
+        .post-content-area { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 2rem; position: relative; z-index: 10; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        @media (min-width: 768px) { .post-content-area { padding: 3rem; } }
+
+        /* Basic styling for content within the post */
+        .post-body h1, .post-body h2, .post-body h3, .post-body h4 { color: var(--text-primary); margin-top: 1.75em; margin-bottom: 0.75em; font-weight: 600; line-height: 1.3; }
+        .post-body h1 { font-size: 2.25rem; line-height: 2.5rem; margin-top: 0; }
+        .post-body h2 { font-size: 1.875rem; line-height: 2.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .post-body h3 { font-size: 1.5rem; line-height: 2rem; }
+        .post-body h4 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 500; }
+        .post-body p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25em; }
+        .post-body a { color: var(--text-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; transition: opacity 0.2s ease; word-break: break-all; }
+        .post-body a:hover { opacity: 0.8; }
+        .post-body ul, .post-body ol { list-style: none; padding: 0; margin: 0; }
+        .post-body li { margin-bottom: 0; }
+        .post-body strong { font-weight: 600; color: var(--text-primary); }
+        .post-body blockquote { margin: 1.5em 0; padding: 1em 1.5em; border-left: 4px solid var(--text-accent); background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.1); color: var(--text-secondary); border-radius: 0.25rem; font-style: normal; }
+        body.light-theme .post-body blockquote { background-color: rgba(var(--text-accent-rgb-light, 59, 130, 246), 0.08); border-left-color: var(--text-accent-light); }
+        .post-body blockquote p { margin-bottom: 0.5em; }
+        .post-body blockquote p:last-child { margin-bottom: 0; }
+        .post-body blockquote.warning { border-left-color: #f59e0b; background-color: rgba(245, 158, 11, 0.1); }
+        body.light-theme .post-body blockquote.warning { border-left-color: #d97706; background-color: rgba(245, 158, 11, 0.08); }
+
+        .post-body code { background-color: var(--bg-glass); padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.9em; color: var(--text-primary); font-family: monospace; }
+        .code-block-wrapper { position: relative; margin-bottom: 1.25em; }
+        .post-body pre { background-color: var(--bg-glass); padding: 1em; border-radius: 0.5rem; overflow-x: auto; border: 1px solid var(--border-color); }
+        .post-body pre code { background-color: transparent; padding: 0; border-radius: 0; font-size: 0.9em; border: none; }
+        .copy-button { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.3rem 0.5rem; background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 0.375rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease; font-size: 0.75rem; line-height: 1; }
+        .copy-button:hover { opacity: 1; background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.4); color: var(--text-primary); }
+        .copy-button i { margin-right: 0.25rem; }
+        .copy-button.copied { background-color: rgba(74, 222, 128, 0.2); color: #16a34a; }
+        body.light-theme .copy-button.copied { background-color: rgba(34, 197, 94, 0.1); color: #15803d; }
+        .references ol { list-style: decimal; margin-left: 1.5rem; }
+        .references li { margin-bottom: 0.75rem; font-size: 0.875rem; line-height: 1.4; }
+        .references li a { word-break: break-all; }
+        /* 图片样式 */
+        .post-body img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5em 0; border: 1px solid var(--border-color); }
+        .post-body figure { margin: 1.5em 0; text-align: center; }
+        .post-body figure img { display: inline-block; margin-left: auto; margin-right: auto; }
+        .post-body figcaption { text-align: center; font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5em; }
+
+        /* Lightbox Styles (保持不变) */
+        #lightbox-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; cursor: zoom-out; }
+        #lightbox-overlay.visible { display: flex; opacity: 1; visibility: visible; }
+        #lightbox-img { display: block; max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 0.5rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease-in-out; cursor: default; }
+        #lightbox-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2.5rem; font-weight: bold; color: white; cursor: pointer; line-height: 1; transition: color 0.2s ease; padding: 0.5rem; }
+        #lightbox-close:hover { color: var(--text-secondary, #ccc); }
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="blog_title">麦青春的博客</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1 z-30">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 relative z-10">
+         <div class="mb-6 md:mb-8">
+            <a href="blog.html" class="text-sm text-[var(--text-accent)] hover:underline">
+                &larr; <span data-translate-key="back_to_blog">返回博客列表</span>
+            </a>
+        </div>
+         <article class="post-content-area glass-effect">
+            <header class="mb-8 md:mb-12 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gradient" data-translate-key="post_story_heart_title">
+                    她说故事是生活的第二颗心脏
+                </h1>
+                <p class="text-sm text-[var(--text-secondary)]">
+                    <span data-translate-key="category">分类</span>:
+                    <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="misc_category">随笔</a>,
+                    <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="life_category">生活</a>
+                    <span class="mx-2">|</span>
+                    <span data-translate-key="posted_on">发布于</span>: <time datetime="2025-04-30">2025年4月30日</time>
+                </p>
+            </header>
+
+            <div class="post-body text-center">
+                 <figure>
+                     <img src="images/story-heart-placeholder.jpg"
+                          alt="She says that stories are the second heart of life" loading="lazy" class="block mx-auto max-w-full md:max-w-2xl">
+                     <figcaption data-translate-key="post_story_heart_img_caption">She says that stories are the second heart of life</figcaption>
+                 </figure>
+
+                <p data-translate-key="post_story_heart_para1">故事于她，是生命的第二颗心脏。字里行间，是跳动的脉搏，每一个音节都承载着血液的温度。</p>
+                <p data-translate-key="post_story_heart_para2">她沉浸于故事的海洋，那里波光粼粼，每一页都是一个全新的世界。那里有星辰闪烁，低吟浅唱；也有狂风怒号，惊涛骇浪。</p>
+                <p data-translate-key="post_story_heart_para3">她于其中，感受生命的百态，体悟人性的光辉。故事是夜空中最亮的星，照亮她前行的路；故事是寒冬里最温暖的火，融化她心中的冰霜。</p>
+                <p data-translate-key="post_story_heart_para4">每一个故事都是一次重生，每一次阅读都是一次旅行。她相信，故事是生命的延续，是灵魂的栖息地。</p>
+                <p data-translate-key="post_story_heart_para5">故事不朽，生命便不息。</p>
+
+            </div>
+         </article>
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+
+    <div id="lightbox-overlay" class="fixed inset-0 bg-black bg-opacity-85 hidden items-center justify-center z-[100] transition-opacity duration-300 ease-in-out cursor-zoom-out">
+        <span id="lightbox-close" class="absolute top-6 right-8 text-white text-4xl font-bold cursor-pointer hover:text-gray-400 transition-colors leading-none p-2">&times;</span>
+        <img id="lightbox-img" src="" alt="放大的图片" class="max-w-[95%] max-h-[95%] object-contain rounded-lg shadow-xl cursor-default">
+    </div>
+
+
+    <script>
+        // --- Translations (Updated caption) ---
+        const translations = {
+            'en': {
+                'blog_title': "MaxCaulfield's Blog", 'category': "Category", 'life_category': "Life", 'posted_on': "Posted on", 'author': "Author", 'back_to_blog': "Back to Blog List", 'footer_built_with': "Built with ❤️ and code.", 'back_to_home': "Back to Home", 'current_lang_display': "EN", 'tech_category': "Tech", 'misc_category': "Essay", 'ai_category': "AI Talk", 'econ_category': "Economy Watch",
+                // Keys for this post
+                'post_story_heart_title_seo': "She Said Stories are Life's Second Heart - MaxCaulfield's Blog",
+                'post_story_heart_title': "She Said Stories are Life's Second Heart",
+                'post_story_heart_img_caption': "She says that stories are the second heart of life", // Updated caption
+                'post_story_heart_para1': "To her, stories are life's second heart. Between the lines pulses a living beat, each syllable carrying the warmth of blood.",
+                'post_story_heart_para2': "She immerses herself in the ocean of stories, where waves shimmer and each page unfolds a new world. There, stars twinkle, whispering soft melodies; there too, winds howl and waves crash.",
+                'post_story_heart_para3': "Within these realms, she experiences the myriad facets of existence, grasping the brilliance of humanity. Stories are the brightest stars in the night sky, illuminating her path forward; stories are the warmest fire in winter, melting the frost in her heart.",
+                'post_story_heart_para4': "Every story is a rebirth, every reading a journey. She believes that stories are the continuation of life, the sanctuary of the soul.",
+                'post_story_heart_para5': "As long as stories endure, life itself persists."
+            },
+            'zh-CN': {
+                 'blog_title': "麦青春的博客", 'category': "分类", 'life_category': "生活", 'posted_on': "发布于", 'author': "作者", 'back_to_blog': "返回博客列表", 'footer_built_with': "用 ❤️ 和代码构建.", 'back_to_home': "返回主页", 'current_lang_display': "简", 'tech_category': "技术", 'misc_category': "随笔", 'ai_category': "AI杂谈", 'econ_category': "经济观察",
+                 // 本文相关键
+                 'post_story_heart_title_seo': "她说故事是生活的第二颗心脏 - 麦青春的博客",
+                 'post_story_heart_title': "她说故事是生活的第二颗心脏",
+                 'post_story_heart_img_caption': "她说故事是生活的第二颗心脏", // 更新注释
+                 'post_story_heart_para1': "故事于她，是生命的第二颗心脏。字里行间，是跳动的脉搏，每一个音节都承载着血液的温度。",
+                 'post_story_heart_para2': "她沉浸于故事的海洋，那里波光粼粼，每一页都是一个全新的世界。那里有星辰闪烁，低吟浅唱；也有狂风怒号，惊涛骇浪。",
+                 'post_story_heart_para3': "她于其中，感受生命的百态，体悟人性的光辉。故事是夜空中最亮的星，照亮她前行的路；故事是寒冬里最温暖的火，融化她心中的冰霜。",
+                 'post_story_heart_para4': "每一个故事都是一次重生，每一次阅读都是一次旅行。她相信，故事是生命的延续，是灵魂的栖息地。",
+                 'post_story_heart_para5': "故事不朽，生命便不息。"
+             },
+             'zh-TW': {
+                 'blog_title': "麥青春的部落格", 'category': "分類", 'life_category': "生活", 'posted_on': "發佈於", 'author': "作者", 'back_to_blog': "返回部落格列表", 'footer_built_with': "用 ❤️ 和程式碼構建.", 'back_to_home': "返回主頁", 'current_lang_display': "繁", 'tech_category': "技術", 'misc_category': "隨筆", 'ai_category': "AI雜談", 'econ_category': "經濟觀察",
+                 // 本文相关键
+                 'post_story_heart_title_seo': "她說故事是生活的第二顆心臟 - 麥青春的部落格",
+                 'post_story_heart_title': "她說故事是生活的第二顆心臟",
+                 'post_story_heart_img_caption': "她說故事是生活的第二顆心臟", // 更新註釋
+                 'post_story_heart_para1': "故事於她，是生命的第二顆心臟。字裡行間，是跳動的脈搏，每一個音節都承載著血液的溫度。",
+                 'post_story_heart_para2': "她沉浸於故事的海洋，那裡波光粼粼，每一頁都是一個全新的世界。那裡有星辰閃爍，低吟淺唱；也有狂風怒號，驚濤駭浪。",
+                 'post_story_heart_para3': "她於其中，感受生命的百態，體悟人性的光輝。故事是夜空中最亮的星，照亮她前行的路；故事是寒冬裡最溫暖的火，融化她心中的冰霜。",
+                 'post_story_heart_para4': "每一個故事都是一次重生，每一次閱讀都是一次旅行。她相信，故事是生命的延續，是靈魂的棲息地。",
+                 'post_story_heart_para5': "故事不朽，生命便不息。"
+             }
+        };
+
+        // --- Theme Switching Logic ---
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            function applyTheme(theme) {
+                if (!sunIcon || !moonIcon) { console.warn("Sun/Moon icon not found."); return; }
+                if (theme === 'light') { document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme'); sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); }
+                else { document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme'); sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); }
+                console.log(`Theme applied: ${theme}`);
+            }
+            applyTheme(currentTheme);
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+                console.log(`Theme toggled to: ${newTheme}`);
+            });
+            console.log("Theme switcher setup complete.");
+        } else { console.warn("Theme toggle button not found."); }
+
+
+        // --- Language Switching Logic ---
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+
+        function applyTranslations(lang) {
+             if (!translations || !translations[lang]) { console.warn(`Translations for language '${lang}' not found.`); return; }
+             console.log(`Applying translations for: ${lang}`);
+             document.documentElement.lang = lang.startsWith('zh') ? lang : lang.split('-')[0];
+             const elements = document.querySelectorAll('[data-translate-key]');
+             elements.forEach(el => {
+                 const key = el.getAttribute('data-translate-key');
+                 if (translations[lang][key] !== undefined) {
+                     if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
+                     else if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[lang][key]; }
+                     else if (el.title) { el.title = translations[lang][key]; }
+                     else { el.innerHTML = translations[lang][key]; }
+                 } else {
+                     // console.warn(`Translation key "${key}" not found for language "${lang}"`);
+                 }
+             });
+             if (currentLangSpan) {
+                if(translations[lang]['current_lang_display']) {
+                    currentLangSpan.textContent = translations[lang]['current_lang_display'];
+                } else {
+                    currentLangSpan.textContent = lang.split('-')[0].toUpperCase();
+                }
+             } else { console.warn("currentLangSpan element not found."); }
+             if (langDropdown) {
+                 const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                 langLinks.forEach(link => {
+                     link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
+                 });
+             }
+        }
+
+        function setupLangSwitcher(toggleButton, dropdownMenu) {
+            if (!toggleButton || !dropdownMenu) { console.warn("Language switcher elements missing."); return; }
+            const links = dropdownMenu.querySelectorAll('a[data-lang]');
+            if (!links || links.length === 0) { console.warn("No language links found."); return; }
+            console.log("Setting up lang switcher for:", toggleButton.id);
+            toggleButton.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('hidden'); });
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedLang = link.getAttribute('data-lang');
+                    if (selectedLang !== currentLang) {
+                        currentLang = selectedLang;
+                        localStorage.setItem('language', currentLang);
+                        applyTranslations(currentLang);
+                    }
+                    dropdownMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (langToggle && langDropdown && !langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.add('hidden');
+            }
+        });
+
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('blog-header');
+        if (header) {
+            window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+        } else { console.warn("Blog header element not found."); }
+
+
+        // --- DOMContentLoaded Listener ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired.");
+
+            // --- Theme Switching Setup ---
+            console.log("Attempting to set up theme switcher...");
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const sunIcon = themeToggle.querySelector('.fa-sun');
+                const moonIcon = themeToggle.querySelector('.fa-moon');
+                const currentTheme = localStorage.getItem('theme') || 'dark';
+                function applyTheme(theme) { /* ... */ }
+                applyTheme(currentTheme);
+                themeToggle.addEventListener('click', () => { /* ... */ });
+                console.log("Theme switcher setup complete.");
+            } else { console.warn("Theme toggle button not found."); }
+
+            // --- Language Switching Setup ---
+            console.log("Attempting to set up language switcher...");
+            const langToggleInstance = document.getElementById('lang-toggle');
+            const langDropdownInstance = document.getElementById('lang-dropdown');
+            setupLangSwitcher(langToggleInstance, langDropdownInstance);
+
+            // Apply initial translation
+            console.log("Attempting to apply initial translations...");
+            applyTranslations(currentLang);
+
+            // --- tsParticles Initialization ---
+            console.log("Attempting to load tsParticles...");
+            if (typeof tsParticles !== 'undefined') {
+                const particlesContainer = document.getElementById('tsparticles');
+                if (particlesContainer) {
+                    tsParticles.load("tsparticles", {
+                         fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 }
+                    }).then(container => { console.log("tsParticles loaded successfully."); }).catch(error => { console.error("Error loading tsParticles:", error); });
+                } else { console.warn("tsParticles container element '#tsparticles' not found."); }
+            } else { console.warn("tsParticles library not found."); }
+            console.log("After tsParticles load attempt");
+
+            // --- Lightbox Logic (No images in this post, so no listeners needed) ---
+            // (保持不变)
+
+        }); // End DOMContentLoaded
+
+    </script>
+
+</body>
+</html>
