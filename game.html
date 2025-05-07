@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="games_page_title">小游戏 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
+        }
+        body.light-theme {
+            --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+        .game-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
+        .game-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 0 15px var(--glow-color); }
+        .game-card .card-header-block { border-bottom: 1px solid var(--border-color); }
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="games_hub_title">游戏中心</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1 z-30">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 py-8 md:py-12 relative z-10">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient" data-translate-key="games_list_title">小游戏列表</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <a href="tic-tac-toe.html" class="game-card block rounded-xl overflow-hidden group">
+                <div class="h-48 bg-emerald-600 flex items-center justify-center p-6 card-header-block">
+                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_tic_tac_toe_title_card">井字棋</h3>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_tic_tac_toe_title">井字棋 (Tic-Tac-Toe)</h2>
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_tic_tac_toe_desc">经典的井字棋游戏，支持双人对战或挑战简单的电脑AI。快来和朋友一决高下，或者看看你能否战胜机器！</p>
+                </div>
+            </a>
+
+            </div>
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Translations ---
+        const translations = {
+            'en': {
+                'games_page_title': "Games - MaxCaulfield's Blog",
+                'games_hub_title': "Game Center",
+                'games_list_title': "Game List",
+                'game_tic_tac_toe_title_card': "Tic-Tac-Toe",
+                'game_tic_tac_toe_title': "Tic-Tac-Toe",
+                'game_tic_tac_toe_desc': "The classic Tic-Tac-Toe game. Supports two-player mode or challenge a simple computer AI. Come and compete with friends, or see if you can beat the machine!",
+                'footer_built_with': "Built with ❤️ and code.",
+                'back_to_home': "Back to Home",
+                'current_lang_display': "EN"
+            },
+            'zh-CN': {
+                'games_page_title': "小游戏 - 麦青春的博客",
+                'games_hub_title': "游戏中心",
+                'games_list_title': "小游戏列表",
+                'game_tic_tac_toe_title_card': "井字棋",
+                'game_tic_tac_toe_title': "井字棋 (Tic-Tac-Toe)",
+                'game_tic_tac_toe_desc': "经典的井字棋游戏，支持双人对战或挑战简单的电脑AI。快来和朋友一决高下，或者看看你能否战胜机器！",
+                'footer_built_with': "用 ❤️ 和代码构建.",
+                'back_to_home': "返回主页",
+                'current_lang_display': "简"
+            },
+            'zh-TW': {
+                'games_page_title': "小遊戲 - 麥青春的部落格",
+                'games_hub_title': "遊戲中心",
+                'games_list_title': "小遊戲列表",
+                'game_tic_tac_toe_title_card': "井字棋",
+                'game_tic_tac_toe_title': "井字棋 (Tic-Tac-Toe)",
+                'game_tic_tac_toe_desc': "經典的井字棋遊戲，支援雙人對戰或挑戰簡單的電腦AI。快來和朋友一決高下，或者看看你能否戰勝機器！",
+                'footer_built_with': "用 ❤️ 和程式碼構建.",
+                'back_to_home': "返回主頁",
+                'current_lang_display': "繁"
+            }
+        };
+
+        // --- Theme Switching Logic ---
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            function applyTheme(theme) {
+                if (!sunIcon || !moonIcon) { console.warn("Sun/Moon icon not found."); return; }
+                if (theme === 'light') { document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme'); sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); }
+                else { document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme'); sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); }
+            }
+            applyTheme(currentTheme);
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        }
+
+        // --- Language Switching Logic ---
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+
+        function applyTranslations(lang) {
+             if (!translations || !translations[lang]) { console.warn(`Translations for language '${lang}' not found.`); return; }
+             document.documentElement.lang = lang.startsWith('zh') ? lang : lang.split('-')[0];
+             const elements = document.querySelectorAll('[data-translate-key]');
+             elements.forEach(el => {
+                 const key = el.getAttribute('data-translate-key');
+                 if (translations[lang][key] !== undefined) {
+                     if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
+                     else { el.innerHTML = translations[lang][key]; }
+                 } else {
+                     console.warn(`Translation key "${key}" not found for language "${lang}"`);
+                 }
+             });
+             if (currentLangSpan) {
+                currentLangSpan.textContent = translations[lang]['current_lang_display'] || lang.split('-')[0].toUpperCase();
+             }
+             if (langDropdown) {
+                 const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                 langLinks.forEach(link => {
+                     link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
+                 });
+             }
+        }
+        applyTranslations(currentLang); // Apply on initial load
+
+        if (langToggle && langDropdown) {
+            const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+            langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); });
+            langLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedLang = link.getAttribute('data-lang');
+                    if (selectedLang !== currentLang) {
+                        currentLang = selectedLang;
+                        localStorage.setItem('language', currentLang);
+                        applyTranslations(currentLang);
+                    }
+                    langDropdown.classList.add('hidden');
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                    langDropdown.classList.add('hidden');
+                }
+            });
+        }
+
+         // --- Header Scroll Effect ---
+         const header = document.getElementById('blog-header');
+         if (header) {
+             window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+         }
+
+         // --- tsParticles Initialization ---
+         document.addEventListener('DOMContentLoaded', () => {
+            if (typeof tsParticles !== 'undefined') {
+                tsParticles.load("tsparticles", {
+                    fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 }
+                }).catch(error => { console.error("Error loading tsParticles:", error); });
+            } else { console.warn("tsParticles library not found."); }
+        });
+    </script>
+
+</body>
+</html>
