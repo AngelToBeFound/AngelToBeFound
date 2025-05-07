@@ -65,12 +65,12 @@
             font-weight: 500;
         }
         .game-controls button:hover, .game-controls select:hover {
-            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2);
+            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2); /* Use accent color with alpha for hover */
             transform: translateY(-1px);
         }
         .game-controls button.active {
             background-color: var(--text-accent);
-            color: var(--bg-primary);
+            color: var(--bg-primary); /* Ensure contrast for active button text */
             font-weight: bold;
         }
         .game-controls select {
@@ -111,8 +111,8 @@
 
     <header id="main-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
-                <span class="text-gradient" data-translate-key="blog_title_header">麦青春的博客</span>
+            <a href="games.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="games_hub_title">游戏中心</span>
             </a>
             <div class="flex items-center space-x-3 md:space-x-4">
                 <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
@@ -136,8 +136,7 @@
 
     <div class="container mx-auto px-4 md:px-6 py-8 relative z-10">
         <div class="mb-6 md:mb-8">
-            <a href="game.html" class="text-sm text-[var(--text-accent)] hover:underline">
-                &larr; <span data-translate-key="back_to_games_list">返回游戏列表</span>
+            <a href="games.html" class="text-sm text-[var(--text-accent)] hover:underline"> &larr; <span data-translate-key="back_to_games_list">返回游戏列表</span>
             </a>
         </div>
 
@@ -180,7 +179,7 @@
         const translations = {
             'en': {
                 'gomoku_page_title': "Gomoku - MaxCaulfield's Blog",
-                'blog_title_header': "MaxCaulfield's Blog",
+                'blog_title_header': "Game Center",
                 'back_to_games_list': "Back to Games List",
                 'gomoku_title': "Gomoku Game",
                 'game_mode': "Mode:",
@@ -205,7 +204,7 @@
             },
             'zh-CN': {
                 'gomoku_page_title': "五子棋 - 麦青春的博客",
-                'blog_title_header': "麦青春的博客",
+                'blog_title_header': "游戏中心",
                 'back_to_games_list': "返回游戏列表",
                 'gomoku_title': "五子棋游戏",
                 'game_mode': "模式:",
@@ -230,7 +229,7 @@
             },
             'zh-TW': {
                 'gomoku_page_title': "五子棋 - 麥青春的部落格",
-                'blog_title_header': "麥青春的部落格",
+                'blog_title_header': "遊戲中心",
                 'back_to_games_list': "返回遊戲列表",
                 'gomoku_title': "五子棋遊戲",
                 'game_mode': "模式:",
@@ -255,101 +254,15 @@
             }
         };
 
-        // --- Theme Switching Logic ---
+        // Global DOM Elements (safe to get early, but check before use if needed)
         const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            const sunIcon = themeToggle.querySelector('.fa-sun');
-            const moonIcon = themeToggle.querySelector('.fa-moon');
-            let currentTheme = localStorage.getItem('theme') || 'dark';
-
-            function applyTheme(theme) {
-                if (!sunIcon || !moonIcon) { console.warn("Sun/Moon icon not found."); return; }
-                if (theme === 'light') {
-                    document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme');
-                    sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden');
-                } else {
-                    document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme');
-                    sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden');
-                }
-                // Redraw board with new theme colors
-                if (typeof drawBoard === 'function') { // Check if game functions are defined
-                    drawBoard();
-                    drawPieces();
-                }
-            }
-            applyTheme(currentTheme);
-            themeToggle.addEventListener('click', () => {
-                currentTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
-                applyTheme(currentTheme);
-                localStorage.setItem('theme', currentTheme);
-            });
-        }
-
-        // --- Language Switching Logic ---
         const langToggle = document.getElementById('lang-toggle');
         const langDropdown = document.getElementById('lang-dropdown');
         const currentLangSpan = document.getElementById('current-lang');
-        let currentLang = localStorage.getItem('language') || 'zh-CN';
-
-        function applyTranslations(lang) {
-             if (!translations || !translations[lang]) { console.warn(`Translations for language '${lang}' not found.`); return; }
-             document.documentElement.lang = lang.startsWith('zh') ? lang : lang.split('-')[0];
-             const elements = document.querySelectorAll('[data-translate-key]');
-             elements.forEach(el => {
-                 const key = el.getAttribute('data-translate-key');
-                 if (translations[lang][key] !== undefined) {
-                     if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
-                     else if (el.tagName === 'OPTION') { el.textContent = translations[lang][key];}
-                     else { el.innerHTML = translations[lang][key]; } // Use innerHTML for buttons/spans that might contain icons
-                 }
-             });
-             if (currentLangSpan) {
-                currentLangSpan.textContent = translations[lang]['current_lang_display'] || lang.split('-')[0].toUpperCase();
-             }
-             if (langDropdown) {
-                 const langLinks = langDropdown.querySelectorAll('a[data-lang]');
-                 langLinks.forEach(link => {
-                     link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
-                     link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === lang);
-                 });
-             }
-             // Update game status message if game is active
-             if (typeof game !== 'undefined' && game.statusMessageKey) {
-                updateStatusMessage(game.statusMessageKey);
-             }
-        }
-        
-        if (langToggle && langDropdown) {
-            const langLinks = langDropdown.querySelectorAll('a[data-lang]');
-            langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); });
-            langLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const selectedLang = link.getAttribute('data-lang');
-                    if (selectedLang !== currentLang) {
-                        currentLang = selectedLang;
-                        localStorage.setItem('language', currentLang);
-                        applyTranslations(currentLang);
-                    }
-                    langDropdown.classList.add('hidden');
-                });
-            });
-            document.addEventListener('click', (e) => {
-                if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
-                    langDropdown.classList.add('hidden');
-                }
-            });
-        }
-        
-        // --- Header Scroll Effect ---
         const header = document.getElementById('main-header');
-        if (header) {
-             window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
-        }
 
-        // --- Gomoku Game Logic ---
         const canvas = document.getElementById('gomoku-board');
-        const ctx = canvas.getContext('2d');
+        let ctx; // Declare ctx, initialize in DOMContentLoaded
         const pvpModeBtn = document.getElementById('pvp-mode-btn');
         const pvaiModeBtn = document.getElementById('pvai-mode-btn');
         const difficultySelection = document.getElementById('difficulty-selection');
@@ -357,8 +270,9 @@
         const startGameBtn = document.getElementById('start-game-btn');
         const restartGameBtn = document.getElementById('restart-game-btn');
         const gameStatusEl = document.getElementById('game-status').querySelector('span');
-        
-        const BOARD_SIZE = 15; // 15x15 board
+
+        // Game State and Constants
+        const BOARD_SIZE = 15;
         const EMPTY = 0;
         const BLACK = 1;
         const WHITE = 2;
@@ -367,23 +281,29 @@
             board: [],
             currentPlayer: BLACK,
             gameOver: true,
-            mode: 'pvp', // 'pvp' or 'pvai'
+            mode: 'pvp',
             aiDifficulty: 'easy',
             cellSize: 0,
             boardPadding: 0,
             statusMessageKey: 'status_select_mode'
         };
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
 
+
+        // --- Core Game Functions ---
         function updateStatusMessage(key, player = null) {
-            game.statusMessageKey = key;
-            let message = translations[currentLang][key] || key;
+            game.statusMessageKey = key; // Store the key for re-translation
+            let message = (translations[currentLang] && translations[currentLang][key]) ? translations[currentLang][key] : key;
             let playerIndicatorHtml = '';
             if (player === BLACK) {
                 playerIndicatorHtml = '<span class="player-indicator player-black"></span>';
             } else if (player === WHITE) {
                 playerIndicatorHtml = '<span class="player-indicator player-white"></span>';
             }
-            gameStatusEl.innerHTML = message + playerIndicatorHtml;
+            if (gameStatusEl) { // Check if element exists
+                 gameStatusEl.innerHTML = message + playerIndicatorHtml;
+            }
         }
 
         function initBoardArray() {
@@ -391,49 +311,44 @@
         }
 
         function resizeCanvas() {
-            const containerWidth = canvas.parentElement.clientWidth * 0.9; // Use 90% of parent width
-            const size = Math.min(containerWidth, window.innerHeight * 0.65); // Limit by height also
+            if (!canvas || !canvas.parentElement) return; // Guard clause
+            const containerWidth = canvas.parentElement.clientWidth * 0.9;
+            const size = Math.min(containerWidth, window.innerHeight * 0.65, 500); // Added a max size for very large screens
             canvas.width = size;
             canvas.height = size;
-            game.boardPadding = size * 0.05; // 5% padding
+            game.boardPadding = size * 0.05;
             game.cellSize = (size - 2 * game.boardPadding) / (BOARD_SIZE - 1);
+            if (game.cellSize <=0) { // Prevent division by zero or negative cell size
+                console.error("Calculated cell size is invalid. Canvas might be too small or hidden.");
+                game.cellSize = 10; // Fallback to a small positive value
+            }
             drawBoard();
             drawPieces();
         }
 
         function drawBoard() {
+            if (!ctx || !canvas) return; // Guard clause
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Get current theme colors
             const bodyStyles = getComputedStyle(document.body);
             const boardBgColor = bodyStyles.getPropertyValue('--board-bg').trim();
             const boardLineColor = bodyStyles.getPropertyValue('--board-line').trim();
 
             ctx.fillStyle = boardBgColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.strokeStyle = boardLineColor;
             ctx.lineWidth = 1;
 
             for (let i = 0; i < BOARD_SIZE; i++) {
-                // Horizontal lines
                 ctx.beginPath();
                 ctx.moveTo(game.boardPadding, game.boardPadding + i * game.cellSize);
                 ctx.lineTo(canvas.width - game.boardPadding, game.boardPadding + i * game.cellSize);
                 ctx.stroke();
-                // Vertical lines
                 ctx.beginPath();
                 ctx.moveTo(game.boardPadding + i * game.cellSize, game.boardPadding);
                 ctx.lineTo(game.boardPadding + i * game.cellSize, canvas.height - game.boardPadding);
                 ctx.stroke();
             }
-
-            // Star points (天元 and other key points)
-            const starPoints = [
-                {r:3, c:3}, {r:3, c:11}, {r:11, c:3}, {r:11, c:11}, {r:7, c:7} // Center (Tengen)
-            ];
-            if (BOARD_SIZE === 19) { // More star points for a 19x19 board if implemented later
-                 starPoints.push({r:3, c:7}, {r:7, c:3}, {r:11, c:7}, {r:7, c:11});
-            }
+            const starPoints = [{r:3,c:3},{r:3,c:11},{r:11,c:3},{r:11,c:11},{r:7,c:7}];
             ctx.fillStyle = boardLineColor;
             starPoints.forEach(p => {
                 if (p.r < BOARD_SIZE && p.c < BOARD_SIZE) {
@@ -445,9 +360,10 @@
         }
 
         function drawPieces() {
+            if (!ctx || !game.board) return; // Guard clause
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
-                    if (game.board[r][c] !== EMPTY) {
+                    if (game.board[r] && game.board[r][c] !== EMPTY) { // Check if row exists
                         drawPiece(r, c, game.board[r][c]);
                     }
                 }
@@ -455,50 +371,38 @@
         }
         
         function drawPiece(row, col, player) {
+            if (!ctx) return; // Guard clause
             const x = game.boardPadding + col * game.cellSize;
             const y = game.boardPadding + row * game.cellSize;
             const radius = game.cellSize * 0.4;
-
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, 2 * Math.PI);
-            
             if (player === BLACK) {
-                ctx.fillStyle = '#222'; // More distinct black
-                ctx.fill();
-            } else { // WHITE
-                ctx.fillStyle = '#f0f0f0'; // Slightly off-white
-                ctx.fill();
-                ctx.strokeStyle = '#ccc'; // Light border for white pieces
-                ctx.lineWidth = 1;
-                ctx.stroke();
+                ctx.fillStyle = '#222'; ctx.fill();
+            } else {
+                ctx.fillStyle = '#f0f0f0'; ctx.fill();
+                ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1; ctx.stroke();
             }
         }
 
         function handleBoardClick(event) {
-            if (game.gameOver) return;
-
+            if (game.gameOver || !canvas) return; // Guard clause
             const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;    // Relationship bitmap vs. element for X
-            const scaleY = canvas.height / rect.height;  // Relationship bitmap vs. element for Y
-
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
             const x = (event.clientX - rect.left) * scaleX;
             const y = (event.clientY - rect.top) * scaleY;
-
-            // Find nearest intersection
             const col = Math.round((x - game.boardPadding) / game.cellSize);
             const row = Math.round((y - game.boardPadding) / game.cellSize);
-
             if (row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE && game.board[row][col] === EMPTY) {
                 makeMove(row, col, game.currentPlayer);
             }
         }
 
         function makeMove(row, col, player) {
-            if (game.board[row][col] !== EMPTY || game.gameOver) return false;
-
+            if (!game.board[row] || game.board[row][col] !== EMPTY || game.gameOver) return false;
             game.board[row][col] = player;
             drawPiece(row, col, player);
-
             if (checkWin(row, col, player)) {
                 game.gameOver = true;
                 updateStatusMessage(player === BLACK ? 'status_black_wins' : 'status_white_wins');
@@ -509,46 +413,25 @@
                 updateStatusMessage('status_draw');
                 return true;
             }
-
             game.currentPlayer = (player === BLACK) ? WHITE : BLACK;
             updateStatusMessage(game.currentPlayer === BLACK ? 'status_black_turn' : 'status_white_turn', game.currentPlayer);
-            
-            if (game.mode === 'pvai' && game.currentPlayer === WHITE && !game.gameOver) { // AI is WHITE
-                setTimeout(aiMove, 500); // AI "thinks" for a bit
+            if (game.mode === 'pvai' && game.currentPlayer === WHITE && !game.gameOver) {
+                setTimeout(aiMove, 500);
             }
             return true;
         }
 
         function checkWin(r, c, player) {
-            // Check horizontal, vertical, and two diagonals
-            const directions = [
-                { dr: 0, dc: 1 }, // Horizontal
-                { dr: 1, dc: 0 }, // Vertical
-                { dr: 1, dc: 1 }, // Diagonal \
-                { dr: 1, dc: -1 } // Diagonal /
-            ];
-
-            for (const { dr, dc } of directions) {
+            const directions = [{dr:0,dc:1},{dr:1,dc:0},{dr:1,dc:1},{dr:1,dc:-1}];
+            for (const {dr, dc} of directions) {
                 let count = 1;
-                // Check in one direction
                 for (let i = 1; i < 5; i++) {
-                    const nr = r + dr * i;
-                    const nc = c + dc * i;
-                    if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && game.board[nr][nc] === player) {
-                        count++;
-                    } else {
-                        break;
-                    }
+                    const nr = r + dr * i; const nc = c + dc * i;
+                    if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && game.board[nr][nc] === player) count++; else break;
                 }
-                // Check in opposite direction
                 for (let i = 1; i < 5; i++) {
-                    const nr = r - dr * i;
-                    const nc = c - dc * i;
-                    if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && game.board[nr][nc] === player) {
-                        count++;
-                    } else {
-                        break;
-                    }
+                    const nr = r - dr * i; const nc = c - dc * i;
+                    if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && game.board[nr][nc] === player) count++; else break;
                 }
                 if (count >= 5) return true;
             }
@@ -556,144 +439,93 @@
         }
 
         function checkDraw() {
+            if (!game.board) return false;
             for (let r = 0; r < BOARD_SIZE; r++) {
+                if (!game.board[r]) continue; // Should not happen with initBoardArray
                 for (let c = 0; c < BOARD_SIZE; c++) {
-                    if (game.board[r][c] === EMPTY) return false; // Game not over if empty cell exists
+                    if (game.board[r][c] === EMPTY) return false;
                 }
             }
-            return true; // Board is full
+            return true;
         }
         
         function aiMove() {
             if (game.gameOver) return;
             updateStatusMessage('status_ai_thinking');
-
             let bestMove = findBestMoveForAI();
             if (bestMove) {
-                makeMove(bestMove.row, bestMove.col, WHITE); // AI is WHITE
-            } else { // Should not happen if game is not a draw
-                console.error("AI could not find a move.");
-            }
+                makeMove(bestMove.row, bestMove.col, WHITE);
+            } else { console.error("AI could not find a move."); }
         }
 
         function findBestMoveForAI() {
-            // AI Difficulty Logic
-            if (game.aiDifficulty === 'easy') {
-                return findRandomMove();
-            }
-            
-            let bestScore = -Infinity;
-            let move = null;
-            const availableMoves = [];
-
-            // Prioritize winning moves for AI (WHITE)
+            if (game.aiDifficulty === 'easy') return findRandomMove();
+            let bestScore = -Infinity; let move = null; const availableMoves = [];
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
                     if (game.board[r][c] === EMPTY) {
-                        game.board[r][c] = WHITE; // Try AI move
-                        if (checkWin(r, c, WHITE)) {
-                            game.board[r][c] = EMPTY; // Undo
-                            return { row: r, col: c };
-                        }
-                        game.board[r][c] = EMPTY; // Undo
+                        game.board[r][c] = WHITE;
+                        if (checkWin(r, c, WHITE)) { game.board[r][c] = EMPTY; return { row: r, col: c }; }
+                        game.board[r][c] = EMPTY;
                         availableMoves.push({row: r, col: c});
                     }
                 }
             }
-
-            // Prioritize blocking moves for Player (BLACK)
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
                     if (game.board[r][c] === EMPTY) {
-                        game.board[r][c] = BLACK; // Try Player move
-                        if (checkWin(r, c, BLACK)) {
-                            game.board[r][c] = EMPTY; // Undo
-                            return { row: r, col: c }; // Block this
-                        }
-                        game.board[r][c] = EMPTY; // Undo
+                        game.board[r][c] = BLACK;
+                        if (checkWin(r, c, BLACK)) { game.board[r][c] = EMPTY; return { row: r, col: c }; }
+                        game.board[r][c] = EMPTY;
                     }
                 }
             }
-            
-            // Medium / Hard: More sophisticated evaluation
             if (game.aiDifficulty === 'medium' || game.aiDifficulty === 'hard') {
                 for (const m of availableMoves) {
                     game.board[m.row][m.col] = WHITE;
-                    let score = evaluateBoard(WHITE, game.aiDifficulty === 'hard'); // Pass 'hard' flag
+                    let score = evaluateBoard(WHITE, game.aiDifficulty === 'hard');
                     game.board[m.row][m.col] = EMPTY;
-                    if (score > bestScore) {
-                        bestScore = score;
-                        move = m;
-                    }
+                    if (score > bestScore) { bestScore = score; move = m; }
                 }
             }
-            
-            return move || findRandomMove(); // Fallback to random if no better move
+            return move || findRandomMove();
         }
 
         function findRandomMove() {
             const emptyCells = [];
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
-                    if (game.board[r][c] === EMPTY) {
-                        emptyCells.push({ row: r, col: c });
-                    }
+                    if (game.board[r][c] === EMPTY) emptyCells.push({ row: r, col: c });
                 }
             }
-            if (emptyCells.length > 0) {
-                return emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            }
-            return null; // No moves left
+            return emptyCells.length > 0 ? emptyCells[Math.floor(Math.random() * emptyCells.length)] : null;
         }
 
         function evaluateBoard(player, isHardDifficulty) {
-            let score = 0;
-            const opponent = player === BLACK ? WHITE : BLACK;
-
-            // Score based on number of pieces in a line, potential for 5
-            // This is a very basic evaluation. A real Gomoku AI needs much more.
+            let score = 0; const opponent = player === BLACK ? WHITE : BLACK;
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
                     if (game.board[r][c] === EMPTY) continue;
-
                     const directions = [{dr:0,dc:1},{dr:1,dc:0},{dr:1,dc:1},{dr:1,dc:-1}];
                     directions.forEach(dir => {
-                        let linePlayer = 0;
-                        let lineOpponent = 0;
-                        let openEndsPlayer = 0;
-                        let openEndsOpponent = 0;
-
-                        // Check player's line
+                        let linePlayer = 0, lineOpponent = 0, openEndsPlayer = 0, openEndsOpponent = 0;
                         for (let i = 0; i < 5; i++) {
-                            const cr = r + dir.dr * i;
-                            const cc = c + dir.dc * i;
-                            if (cr < 0 || cr >= BOARD_SIZE || cc < 0 || cc >= BOARD_SIZE) break;
-                            if (game.board[cr][cc] === player) linePlayer++;
-                            else if (game.board[cr][cc] === opponent) { linePlayer = -10; break; } // Blocked
-                            else if (game.board[cr][cc] === EMPTY) openEndsPlayer++;
+                            const cr = r + dir.dr*i, cc = c + dir.dc*i; if (cr<0||cr>=BOARD_SIZE||cc<0||cc>=BOARD_SIZE) break;
+                            if (game.board[cr][cc]===player) linePlayer++; else if (game.board[cr][cc]===opponent) {linePlayer=-10; break;} else openEndsPlayer++;
                         }
-
-                        // Check opponent's line (from same starting point, for blocking)
-                         for (let i = 0; i < 5; i++) {
-                            const cr = r + dir.dr * i;
-                            const cc = c + dir.dc * i;
-                            if (cr < 0 || cr >= BOARD_SIZE || cc < 0 || cc >= BOARD_SIZE) break;
-                            if (game.board[cr][cc] === opponent) lineOpponent++;
-                            else if (game.board[cr][cc] === player) { lineOpponent = -10; break; } // Blocked by player
-                            else if (game.board[cr][cc] === EMPTY) openEndsOpponent++;
+                        for (let i = 0; i < 5; i++) {
+                            const cr = r + dir.dr*i, cc = c + dir.dc*i; if (cr<0||cr>=BOARD_SIZE||cc<0||cc>=BOARD_SIZE) break;
+                            if (game.board[cr][cc]===opponent) lineOpponent++; else if (game.board[cr][cc]===player) {lineOpponent=-10; break;} else openEndsOpponent++;
                         }
-
-
                         if (linePlayer > 0) {
-                            if (linePlayer === 4 && openEndsPlayer >=1) score += (player === WHITE ? 10000 : 5000); // AI winning / Player winning
-                            else if (linePlayer === 3 && openEndsPlayer >=2) score += (player === WHITE ? 500 : 200);
-                            else if (linePlayer === 2 && openEndsPlayer >=2) score += (player === WHITE ? 50 : 20);
-                            else score += linePlayer * (player === WHITE ? 2 : 1);
+                            if (linePlayer===4 && openEndsPlayer>=1) score += (player===WHITE ? 10000 : 5000);
+                            else if (linePlayer===3 && openEndsPlayer>=2) score += (player===WHITE ? 500 : 200);
+                            else if (linePlayer===2 && openEndsPlayer>=2) score += (player===WHITE ? 50 : 20);
+                            else score += linePlayer * (player===WHITE ? 2 : 1);
                         }
-                        
-                        if (isHardDifficulty && lineOpponent > 0) { // More aggressive blocking for Hard AI
-                            if (lineOpponent === 4 && openEndsOpponent >=1) score += (player === WHITE ? 8000 : 100); // Block opponent's win
-                            else if (lineOpponent === 3 && openEndsOpponent >=2) score += (player === WHITE ? 400 : 50);
+                        if (isHardDifficulty && lineOpponent > 0) {
+                            if (lineOpponent===4 && openEndsOpponent>=1) score += (player===WHITE ? 8000 : 100);
+                            else if (lineOpponent===3 && openEndsOpponent>=2) score += (player===WHITE ? 400 : 50);
                         }
                     });
                 }
@@ -701,52 +533,140 @@
             return score;
         }
 
-
         function setupGameControls() {
-            pvpModeBtn.addEventListener('click', () => {
-                game.mode = 'pvp';
-                pvpModeBtn.classList.add('active');
-                pvaiModeBtn.classList.remove('active');
-                difficultySelection.classList.add('hidden');
+            if (pvpModeBtn) pvpModeBtn.addEventListener('click', () => {
+                game.mode = 'pvp'; pvpModeBtn.classList.add('active'); pvaiModeBtn.classList.remove('active'); difficultySelection.classList.add('hidden');
             });
-            pvaiModeBtn.addEventListener('click', () => {
-                game.mode = 'pvai';
-                pvaiModeBtn.classList.add('active');
-                pvpModeBtn.classList.remove('active');
-                difficultySelection.classList.remove('hidden');
+            if (pvaiModeBtn) pvaiModeBtn.addEventListener('click', () => {
+                game.mode = 'pvai'; pvaiModeBtn.classList.add('active'); pvpModeBtn.classList.remove('active'); difficultySelection.classList.remove('hidden');
             });
-            aiDifficultySelect.addEventListener('change', (e) => {
-                game.aiDifficulty = e.target.value;
-            });
-            startGameBtn.addEventListener('click', startGame);
-            restartGameBtn.addEventListener('click', startGame); // Restart is same as start for now
-            
-            // Set default mode active
-            pvpModeBtn.classList.add('active'); // Default to PvP
+            if (aiDifficultySelect) aiDifficultySelect.addEventListener('change', (e) => { game.aiDifficulty = e.target.value; });
+            if (startGameBtn) startGameBtn.addEventListener('click', startGame);
+            if (restartGameBtn) restartGameBtn.addEventListener('click', startGame);
+            if (pvpModeBtn) pvpModeBtn.classList.add('active'); // Default
         }
 
         function startGame() {
+            console.log("Start game called. Mode:", game.mode, "Difficulty:", game.aiDifficulty); // Debug log
             game.gameOver = false;
             game.currentPlayer = BLACK;
             initBoardArray();
-            drawBoard();
+            drawBoard(); // This should call resizeCanvas implicitly if needed, or ensure canvas is sized
             updateStatusMessage('status_black_turn', BLACK);
         }
 
-        // --- DOMContentLoaded Listener ---
-        document.addEventListener('DOMContentLoaded', () => {
-            applyTranslations(currentLang); // Apply on initial load
-            setupGameControls();
-            resizeCanvas(); // Initial draw
+        // --- Theme and Language Helper Functions ---
+        function applyCurrentTheme() {
+            const sunIcon = themeToggle ? themeToggle.querySelector('.fa-sun') : null;
+            const moonIcon = themeToggle ? themeToggle.querySelector('.fa-moon') : null;
 
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme');
+                if (sunIcon) sunIcon.classList.add('hidden'); if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+                document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme');
+                if (sunIcon) sunIcon.classList.remove('hidden'); if (moonIcon) moonIcon.classList.add('hidden');
+            }
+            if (typeof drawBoard === 'function' && canvas && ctx) {
+                drawBoard(); drawPieces();
+            }
+        }
+        
+        function applyCurrentTranslations() {
+            if (!translations[currentLang]) { console.warn(`Translations for language '${currentLang}' not found.`); return; }
+            document.documentElement.lang = currentLang.startsWith('zh') ? currentLang : currentLang.split('-')[0];
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (translations[currentLang][key] !== undefined) {
+                    if (el.tagName === 'TITLE') { document.title = translations[currentLang][key]; }
+                    else if (el.tagName === 'OPTION') { el.textContent = translations[currentLang][key];}
+                    else { el.innerHTML = translations[currentLang][key]; }
+                }
+            });
+            if (currentLangSpan) {
+               currentLangSpan.textContent = (translations[currentLang] && translations[currentLang]['current_lang_display']) ? translations[currentLang]['current_lang_display'] : currentLang.split('-')[0].toUpperCase();
+            }
+            if (langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langLinks.forEach(link => {
+                    link.classList.toggle('font-bold', link.getAttribute('data-lang') === currentLang);
+                    link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === currentLang);
+                });
+            }
+            if (typeof game !== 'undefined' && game.statusMessageKey) {
+               updateStatusMessage(game.statusMessageKey, game.currentPlayer);
+            }
+        }
+
+        // --- DOMContentLoaded Listener (Primary Setup Point) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM Content Loaded - Gomoku Game");
+
+            // Initialize canvas context here
+            if (canvas) {
+                ctx = canvas.getContext('2d');
+            } else {
+                console.error("Canvas element not found at DOMContentLoaded.");
+                return;
+            }
+            if (!ctx) {
+                console.error("Canvas context could not be retrieved at DOMContentLoaded.");
+                return;
+            }
+
+            // Initialize Theme
+            if (themeToggle) {
+                applyCurrentTheme();
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                    localStorage.setItem('theme', currentTheme);
+                    applyCurrentTheme();
+                });
+            }
+
+            // Initialize Language
+            applyCurrentTranslations();
+            if (langToggle && langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); });
+                langLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const selectedLang = link.getAttribute('data-lang');
+                        if (selectedLang !== currentLang) {
+                            currentLang = selectedLang;
+                            localStorage.setItem('language', currentLang);
+                            applyCurrentTranslations();
+                        }
+                        langDropdown.classList.add('hidden');
+                    });
+                });
+                document.addEventListener('click', (e) => {
+                    if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                        langDropdown.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Header Scroll Effect
+            if (header) {
+                window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+            }
+
+            // Game Setup
+            setupGameControls();
+            resizeCanvas();
             canvas.addEventListener('click', handleBoardClick);
             window.addEventListener('resize', resizeCanvas);
+            console.log("Gomoku game controls and canvas listeners initialized.");
+            updateStatusMessage('status_select_mode');
 
-            // --- tsParticles Initialization ---
+            // tsParticles Initialization
             if (typeof tsParticles !== 'undefined') {
                 tsParticles.load("tsparticles", {
                      fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 }
-                }).catch(error => { console.error("Error loading tsParticles:", error); });
+                }).then(() => console.log("tsParticles loaded.")).catch(error => { console.error("Error loading tsParticles:", error); });
             } else { console.warn("tsParticles library not found."); }
         });
     </script>
