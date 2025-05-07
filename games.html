@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <style>
-        /* --- Base Styles & Theme Variables (保持和博客一致) --- */
+        /* --- Base Styles & Theme Variables --- */
         :root {
             --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7);
             --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6);
@@ -51,6 +51,17 @@
         .game-card .card-header-block {
             border-bottom: 1px solid var(--border-color);
         }
+        /* Style for the new Home button */
+        .home-button {
+             padding: 0.5rem; /* p-2 */
+             border-radius: 9999px; /* rounded-full */
+             transition: background-color 0.2s ease;
+             color: var(--text-secondary);
+        }
+        .home-button:hover {
+             background-color: var(--bg-glass);
+             color: var(--text-primary);
+        }
     </style>
 </head>
 <body class="dark-theme">
@@ -58,10 +69,12 @@
 
     <header id="main-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="games.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+            <div class="text-2xl md:text-3xl font-bold">
                 <span class="text-gradient" data-translate-key="games_hub_title">游戏中心</span>
-            </a>
-            <div class="flex items-center space-x-3 md:space-x-4">
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-3"> <a href="index.html" class="home-button" aria-label="Back to Home" data-translate-key="tooltip_back_to_home">
+                    <i class="fas fa-house text-lg"></i>
+                </a>
                 <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
                     <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
                 </button>
@@ -96,7 +109,8 @@
             </a>
 
             <a href="snake-game.html" class="game-card block rounded-xl overflow-hidden group">
-                <div class="h-48 bg-emerald-600 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_snake_title_card">贪吃蛇</h3>
+                <div class="h-48 bg-emerald-600 flex items-center justify-center p-6 card-header-block">
+                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_snake_title_card">贪吃蛇</h3>
                 </div>
                 <div class="p-6">
                     <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_snake_title">贪吃蛇 (Snake)</h2>
@@ -115,67 +129,52 @@
     </footer>
 
     <script>
-        // --- Translations (Added Snake keys) ---
+        // --- Translations (Added tooltip key) ---
         const translations = {
             'en': {
                 'games_page_title': "Games - MaxCaulfield's Blog",
                 'games_hub_title': "Game Center",
                 'games_list_title': "Game List",
-                // Gomoku Game
                 'game_gomoku_title_card': "Gomoku",
                 'game_gomoku_title': "Gomoku (Five-in-a-Row)",
                 'game_gomoku_desc': "The classic Gomoku game. Be the first to get five stones in a row to win. Supports Player vs Player or challenge the computer AI at different difficulties.",
-                // Snake Game - ADDED
                 'game_snake_title_card': "Snake",
                 'game_snake_title': "Snake Game",
                 'game_snake_desc': "Control the snake to eat food and grow longer! Be careful not to hit the walls or yourself. Classic arcade style.",
-                // Placeholder
-                'game_coming_soon_card': "Coming Soon",
-                'game_coming_soon_title': "More Games",
-                'game_coming_soon_desc': "More fun little games are under development...",
                 'footer_built_with': "Built with ❤️ and code.",
                 'back_to_home': "Back to Home",
-                'current_lang_display': "EN"
+                'current_lang_display': "EN",
+                'tooltip_back_to_home': "Back to Home" // Added tooltip text
             },
             'zh-CN': {
                 'games_page_title': "小游戏 - 麦青春的博客",
                 'games_hub_title': "游戏中心",
                 'games_list_title': "小游戏列表",
-                // 五子棋
                 'game_gomoku_title_card': "五子棋",
                 'game_gomoku_title': "五子棋 (Gomoku)",
                 'game_gomoku_desc': "经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。",
-                // 贪吃蛇 - ADDED
                 'game_snake_title_card': "贪吃蛇",
                 'game_snake_title': "贪吃蛇 (Snake)",
                 'game_snake_desc': "控制小蛇吃食物，变得越来越长！小心不要撞到墙壁或自己的身体。经典街机风格。",
-                // 占位符
-                'game_coming_soon_card': "敬请期待",
-                'game_coming_soon_title': "更多游戏",
-                'game_coming_soon_desc': "更多有趣的小游戏正在制作中...",
                 'footer_built_with': "用 ❤️ 和代码构建.",
                 'back_to_home': "返回主页",
-                'current_lang_display': "简"
+                'current_lang_display': "简",
+                'tooltip_back_to_home': "返回主页" // Added tooltip text
             },
             'zh-TW': {
                 'games_page_title': "小遊戲 - 麥青春的部落格",
                 'games_hub_title': "遊戲中心",
                 'games_list_title': "小遊戲列表",
-                // 五子棋
                 'game_gomoku_title_card': "五子棋",
                 'game_gomoku_title': "五子棋 (Gomoku)",
                 'game_gomoku_desc': "經典的五子棋遊戲，率先將五個棋子連成一線者獲勝。支援雙人對戰或挑戰不同難度的電腦AI。",
-                // 貪吃蛇 - ADDED
                 'game_snake_title_card': "貪吃蛇",
                 'game_snake_title': "貪吃蛇 (Snake)",
                 'game_snake_desc': "控制小蛇吃食物，變得越來越長！小心不要撞到牆壁或自己的身體。經典街機風格。",
-                // 佔位符
-                'game_coming_soon_card': "敬請期待",
-                'game_coming_soon_title': "更多遊戲",
-                'game_coming_soon_desc': "更多有趣的小遊戲正在製作中...",
                 'footer_built_with': "用 ❤️ 和程式碼構建.",
                 'back_to_home': "返回主頁",
-                'current_lang_display': "繁"
+                'current_lang_display': "繁",
+                'tooltip_back_to_home': "返回主頁" // Added tooltip text
             }
         };
 
@@ -212,6 +211,11 @@
                  const key = el.getAttribute('data-translate-key');
                  if (translations[lang][key] !== undefined) {
                      if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
+                     // Apply translation to title attribute for tooltips
+                     else if (el.hasAttribute('aria-label') && key === 'tooltip_back_to_home') {
+                         el.setAttribute('aria-label', translations[lang][key]);
+                         el.setAttribute('title', translations[lang][key]); // Set title for standard browser tooltip
+                     }
                      else { el.innerHTML = translations[lang][key]; }
                  }
              });
@@ -222,7 +226,7 @@
                  const langLinks = langDropdown.querySelectorAll('a[data-lang]');
                  langLinks.forEach(link => {
                      link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
-                     link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === lang); // Highlight active lang
+                     link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === lang);
                  });
              }
         }
@@ -251,7 +255,7 @@
         }
 
          // --- Header Scroll Effect ---
-         const header = document.getElementById('main-header'); // Use the correct ID
+         const header = document.getElementById('main-header');
          if (header) {
              window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
          }
