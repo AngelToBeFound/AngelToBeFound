@@ -414,7 +414,7 @@
         }
 
         function changeDirection(event) {
-            if (changingDirection) return; // Prevent changing direction multiple times before next move
+            if (changingDirection || isGameOver) return; // Game not active or already processed a change this tick
 
             const LEFT_KEY = 37; const UP_KEY = 38; const RIGHT_KEY = 39; const DOWN_KEY = 40;
             const keyPressed = event.keyCode;
@@ -424,10 +424,26 @@
             const goingLeft = velocity.x === -1;
             const goingRight = velocity.x === 1;
 
-            if (keyPressed === LEFT_KEY && !goingRight) { velocity = { x: -1, y: 0 }; changingDirection = true; }
-            if (keyPressed === UP_KEY && !goingDown) { velocity = { x: 0, y: -1 }; changingDirection = true; }
-            if (keyPressed === RIGHT_KEY && !goingLeft) { velocity = { x: 1, y: 0 }; changingDirection = true; }
-            if (keyPressed === DOWN_KEY && !goingUp) { velocity = { x: 0, y: 1 }; changingDirection = true; }
+            let madeValidMove = false;
+
+            if (keyPressed === LEFT_KEY && !goingRight) {
+                velocity = { x: -1, y: 0 };
+                madeValidMove = true;
+            } else if (keyPressed === UP_KEY && !goingDown) { // Changed to else if for mutual exclusivity
+                velocity = { x: 0, y: -1 };
+                madeValidMove = true;
+            } else if (keyPressed === RIGHT_KEY && !goingLeft) {
+                velocity = { x: 1, y: 0 };
+                madeValidMove = true;
+            } else if (keyPressed === DOWN_KEY && !goingUp) {
+                velocity = { x: 0, y: 1 };
+                madeValidMove = true;
+            }
+
+            if (madeValidMove) {
+                changingDirection = true; // Mark that a direction change has been processed for this game tick
+                event.preventDefault();   // Prevent default browser action (e.g., scrolling)
+            }
         }
 
         function handleTouchStart(event) {

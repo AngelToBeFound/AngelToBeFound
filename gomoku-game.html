@@ -75,14 +75,28 @@
         }
         .game-controls select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); /* Default to light stroke for dark theme */
             background-position: right 0.5rem center;
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
             padding-right: 2.5rem;
+            color: var(--text-primary); /* Ensure text color is applied */
         }
         body.light-theme .game-controls select {
-             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); /* Darker stroke for light theme */
+             color: var(--text-primary); /* Ensure text color is applied for light theme */
+        }
+        body.dark-theme .game-controls select option {
+            background-color: var(--bg-primary-dark); /* Use a solid, dark background */
+            color: var(--text-primary-dark); /* Ensure light text */
+        }
+        body.light-theme .game-controls select option {
+             background-color: var(--bg-secondary); /* Match dropdown background if possible */
+             color: var(--text-primary);
+        }
+        .game-controls select option {
+            background-color: var(--bg-secondary); /* Match dropdown background if possible */
+            color: var(--text-primary);
         }
 
         #game-status {
