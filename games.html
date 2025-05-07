@@ -27,7 +27,7 @@
         @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        #main-header { /* Changed ID to avoid conflict if reusing header */
+        #main-header {
             position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         #main-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -36,13 +36,13 @@
         body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
 
-        /* Game Card Styles (保持和博客卡片类似) */
+        /* Game Card Styles */
         .game-card {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-            display: block; /* Make the anchor a block element */
-            text-decoration: none; /* Remove underline from link */
+            display: block;
+            text-decoration: none;
         }
         .game-card:hover {
             transform: translateY(-5px);
@@ -86,11 +86,21 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <a href="gomoku-game.html" class="game-card block rounded-xl overflow-hidden group">
-                <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_gomoku_title_card">五子棋</h3>
+                <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block">
+                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_gomoku_title_card">五子棋</h3>
                 </div>
                 <div class="p-6">
                     <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_gomoku_title">五子棋 (Gomoku)</h2>
                     <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_gomoku_desc">经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。</p>
+                </div>
+            </a>
+
+            <a href="snake-game.html" class="game-card block rounded-xl overflow-hidden group">
+                <div class="h-48 bg-emerald-600 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_snake_title_card">贪吃蛇</h3>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_snake_title">贪吃蛇 (Snake)</h2>
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_snake_desc">控制小蛇吃食物，变得越来越长！小心不要撞到墙壁或自己的身体。经典街机风格。</p>
                 </div>
             </a>
 
@@ -105,7 +115,7 @@
     </footer>
 
     <script>
-        // --- Translations (Added Gomoku keys) ---
+        // --- Translations (Added Snake keys) ---
         const translations = {
             'en': {
                 'games_page_title': "Games - MaxCaulfield's Blog",
@@ -115,6 +125,10 @@
                 'game_gomoku_title_card': "Gomoku",
                 'game_gomoku_title': "Gomoku (Five-in-a-Row)",
                 'game_gomoku_desc': "The classic Gomoku game. Be the first to get five stones in a row to win. Supports Player vs Player or challenge the computer AI at different difficulties.",
+                // Snake Game - ADDED
+                'game_snake_title_card': "Snake",
+                'game_snake_title': "Snake Game",
+                'game_snake_desc': "Control the snake to eat food and grow longer! Be careful not to hit the walls or yourself. Classic arcade style.",
                 // Placeholder
                 'game_coming_soon_card': "Coming Soon",
                 'game_coming_soon_title': "More Games",
@@ -131,6 +145,10 @@
                 'game_gomoku_title_card': "五子棋",
                 'game_gomoku_title': "五子棋 (Gomoku)",
                 'game_gomoku_desc': "经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。",
+                // 贪吃蛇 - ADDED
+                'game_snake_title_card': "贪吃蛇",
+                'game_snake_title': "贪吃蛇 (Snake)",
+                'game_snake_desc': "控制小蛇吃食物，变得越来越长！小心不要撞到墙壁或自己的身体。经典街机风格。",
                 // 占位符
                 'game_coming_soon_card': "敬请期待",
                 'game_coming_soon_title': "更多游戏",
@@ -147,6 +165,10 @@
                 'game_gomoku_title_card': "五子棋",
                 'game_gomoku_title': "五子棋 (Gomoku)",
                 'game_gomoku_desc': "經典的五子棋遊戲，率先將五個棋子連成一線者獲勝。支援雙人對戰或挑戰不同難度的電腦AI。",
+                // 貪吃蛇 - ADDED
+                'game_snake_title_card': "貪吃蛇",
+                'game_snake_title': "貪吃蛇 (Snake)",
+                'game_snake_desc': "控制小蛇吃食物，變得越來越長！小心不要撞到牆壁或自己的身體。經典街機風格。",
                 // 佔位符
                 'game_coming_soon_card': "敬請期待",
                 'game_coming_soon_title': "更多遊戲",

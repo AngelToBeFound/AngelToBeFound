@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="snake_page_title">贪吃蛇 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- Base Styles & Theme Variables (from blog.html) --- */
+        :root {
+            --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7);
+            --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6);
+            --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark);
+            scroll-behavior: smooth;
+            /* Snake Game Specific Colors */
+            --snake-head-dark: #6ee7b7; /* emerald-300 */
+            --snake-body-dark: #34d399; /* emerald-400 */
+            --food-dark: #f87171; /* red-400 */
+            --game-border-dark: #4b5563; /* gray-500 */
+            --snake-head-light: #10b981; /* emerald-500 */
+            --snake-body-light: #059669; /* emerald-600 */
+            --food-light: #ef4444; /* red-500 */
+            --game-border-light: #9ca3af; /* gray-400 */
+            --snake-head: var(--snake-head-dark);
+            --snake-body: var(--snake-body-dark);
+            --food-color: var(--food-dark);
+            --game-border: var(--game-border-dark);
+        }
+        body.light-theme {
+            --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+            --snake-head: var(--snake-head-light);
+            --snake-body: var(--snake-body-light);
+            --food-color: var(--food-light);
+            --game-border: var(--game-border-light);
+        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #main-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #main-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #main-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+
+        /* Game Specific Styles */
+        #game-container {
+            font-family: 'Press Start 2P', cursive; /* Arcade font */
+        }
+        #snake-canvas {
+            display: block;
+            margin: 20px auto;
+            border: 5px solid var(--game-border);
+            background-color: var(--bg-primary); /* Match body background */
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            touch-action: none; /* Prevent default touch actions like scrolling */
+        }
+        .game-controls button {
+            font-family: 'Press Start 2P', cursive; /* Arcade font for buttons */
+            background-color: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem; /* Adjusted padding */
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 500;
+            text-transform: uppercase; /* Classic arcade style */
+            box-shadow: 2px 2px 0px var(--border-color); /* Simple shadow */
+        }
+        .game-controls button:hover {
+            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.2);
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px var(--border-color), 0 0 5px var(--glow-color);
+        }
+         .game-controls button:active {
+            transform: translateY(1px);
+            box-shadow: 1px 1px 0px var(--border-color);
+        }
+
+        #score-display, #game-over-message {
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+        }
+        #game-over-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            text-align: center;
+            z-index: 10; /* Ensure it's above canvas */
+        }
+        #game-over-message span {
+            display: block;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="main-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="blog_title_header">麦青春的博客</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1 z-30">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="game-container" class="container mx-auto px-4 md:px-6 py-8 relative z-10">
+        <div class="mb-6 md:mb-8">
+            <a href="games.html" class="text-sm text-[var(--text-accent)] hover:underline font-sans"> &larr; <span data-translate-key="back_to_games_list">返回游戏列表</span>
+            </a>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-bold text-center mb-6 text-gradient" data-translate-key="snake_title">贪吃蛇</h1>
+
+        <div id="score-display" class="text-center text-2xl font-bold my-4 p-3 glass-effect">
+            <span data-translate-key="score_label">分数</span>: <span id="score">0</span>
+        </div>
+
+        <div class="relative"> <canvas id="snake-canvas"></canvas>
+            <div id="game-over-message" class="hidden">
+                <p data-translate-key="game_over">游戏结束!</p>
+                <span data-translate-key="final_score">最终得分</span>: <span id="final-score">0</span>
+            </div>
+        </div>
+
+        <div class="game-controls mt-6 text-center">
+            <button id="start-restart-btn" data-translate-key="start_game">开始游戏</button>
+        </div>
+
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10 font-sans"> <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Translations ---
+        const translations = {
+            'en': {
+                'snake_page_title': "Snake Game - MaxCaulfield's Blog",
+                'blog_title_header': "MaxCaulfield's Blog",
+                'back_to_games_list': "Back to Games List",
+                'snake_title': "Snake Game",
+                'score_label': "Score",
+                'start_game': "Start Game",
+                'restart_game': "Restart",
+                'game_over': "Game Over!",
+                'final_score': "Final Score",
+                'footer_built_with': "Built with ❤️ and code.",
+                'back_to_home': "Back to Home",
+                'current_lang_display': "EN"
+            },
+            'zh-CN': {
+                'snake_page_title': "贪吃蛇 - 麦青春的博客",
+                'blog_title_header': "麦青春的博客",
+                'back_to_games_list': "返回游戏列表",
+                'snake_title': "贪吃蛇",
+                'score_label': "分数",
+                'start_game': "开始游戏",
+                'restart_game': "重新开始",
+                'game_over': "游戏结束!",
+                'final_score': "最终得分",
+                'footer_built_with': "用 ❤️ 和代码构建.",
+                'back_to_home': "返回主页",
+                'current_lang_display': "简"
+            },
+            'zh-TW': {
+                'snake_page_title': "貪吃蛇 - 麥青春的部落格",
+                'blog_title_header': "麥青春的部落格",
+                'back_to_games_list': "返回遊戲列表",
+                'snake_title': "貪吃蛇",
+                'score_label': "分數",
+                'start_game': "開始遊戲",
+                'restart_game': "重新開始",
+                'game_over': "遊戲結束!",
+                'final_score': "最終得分",
+                'footer_built_with': "用 ❤️ 和程式碼構建.",
+                'back_to_home': "返回主頁",
+                'current_lang_display': "繁"
+            }
+        };
+
+        // --- Global DOM Elements & State ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        const header = document.getElementById('main-header');
+        const canvas = document.getElementById('snake-canvas');
+        const scoreEl = document.getElementById('score');
+        const startRestartBtn = document.getElementById('start-restart-btn');
+        const gameOverMessageEl = document.getElementById('game-over-message');
+        const finalScoreEl = document.getElementById('final-score');
+
+        let ctx; // Canvas context
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Game variables
+        const GRID_SIZE = 20; // Size of each grid cell in pixels
+        let canvasWidth, canvasHeight;
+        let tileCountX, tileCountY;
+        let snake = [];
+        let food = { x: 10, y: 10 };
+        let velocity = { x: 0, y: 0 };
+        let score = 0;
+        let gameInterval = null;
+        let gameSpeed = 150; // Milliseconds per update (lower is faster)
+        let changingDirection = false; // Prevent rapid direction changes
+        let isGameOver = true;
+
+        // Touch control variables
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        // --- Theme and Language Functions ---
+        function applyCurrentTheme() {
+            const sunIcon = themeToggle ? themeToggle.querySelector('.fa-sun') : null;
+            const moonIcon = themeToggle ? themeToggle.querySelector('.fa-moon') : null;
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme');
+                if (sunIcon) sunIcon.classList.add('hidden'); if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+                document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme');
+                if (sunIcon) sunIcon.classList.remove('hidden'); if (moonIcon) moonIcon.classList.add('hidden');
+            }
+            // Redraw game elements if needed (colors are CSS variables, so automatic)
+            if (!isGameOver && typeof drawGame === 'function') {
+                 drawGame(); // Redraw if game is running
+            } else if (typeof drawInitialState === 'function') {
+                 drawInitialState(); // Redraw initial state if game not running
+            }
+        }
+
+        function applyCurrentTranslations() {
+            if (!translations[currentLang]) { console.warn(`Translations for language '${currentLang}' not found.`); return; }
+            document.documentElement.lang = currentLang.startsWith('zh') ? currentLang : currentLang.split('-')[0];
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (translations[currentLang][key] !== undefined) {
+                    if (el.tagName === 'TITLE') { document.title = translations[currentLang][key]; }
+                    else { el.innerHTML = translations[currentLang][key]; }
+                }
+            });
+            if (currentLangSpan) {
+               currentLangSpan.textContent = (translations[currentLang] && translations[currentLang]['current_lang_display']) ? translations[currentLang]['current_lang_display'] : currentLang.split('-')[0].toUpperCase();
+            }
+            if (langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langLinks.forEach(link => {
+                    link.classList.toggle('font-bold', link.getAttribute('data-lang') === currentLang);
+                    link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === currentLang);
+                });
+            }
+            // Update button text based on game state
+            if (startRestartBtn) {
+                startRestartBtn.innerHTML = translations[currentLang][isGameOver ? 'start_game' : 'restart_game'];
+            }
+            // Update score label
+            const scoreLabel = document.querySelector('[data-translate-key="score_label"]');
+            if (scoreLabel) scoreLabel.innerHTML = translations[currentLang]['score_label'];
+        }
+
+        // --- Game Logic Functions ---
+
+        function initializeGame() {
+            isGameOver = false;
+            snake = [{ x: Math.floor(tileCountX / 2), y: Math.floor(tileCountY / 2) }]; // Start in middle
+            velocity = { x: 0, y: 0 }; // Start stationary
+            score = 0;
+            scoreEl.textContent = score;
+            gameOverMessageEl.classList.add('hidden');
+            placeFood();
+            if (gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(gameLoop, gameSpeed);
+            updateButtonText(); // Update button to "Restart"
+            console.log("Game Initialized");
+        }
+
+        function gameLoop() {
+            if (isGameOver) return;
+            changingDirection = false; // Allow direction change for next frame
+            moveSnake();
+            if (isGameOver) return; // moveSnake might set game over
+            drawGame();
+        }
+
+        function moveSnake() {
+            if (velocity.x === 0 && velocity.y === 0) return; // Don't move if stationary
+
+            const head = { x: snake[0].x + velocity.x, y: snake[0].y + velocity.y };
+
+            // Wall collision detection
+            if (head.x < 0 || head.x >= tileCountX || head.y < 0 || head.y >= tileCountY) {
+                gameOver();
+                return;
+            }
+
+            // Self collision detection
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                    return;
+                }
+            }
+
+            snake.unshift(head); // Add new head
+
+            // Food collision detection
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                scoreEl.textContent = score;
+                placeFood();
+                // Increase speed slightly (optional)
+                // if (score % 5 === 0 && gameSpeed > 50) {
+                //     gameSpeed -= 10;
+                //     clearInterval(gameInterval);
+                //     gameInterval = setInterval(gameLoop, gameSpeed);
+                // }
+            } else {
+                snake.pop(); // Remove tail if no food eaten
+            }
+        }
+
+        function placeFood() {
+            let newFoodPosition;
+            do {
+                newFoodPosition = {
+                    x: Math.floor(Math.random() * tileCountX),
+                    y: Math.floor(Math.random() * tileCountY)
+                };
+            } while (isFoodOnSnake(newFoodPosition)); // Ensure food doesn't spawn on snake
+            food = newFoodPosition;
+        }
+
+        function isFoodOnSnake(position) {
+            return snake.some(segment => segment.x === position.x && segment.y === position.y);
+        }
+
+        function drawGame() {
+            if (!ctx) return;
+            const bodyStyles = getComputedStyle(document.body);
+
+            // Clear canvas (draw background)
+            ctx.fillStyle = bodyStyles.getPropertyValue('--bg-primary').trim();
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            // Draw food
+            ctx.fillStyle = bodyStyles.getPropertyValue('--food-color').trim();
+            ctx.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE - 2, GRID_SIZE - 2); // Slightly smaller than grid
+
+            // Draw snake
+            snake.forEach((segment, index) => {
+                ctx.fillStyle = index === 0 ? bodyStyles.getPropertyValue('--snake-head').trim() : bodyStyles.getPropertyValue('--snake-body').trim();
+                ctx.fillRect(segment.x * GRID_SIZE, segment.y * GRID_SIZE, GRID_SIZE - 1, GRID_SIZE - 1); // Leave 1px gap
+            });
+        }
+
+        function drawInitialState() {
+             if (!ctx) return;
+             const bodyStyles = getComputedStyle(document.body);
+             ctx.fillStyle = bodyStyles.getPropertyValue('--bg-primary').trim();
+             ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+             // Optionally draw a "Press Start" message or similar
+        }
+
+        function gameOver() {
+            isGameOver = true;
+            if (gameInterval) clearInterval(gameInterval);
+            finalScoreEl.textContent = score;
+            gameOverMessageEl.classList.remove('hidden');
+            updateButtonText(); // Update button to "Start Game"
+            console.log("Game Over. Final Score:", score);
+        }
+
+        function changeDirection(event) {
+            if (changingDirection) return; // Prevent changing direction multiple times before next move
+
+            const LEFT_KEY = 37; const UP_KEY = 38; const RIGHT_KEY = 39; const DOWN_KEY = 40;
+            const keyPressed = event.keyCode;
+
+            const goingUp = velocity.y === -1;
+            const goingDown = velocity.y === 1;
+            const goingLeft = velocity.x === -1;
+            const goingRight = velocity.x === 1;
+
+            if (keyPressed === LEFT_KEY && !goingRight) { velocity = { x: -1, y: 0 }; changingDirection = true; }
+            if (keyPressed === UP_KEY && !goingDown) { velocity = { x: 0, y: -1 }; changingDirection = true; }
+            if (keyPressed === RIGHT_KEY && !goingLeft) { velocity = { x: 1, y: 0 }; changingDirection = true; }
+            if (keyPressed === DOWN_KEY && !goingUp) { velocity = { x: 0, y: 1 }; changingDirection = true; }
+        }
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+        }
+
+        function handleTouchMove(event) {
+            // Prevent scrolling while swiping
+            event.preventDefault();
+            touchEndX = event.touches[0].clientX;
+            touchEndY = event.touches[0].clientY;
+        }
+
+        function handleTouchEnd() {
+            if (changingDirection || isGameOver) return;
+
+            const dx = touchEndX - touchStartX;
+            const dy = touchEndY - touchStartY;
+            const absDx = Math.abs(dx);
+            const absDy = Math.abs(dy);
+
+            // Determine if horizontal or vertical swipe is more significant
+            if (Math.max(absDx, absDy) > 30) { // Minimum swipe distance threshold
+                const goingUp = velocity.y === -1;
+                const goingDown = velocity.y === 1;
+                const goingLeft = velocity.x === -1;
+                const goingRight = velocity.x === 1;
+
+                if (absDx > absDy) { // Horizontal swipe
+                    if (dx > 0 && !goingLeft) { // Swipe Right
+                        velocity = { x: 1, y: 0 };
+                        changingDirection = true;
+                    } else if (dx < 0 && !goingRight) { // Swipe Left
+                        velocity = { x: -1, y: 0 };
+                        changingDirection = true;
+                    }
+                } else { // Vertical swipe
+                    if (dy > 0 && !goingUp) { // Swipe Down
+                        velocity = { x: 0, y: 1 };
+                        changingDirection = true;
+                    } else if (dy < 0 && !goingDown) { // Swipe Up
+                        velocity = { x: 0, y: -1 };
+                        changingDirection = true;
+                    }
+                }
+            }
+            // Reset touch coordinates
+            touchStartX = 0; touchStartY = 0; touchEndX = 0; touchEndY = 0;
+        }
+
+
+        function updateButtonText() {
+             if (startRestartBtn) {
+                  const key = isGameOver ? 'start_game' : 'restart_game';
+                  startRestartBtn.innerHTML = translations[currentLang][key] || key;
+             }
+        }
+
+        function setupGame() {
+            if (!canvas) {
+                console.error("Canvas element not found during setup.");
+                return;
+            }
+            ctx = canvas.getContext('2d');
+            if (!ctx) {
+                 console.error("Could not get 2D context for canvas.");
+                 return;
+            }
+
+            // Set initial canvas size based on container
+            const containerWidth = canvas.parentElement.clientWidth * 0.9;
+            const initialSize = Math.min(containerWidth, window.innerHeight * 0.6, 400); // Start with a reasonable size, max 400px
+            canvas.width = initialSize;
+            canvas.height = initialSize;
+
+            canvasWidth = canvas.width;
+            canvasHeight = canvas.height;
+            tileCountX = Math.floor(canvasWidth / GRID_SIZE);
+            tileCountY = Math.floor(canvasHeight / GRID_SIZE);
+
+            // Adjust canvas size to be exact multiple of grid size for cleaner look
+            canvas.width = tileCountX * GRID_SIZE;
+            canvas.height = tileCountY * GRID_SIZE;
+            canvasWidth = canvas.width; // Update width/height after adjustment
+            canvasHeight = canvas.height;
+
+            drawInitialState(); // Draw initial empty board
+
+            startRestartBtn.addEventListener('click', () => {
+                if (isGameOver) {
+                    initializeGame();
+                } else {
+                    gameOver(); // Treat restart as game over first
+                    initializeGame(); // Then start new game
+                }
+            });
+
+            document.addEventListener('keydown', changeDirection);
+            // Touch event listeners
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+        }
+
+
+        // --- Initialization on DOMContentLoaded ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM Content Loaded - Snake Game");
+
+            // Initialize Theme
+            if (themeToggle) {
+                applyCurrentTheme();
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                    localStorage.setItem('theme', currentTheme);
+                    applyCurrentTheme();
+                });
+            }
+
+            // Initialize Language
+            applyCurrentTranslations();
+            if (langToggle && langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); });
+                langLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const selectedLang = link.getAttribute('data-lang');
+                        if (selectedLang !== currentLang) {
+                            currentLang = selectedLang;
+                            localStorage.setItem('language', currentLang);
+                            applyCurrentTranslations();
+                        }
+                        langDropdown.classList.add('hidden');
+                    });
+                });
+                document.addEventListener('click', (e) => {
+                    if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                        langDropdown.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Header Scroll Effect
+            if (header) {
+                window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+            }
+
+            // Setup Game
+            setupGame();
+
+            // tsParticles Initialization
+            if (typeof tsParticles !== 'undefined') {
+                tsParticles.load("tsparticles", {
+                     fpsLimit: 60, particles: { number: { value: 50, density: { enable: true, area: 800 } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: "circle" }, opacity: { value: {min: 0.1, max: 0.4} }, size: { value: { min: 1, max: 3 } }, links: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.5, straight: false } }, interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true } }, detectRetina: true, background: { opacity: 0 }
+                }).then(() => console.log("tsParticles loaded.")).catch(error => { console.error("Error loading tsParticles:", error); });
+            } else { console.warn("tsParticles library not found."); }
+        });
+    </script>
+</body>
+</html>
