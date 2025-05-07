@@ -11,8 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <style>
+        /* --- Base Styles & Theme Variables (保持和博客一致) --- */
         :root {
-            --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); scroll-behavior: smooth;
+            --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7);
+            --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6);
+            --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark);
+            scroll-behavior: smooth;
         }
         body.light-theme {
             --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
@@ -23,21 +27,36 @@
         @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
-        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        #main-header { /* Changed ID to avoid conflict if reusing header */
+            position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #main-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #main-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
         .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
         body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
-        .game-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
-        .game-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 0 15px var(--glow-color); }
-        .game-card .card-header-block { border-bottom: 1px solid var(--border-color); }
+
+        /* Game Card Styles (保持和博客卡片类似) */
+        .game-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            display: block; /* Make the anchor a block element */
+            text-decoration: none; /* Remove underline from link */
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 0 15px var(--glow-color);
+        }
+        .game-card .card-header-block {
+            border-bottom: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body class="dark-theme">
     <div id="tsparticles"></div>
 
-    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+    <header id="main-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
                 <span class="text-gradient" data-translate-key="games_hub_title">游戏中心</span>
@@ -66,13 +85,12 @@
         <h1 class="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient" data-translate-key="games_list_title">小游戏列表</h1>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <a href="tic-tac-toe.html" class="game-card block rounded-xl overflow-hidden group">
-                <div class="h-48 bg-emerald-600 flex items-center justify-center p-6 card-header-block">
-                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_tic_tac_toe_title_card">井字棋</h3>
+            <a href="gomoku-game.html" class="game-card block rounded-xl overflow-hidden group">
+                <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block"> <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_gomoku_title_card">五子棋</h3>
                 </div>
                 <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_tic_tac_toe_title">井字棋 (Tic-Tac-Toe)</h2>
-                    <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_tic_tac_toe_desc">经典的井字棋游戏，支持双人对战或挑战简单的电脑AI。快来和朋友一决高下，或者看看你能否战胜机器！</p>
+                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_gomoku_title">五子棋 (Gomoku)</h2>
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_gomoku_desc">经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。</p>
                 </div>
             </a>
 
@@ -87,15 +105,20 @@
     </footer>
 
     <script>
-        // --- Translations ---
+        // --- Translations (Added Gomoku keys) ---
         const translations = {
             'en': {
                 'games_page_title': "Games - MaxCaulfield's Blog",
                 'games_hub_title': "Game Center",
                 'games_list_title': "Game List",
-                'game_tic_tac_toe_title_card': "Tic-Tac-Toe",
-                'game_tic_tac_toe_title': "Tic-Tac-Toe",
-                'game_tic_tac_toe_desc': "The classic Tic-Tac-Toe game. Supports two-player mode or challenge a simple computer AI. Come and compete with friends, or see if you can beat the machine!",
+                // Gomoku Game
+                'game_gomoku_title_card': "Gomoku",
+                'game_gomoku_title': "Gomoku (Five-in-a-Row)",
+                'game_gomoku_desc': "The classic Gomoku game. Be the first to get five stones in a row to win. Supports Player vs Player or challenge the computer AI at different difficulties.",
+                // Placeholder
+                'game_coming_soon_card': "Coming Soon",
+                'game_coming_soon_title': "More Games",
+                'game_coming_soon_desc': "More fun little games are under development...",
                 'footer_built_with': "Built with ❤️ and code.",
                 'back_to_home': "Back to Home",
                 'current_lang_display': "EN"
@@ -104,9 +127,14 @@
                 'games_page_title': "小游戏 - 麦青春的博客",
                 'games_hub_title': "游戏中心",
                 'games_list_title': "小游戏列表",
-                'game_tic_tac_toe_title_card': "井字棋",
-                'game_tic_tac_toe_title': "井字棋 (Tic-Tac-Toe)",
-                'game_tic_tac_toe_desc': "经典的井字棋游戏，支持双人对战或挑战简单的电脑AI。快来和朋友一决高下，或者看看你能否战胜机器！",
+                // 五子棋
+                'game_gomoku_title_card': "五子棋",
+                'game_gomoku_title': "五子棋 (Gomoku)",
+                'game_gomoku_desc': "经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。",
+                // 占位符
+                'game_coming_soon_card': "敬请期待",
+                'game_coming_soon_title': "更多游戏",
+                'game_coming_soon_desc': "更多有趣的小游戏正在制作中...",
                 'footer_built_with': "用 ❤️ 和代码构建.",
                 'back_to_home': "返回主页",
                 'current_lang_display': "简"
@@ -115,9 +143,14 @@
                 'games_page_title': "小遊戲 - 麥青春的部落格",
                 'games_hub_title': "遊戲中心",
                 'games_list_title': "小遊戲列表",
-                'game_tic_tac_toe_title_card': "井字棋",
-                'game_tic_tac_toe_title': "井字棋 (Tic-Tac-Toe)",
-                'game_tic_tac_toe_desc': "經典的井字棋遊戲，支援雙人對戰或挑戰簡單的電腦AI。快來和朋友一決高下，或者看看你能否戰勝機器！",
+                // 五子棋
+                'game_gomoku_title_card': "五子棋",
+                'game_gomoku_title': "五子棋 (Gomoku)",
+                'game_gomoku_desc': "經典的五子棋遊戲，率先將五個棋子連成一線者獲勝。支援雙人對戰或挑戰不同難度的電腦AI。",
+                // 佔位符
+                'game_coming_soon_card': "敬請期待",
+                'game_coming_soon_title': "更多遊戲",
+                'game_coming_soon_desc': "更多有趣的小遊戲正在製作中...",
                 'footer_built_with': "用 ❤️ 和程式碼構建.",
                 'back_to_home': "返回主頁",
                 'current_lang_display': "繁"
@@ -158,8 +191,6 @@
                  if (translations[lang][key] !== undefined) {
                      if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
                      else { el.innerHTML = translations[lang][key]; }
-                 } else {
-                     console.warn(`Translation key "${key}" not found for language "${lang}"`);
                  }
              });
              if (currentLangSpan) {
@@ -169,6 +200,7 @@
                  const langLinks = langDropdown.querySelectorAll('a[data-lang]');
                  langLinks.forEach(link => {
                      link.classList.toggle('font-bold', link.getAttribute('data-lang') === lang);
+                     link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === lang); // Highlight active lang
                  });
              }
         }
@@ -197,7 +229,7 @@
         }
 
          // --- Header Scroll Effect ---
-         const header = document.getElementById('blog-header');
+         const header = document.getElementById('main-header'); // Use the correct ID
          if (header) {
              window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
          }
