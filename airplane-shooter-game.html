@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="airplane_shooter_page_title">飞机大战 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- Base Styles & Theme Variables --- */
+        :root {
+            --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7);
+            --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6);
+            --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark);
+            scroll-behavior: smooth;
+            /* Airplane Shooter Game Specific Colors */
+            --player-color-dark: #60a5fa; 
+            --enemy-color-dark: #f87171; 
+            --bullet-color-dark: #facc15; 
+            --game-border-dark: #4b5563; 
+            --player-color-light: #2563eb; 
+            --enemy-color-light: #ef4444; 
+            --bullet-color-light: #eab308; 
+            --game-border-light: #9ca3af; 
+            --player-color: var(--player-color-dark);
+            --enemy-color: var(--enemy-color-dark);
+            --bullet-color: var(--bullet-color-dark);
+            --game-border: var(--game-border-dark);
+        }
+        body.light-theme {
+            --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+            --player-color: var(--player-color-light);
+            --enemy-color: var(--enemy-color-light);
+            --bullet-color: var(--bullet-color-light);
+            --game-border: var(--game-border-light);
+        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #main-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #main-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #main-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+
+        /* Game Specific Styles */
+        #game-wrapper { 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            width: 100%;
+            padding-left: 1rem; 
+            padding-right: 1rem; 
+        }
+        #game-container {
+            font-family: 'Press Start 2P', cursive; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%; 
+            max-width: 600px; 
+        }
+        #game-canvas {
+            display: block;
+            border: 5px solid var(--game-border);
+            background-color: var(--bg-primary); 
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            touch-action: none; 
+            max-width: 100%; 
+            outline: none; /* Remove focus outline from canvas */
+        }
+        .game-controls button { 
+            font-family: 'Press Start 2P', cursive;
+            background-color: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; 
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px var(--border-color);
+            margin-top: 1rem;
+        }
+        .game-controls button:hover {
+            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.3);
+            transform: translateY(-2px) translateX(-2px);
+            box-shadow: 5px 5px 0px var(--border-color), 0 0 8px var(--glow-color);
+        }
+         .game-controls button:active {
+            transform: translateY(1px) translateX(1px);
+            box-shadow: 1px 1px 0px var(--border-color);
+        }
+
+        #score-display { 
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+            width: 100%; 
+            max-width: 400px; 
+        }
+         #game-message-box-container { 
+            position: relative; 
+            width: 100%; 
+        }
+        #game-message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.85); 
+            color: #fff;
+            padding: 25px 35px;
+            border-radius: 10px;
+            border: 3px solid var(--text-accent);
+            font-family: 'Press Start 2P', cursive; 
+            font-size: 1.1rem; 
+            text-align: center;
+            z-index: 100; 
+            box-shadow: 0 0 15px var(--glow-color);
+            width: 80%; 
+            max-width: 350px; 
+        }
+        #game-message-box p { margin-bottom: 10px; line-height: 1.4; }
+        #game-message-box span {
+            display: block;
+            font-size: 0.9rem; 
+            margin-top: 10px;
+        }
+        .touch-controls {
+            display: none; 
+            justify-content: space-around; 
+            width: 100%;
+            max-width: 320px; 
+            margin-top: 1.25rem; 
+            padding: 0 10px; 
+        }
+        .touch-controls button { 
+            font-family: 'Press Start 2P', cursive; 
+            background-color: var(--bg-glass); 
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1.3rem;  
+            padding: 0.7rem 0.9rem; 
+            width: 70px;  
+            height: 70px; 
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px; 
+            box-shadow: 3px 3px 0px var(--border-color);
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .touch-controls button:hover { 
+            background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.3);
+            transform: translateY(-2px) translateX(-2px);
+            box-shadow: 5px 5px 0px var(--border-color), 0 0 8px var(--glow-color);
+        }
+        .touch-controls button:active { 
+            transform: translateY(1px) translateX(1px);
+            box-shadow: 1px 1px 0px var(--border-color);
+        }
+         #shoot-button-touch {
+            width: auto; 
+            padding: 0.7rem 1.3rem; 
+         }
+
+        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+            .touch-controls {
+                display: flex;
+            }
+            #game-message-box { 
+                font-size: 1rem;
+                padding: 20px;
+            }
+            #game-message-box span { font-size: 0.8rem; }
+        }
+
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="main-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="games.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="games_hub_title">游戏中心</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1 z-30">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="game-wrapper" class="container mx-auto py-8 relative z-10">
+        <div class="mb-6 md:mb-8 w-full max-w-xl text-left">
+            <a href="games.html" class="text-sm text-[var(--text-accent)] hover:underline font-sans"> &larr; <span data-translate-key="back_to_games_list">返回游戏列表</span>
+            </a>
+        </div>
+
+        <div id="game-container"> 
+            <h1 class="text-3xl md:text-5xl font-bold text-center mb-6 pb-2 text-gradient" data-translate-key="airplane_shooter_title">飞机大战</h1>
+
+            <div id="score-display" class="text-center text-2xl font-bold my-4 p-3 glass-effect">
+                <span data-translate-key="score_label">分数</span>: <span id="score">0</span>
+            </div>
+
+            <div id="game-message-box-container">
+                <canvas id="game-canvas" tabindex="0"></canvas> <div id="game-message-box" class="hidden">
+                    <p id="message-text"></p>
+                    <span id="message-score-text" class="hidden"><span data-translate-key="final_score">最终得分</span>: <span id="final-score">0</span></span>
+                </div>
+            </div>
+            
+            <div class="game-controls text-center">
+                <button id="start-restart-btn" data-translate-key="start_game">开始游戏</button>
+            </div>
+
+            <div class="touch-controls">
+                <button id="left-button-touch"><i class="fas fa-arrow-left"></i></button>
+                <button id="shoot-button-touch" data-translate-key="shoot_button">射击</button>
+                <button id="right-button-touch"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10 font-sans">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Translations ---
+        const translations = {
+            'en': {
+                'airplane_shooter_page_title': "Airplane Shooter - MaxCaulfield's Blog",
+                'games_hub_title': "Game Center",
+                'back_to_games_list': "Back to Games List",
+                'airplane_shooter_title': "Airplane Shooter",
+                'score_label': "Score",
+                'start_game': "Start Game",
+                'restart_game': "Restart",
+                'game_over_message': "Game Over!",
+                'final_score': "Final Score",
+                'paused_message': "Paused",
+                'shoot_button': "Shoot",
+                'footer_built_with': "Built with ❤️ and code.",
+                'back_to_home': "Back to Home",
+                'current_lang_display': "EN"
+            },
+            'zh-CN': {
+                'airplane_shooter_page_title': "飞机大战 - 麦青春的博客",
+                'games_hub_title': "游戏中心",
+                'back_to_games_list': "返回游戏列表",
+                'airplane_shooter_title': "飞机大战",
+                'score_label': "分数",
+                'start_game': "开始游戏",
+                'restart_game': "重新开始",
+                'game_over_message': "游戏结束!",
+                'final_score': "最终得分",
+                'paused_message': "已暂停",
+                'shoot_button': "射击",
+                'footer_built_with': "用 ❤️ 和代码构建.",
+                'back_to_home': "返回主页",
+                'current_lang_display': "简"
+            },
+            'zh-TW': {
+                'airplane_shooter_page_title': "飛機大戰 - 麥青春的部落格",
+                'games_hub_title': "遊戲中心",
+                'back_to_games_list': "返回遊戲列表",
+                'airplane_shooter_title': "飛機大戰",
+                'score_label': "分數",
+                'start_game': "開始遊戲",
+                'restart_game': "重新開始",
+                'game_over_message': "遊戲結束!",
+                'final_score': "最終得分",
+                'paused_message': "已暫停",
+                'shoot_button': "射擊",
+                'footer_built_with': "用 ❤️ 和程式碼構建.",
+                'back_to_home': "返回主頁",
+                'current_lang_display': "繁"
+            }
+        };
+
+        // --- Global DOM Elements & State ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        const header = document.getElementById('main-header');
+        
+        const canvas = document.getElementById('game-canvas');
+        const gameMessageBoxContainer = document.getElementById('game-message-box-container');
+        const scoreEl = document.getElementById('score');
+        const startRestartBtn = document.getElementById('start-restart-btn');
+        const gameMessageBox = document.getElementById('game-message-box');
+        const messageTextEl = document.getElementById('message-text');
+        const messageScoreTextEl = document.getElementById('message-score-text');
+        const finalScoreEl = document.getElementById('final-score');
+
+        const leftButtonTouch = document.getElementById('left-button-touch');
+        const rightButtonTouch = document.getElementById('right-button-touch');
+        const shootButtonTouch = document.getElementById('shoot-button-touch');
+
+        let ctx; 
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        let player, bullets, enemies;
+        let score, gameSpeed, enemySpawnInterval, lastEnemySpawnTime;
+        let gameOver = true; 
+        let gamePaused = false; 
+        let gameIntervalId;
+        let keys = {}; 
+
+        const PLAYER_WIDTH = 40;
+        const PLAYER_HEIGHT = 40;
+        const PLAYER_SPEED = 7;
+        const BULLET_WIDTH = 5;
+        const BULLET_HEIGHT = 15;
+        const BULLET_SPEED = 10;
+        const ENEMY_WIDTH = 35;
+        const ENEMY_HEIGHT = 35;
+        const ENEMY_SPEED_MIN = 1;
+        const ENEMY_SPEED_MAX = 3;
+        const ENEMY_SPAWN_INTERVAL_INITIAL = 1500; 
+        const ENEMY_SPAWN_INTERVAL_MIN = 500; 
+        const ENEMY_SPAWN_DECREASE_RATE = 50; 
+        const SCORE_TO_INCREASE_DIFFICULTY = 100; 
+
+        // --- Theme and Language Functions ---
+        function applyCurrentTheme() {
+            const sunIcon = themeToggle ? themeToggle.querySelector('.fa-sun') : null;
+            const moonIcon = themeToggle ? themeToggle.querySelector('.fa-moon') : null;
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme');
+                if (sunIcon) sunIcon.classList.add('hidden'); if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+                document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme');
+                if (sunIcon) sunIcon.classList.remove('hidden'); if (moonIcon) moonIcon.classList.add('hidden');
+            }
+            if (typeof drawGame === 'function' && canvas && ctx && !gameOver && !gamePaused) { 
+                 drawGame();
+            } else if (typeof setupCanvas === 'function' && canvas && ctx && (gameOver || gamePaused)) { // Also redraw initial/paused text on theme change
+                 setupCanvas(); 
+                 if (gamePaused && messageTextEl && gameMessageBox) { // Re-apply pause message if paused
+                    messageTextEl.textContent = (translations[currentLang] && translations[currentLang]['paused_message']) || "Paused";
+                    messageScoreTextEl.classList.add('hidden');
+                    gameMessageBox.classList.remove('hidden');
+                 }
+            }
+        }
+
+        function applyCurrentTranslations() {
+            if (!translations[currentLang]) { console.warn(`Translations for language '${currentLang}' not found.`); return; }
+            document.documentElement.lang = currentLang.startsWith('zh') ? currentLang : currentLang.split('-')[0];
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (translations[currentLang][key] !== undefined) {
+                    if (el.tagName === 'TITLE') { document.title = translations[currentLang][key]; }
+                    else { el.innerHTML = translations[currentLang][key]; }
+                }
+            });
+            if (currentLangSpan) {
+               currentLangSpan.textContent = (translations[currentLang] && translations[currentLang]['current_lang_display']) ? translations[currentLang]['current_lang_display'] : currentLang.split('-')[0].toUpperCase();
+            }
+            if (langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langLinks.forEach(link => {
+                    link.classList.toggle('font-bold', link.getAttribute('data-lang') === currentLang);
+                    link.classList.toggle('text-[var(--text-accent)]', link.getAttribute('data-lang') === currentLang);
+                });
+            }
+            updateButtonText(); 
+            if (shootButtonTouch) { 
+                shootButtonTouch.innerHTML = translations[currentLang]['shoot_button'];
+            }
+            if (gameMessageBox && !gameMessageBox.classList.contains('hidden')) {
+                if (gameOver && messageTextEl) {
+                    messageTextEl.textContent = translations[currentLang]['game_over_message'] || "Game Over!";
+                } else if (gamePaused && messageTextEl) {
+                    messageTextEl.textContent = translations[currentLang]['paused_message'] || "Paused";
+                }
+            }
+        }
+        
+        // --- Game Object Definitions ---
+        function createPlayer() {
+            return {
+                x: canvas.width / 2 - PLAYER_WIDTH / 2,
+                y: canvas.height - PLAYER_HEIGHT - 20,
+                width: PLAYER_WIDTH,
+                height: PLAYER_HEIGHT,
+                speed: PLAYER_SPEED,
+                draw: function() {
+                    if (!ctx) return;
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--player-color').trim();
+                    ctx.beginPath();
+                    ctx.moveTo(this.x + this.width / 2, this.y);
+                    ctx.lineTo(this.x, this.y + this.height);
+                    ctx.lineTo(this.x + this.width, this.y + this.height);
+                    ctx.closePath();
+                    ctx.fill();
+                },
+                shoot: function() {
+                    // console.log("Player.shoot() called. Bullets array before:", bullets.length); 
+                    if (bullets.length < 5) { 
+                        const newBullet = createBullet(this.x + this.width / 2 - BULLET_WIDTH / 2, this.y);
+                        bullets.push(newBullet);
+                        // console.log("Bullet created and pushed. Total bullets:", bullets.length); 
+                    } else {
+                        // console.log("Max bullets reached, not firing."); 
+                    }
+                }
+            };
+        }
+
+        function createBullet(x, y) {
+            // console.log("createBullet called with x:", x, "y:", y); 
+            const bulletObj = {
+                x: x, y: y, width: BULLET_WIDTH, height: BULLET_HEIGHT, speed: BULLET_SPEED,
+                draw: function() {
+                    if (!ctx) return;
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bullet-color').trim();
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                },
+                update: function() { this.y -= this.speed; }
+            };
+            // console.log("Returning bullet object:", bulletObj); 
+            return bulletObj;
+        }
+
+        function createEnemy() {
+            return {
+                x: Math.random() * (canvas.width - ENEMY_WIDTH),
+                y: -ENEMY_HEIGHT, 
+                width: ENEMY_WIDTH, height: ENEMY_HEIGHT,
+                speed: Math.random() * (ENEMY_SPEED_MAX - ENEMY_SPEED_MIN) + ENEMY_SPEED_MIN,
+                draw: function() {
+                    if (!ctx) return;
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--enemy-color').trim();
+                    ctx.beginPath();
+                    ctx.moveTo(this.x + this.width / 2, this.y + this.height);
+                    ctx.lineTo(this.x, this.y);
+                    ctx.lineTo(this.x + this.width, this.y);
+                    ctx.closePath();
+                    ctx.fill();
+                },
+                update: function() { this.y += this.speed; }
+            };
+        }
+
+        // --- Game Logic Functions ---
+        function initializeGameVariables() {
+            if (!canvas || canvas.width === 0 || canvas.height === 0) setupCanvas(); // Ensure canvas is ready
+            player = createPlayer();
+            bullets = []; enemies = []; score = 0;
+            if(scoreEl) scoreEl.textContent = score;
+            gameOver = false; gamePaused = false;
+            gameSpeed = 20; 
+            enemySpawnInterval = ENEMY_SPAWN_INTERVAL_INITIAL;
+            lastEnemySpawnTime = Date.now(); 
+            if(gameMessageBox) gameMessageBox.classList.add('hidden');
+            updateButtonText();
+        }
+
+        function startGame() {
+            initializeGameVariables(); 
+            drawGame(); 
+            if (gameIntervalId) clearInterval(gameIntervalId);
+            gameIntervalId = setInterval(gameLoop, gameSpeed);
+            if (canvas) canvas.focus(); 
+            // console.log("Game Started. Interval ID:", gameIntervalId, "Canvas focused.");
+        }
+
+        function gameLoop() {
+            if (gameOver || gamePaused) return;
+            updateGame();
+            drawGame();
+        }
+
+        function updateGame() {
+            if (!player) return; 
+            if (keys['ArrowLeft'] || keys['KeyA']) player.x -= player.speed;
+            if (keys['ArrowRight'] || keys['KeyD']) player.x += player.speed;
+            player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                bullets[i].update();
+                if (bullets[i].y + bullets[i].height < 0) bullets.splice(i, 1);
+            }
+
+            const currentTime = Date.now();
+            if (currentTime - lastEnemySpawnTime > enemySpawnInterval) {
+                if (enemies.length < 10) { // Limit max enemies on screen
+                    enemies.push(createEnemy());
+                }
+                lastEnemySpawnTime = currentTime;
+            }
+
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                const enemy = enemies[i];
+                enemy.update();
+                if (enemy.y > canvas.height) { enemies.splice(i, 1); continue; }
+                for (let j = bullets.length - 1; j >= 0; j--) {
+                    if (checkCollision(bullets[j], enemy)) {
+                        enemies.splice(i, 1); bullets.splice(j, 1); score += 10;
+                        if(scoreEl) scoreEl.textContent = score;
+                        if (score > 0 && score % SCORE_TO_INCREASE_DIFFICULTY === 0) {
+                            enemySpawnInterval = Math.max(ENEMY_SPAWN_INTERVAL_MIN, enemySpawnInterval - ENEMY_SPAWN_DECREASE_RATE);
+                        }
+                        break; 
+                    }
+                }
+                if (enemies.includes(enemy) && checkCollision(player, enemy)) {
+                    triggerGameOver(); return; 
+                }
+            }
+        }
+        
+        function drawGame() {
+            if (!ctx) return;
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            if (player) player.draw(); 
+            bullets.forEach(bullet => bullet.draw());
+            enemies.forEach(enemy => enemy.draw());
+        }
+
+        function checkCollision(rect1, rect2) {
+            if (!rect1 || !rect2) return false; 
+            return rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height && rect1.y + rect1.height > rect2.y;
+        }
+
+        function triggerGameOver() {
+            gameOver = true; clearInterval(gameIntervalId); gameIntervalId = null; 
+            if (messageTextEl) messageTextEl.textContent = (translations[currentLang] && translations[currentLang]['game_over_message']) || "Game Over!";
+            if (finalScoreEl) finalScoreEl.textContent = score;
+            if (messageScoreTextEl) messageScoreTextEl.classList.remove('hidden');
+            if (gameMessageBox) gameMessageBox.classList.remove('hidden');
+            updateButtonText();
+        }
+        
+        function togglePause() {
+            if (gameOver) return;
+            gamePaused = !gamePaused;
+            if (gamePaused) {
+                if(gameIntervalId) { clearInterval(gameIntervalId); gameIntervalId = null; }
+                if (messageTextEl) messageTextEl.textContent = (translations[currentLang] && translations[currentLang]['paused_message']) || "Paused";
+                if (messageScoreTextEl) messageScoreTextEl.classList.add('hidden'); 
+                if (gameMessageBox) gameMessageBox.classList.remove('hidden');
+            } else {
+                if (gameMessageBox) gameMessageBox.classList.add('hidden');
+                if(gameIntervalId) clearInterval(gameIntervalId); 
+                gameIntervalId = setInterval(gameLoop, gameSpeed);
+            }
+        }
+
+        function updateButtonText() {
+             if (startRestartBtn) {
+                  const key = gameOver ? 'start_game' : 'restart_game';
+                  startRestartBtn.innerHTML = (translations[currentLang] && translations[currentLang][key]) ? translations[currentLang][key] : key.replace('_', ' ');
+             }
+        }
+
+        function handleKeyDown(e) {
+            const gameIsActive = !gameOver && !gamePaused;
+            // Keys that should have default behavior prevented when game is active
+            const gameActionKeys = ['ArrowLeft', 'ArrowRight', 'Space', 'KeyA', 'KeyD'];
+            const pauseKey = 'KeyP';
+
+            if (gameIsActive && gameActionKeys.includes(e.code)) {
+                e.preventDefault();
+            }
+            // Prevent default for pause key only if game is not over (can pause/unpause)
+            if (e.code === pauseKey && !gameOver) {
+                e.preventDefault();
+            }
+
+            keys[e.code] = true; 
+
+            if (e.code === 'Space' && player && gameIsActive) {
+                // console.log("Space pressed, attempting to shoot. Player:", player, "Bullets before:", bullets.length);
+                player.shoot();
+                // console.log("Bullets after shoot attempt:", bullets.length);
+            }
+            
+            if (e.code === pauseKey && !gameOver) {
+                togglePause();
+            }
+        }
+
+        function handleKeyUp(e) {
+            keys[e.code] = false;
+        }
+
+        function setupCanvas() {
+            if (!canvas || !gameMessageBoxContainer) { console.error("Canvas or messagebox container not found!"); return; }
+            ctx = canvas.getContext('2d');
+            if (!ctx) { console.error("Could not get 2D context!"); return; }
+
+            const gameContainerForSizing = document.getElementById('game-container'); 
+            let newWidth = Math.min(gameContainerForSizing.clientWidth, 500); 
+            let newHeight = newWidth * 1.25; 
+            
+            const maxViewportHeight = window.innerHeight * 0.60; 
+            if (newHeight > maxViewportHeight) {
+                newHeight = maxViewportHeight;
+                newWidth = newHeight / 1.25; 
+            }
+            newWidth = Math.max(newWidth, 280); 
+            newHeight = Math.max(newHeight, 350); 
+
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            gameMessageBoxContainer.style.width = `${newWidth}px`; 
+            gameMessageBoxContainer.style.height = `${newHeight}px`; 
+
+
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim();
+            ctx.font = "14px 'Press Start 2P'"; 
+            ctx.textAlign = "center";
+            const initialText = (translations[currentLang] && translations[currentLang]['start_game']) ? translations[currentLang]['start_game'] : "Start Game";
+            ctx.fillText(initialText, canvas.width / 2, canvas.height / 2);
+        }
+        
+        function handleWindowResize() {
+            if (gameIntervalId) { clearInterval(gameIntervalId); gameIntervalId = null; }
+            setupCanvas(); 
+            if (!gameOver && !gamePaused && player) { 
+                player.x = canvas.width / 2 - PLAYER_WIDTH / 2; 
+                player.y = canvas.height - PLAYER_HEIGHT - 20;
+                drawGame(); 
+                gameIntervalId = setInterval(gameLoop, gameSpeed); 
+            } else if (gameOver) {
+                // Message box will be re-centered by CSS. Initial text drawn by setupCanvas.
+            } else if (gamePaused) {
+                if (player) drawGame();
+                if (messageTextEl) messageTextEl.textContent = (translations[currentLang] && translations[currentLang]['paused_message']) || "Paused";
+                if (messageScoreTextEl) messageScoreTextEl.classList.add('hidden'); 
+                if (gameMessageBox) gameMessageBox.classList.remove('hidden');
+            }
+        }
+
+        // --- Initialization on DOMContentLoaded ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!canvas) { console.error("Canvas element not found on DOMContentLoaded!"); return; }
+            ctx = canvas.getContext('2d');
+            if (!ctx) { console.error("Failed to get canvas context on DOMContentLoaded!"); return; }
+
+            setupCanvas(); 
+
+            if (themeToggle) {
+                applyCurrentTheme();
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                    localStorage.setItem('theme', currentTheme);
+                    applyCurrentTheme();
+                });
+            }
+
+            applyCurrentTranslations();
+            if (langToggle && langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langToggle.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('hidden'); });
+                langLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const selectedLang = link.getAttribute('data-lang');
+                        if (selectedLang !== currentLang) {
+                            currentLang = selectedLang;
+                            localStorage.setItem('language', currentLang);
+                            applyCurrentTranslations();
+                            if (gameOver || (!gameIntervalId && !gamePaused)) { 
+                                setupCanvas();
+                            }
+                        }
+                        langDropdown.classList.add('hidden');
+                    });
+                });
+                document.addEventListener('click', (e) => {
+                    if (langToggle && langDropdown && !langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                        langDropdown.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (header) {
+                window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+            }
+
+            if (startRestartBtn) {
+                startRestartBtn.addEventListener('click', () => {
+                    if (gameOver || gamePaused || !gameIntervalId) { // If game is over, or paused, or not running
+                         startGame();
+                    } else { // If game is running actively
+                         triggerGameOver(); // End current game first
+                         startGame();       // Then start a new one
+                    }
+                });
+            }
+            window.addEventListener('keydown', handleKeyDown);
+            window.addEventListener('keyup', handleKeyUp);
+
+            if (leftButtonTouch) {
+                leftButtonTouch.addEventListener('touchstart', (e) => { e.preventDefault(); keys['ArrowLeft'] = true; }, { passive: false });
+                leftButtonTouch.addEventListener('touchend', (e) => { e.preventDefault(); keys['ArrowLeft'] = false; }, { passive: false });
+            }
+            if (rightButtonTouch) {
+                rightButtonTouch.addEventListener('touchstart', (e) => { e.preventDefault(); keys['ArrowRight'] = true; }, { passive: false });
+                rightButtonTouch.addEventListener('touchend', (e) => { e.preventDefault(); keys['ArrowRight'] = false; }, { passive: false });
+            }
+            if (shootButtonTouch) {
+                shootButtonTouch.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    if (player && !gameOver && !gamePaused) player.shoot();
+                }, { passive: false });
+            }
+            
+            window.addEventListener('resize', handleWindowResize);
+
+            if (typeof tsParticles !== 'undefined') {
+                tsParticles.load("tsparticles", {
+                     fpsLimit: 60, particles: { number: { value: 30, density: { enable: true, area: 800 } }, color: { value: ["#FFFFFF", "#ADD8E6", "#a7c7e7"] }, shape: { type: "star" }, opacity: { value: {min: 0.1, max: 0.3} }, size: { value: { min: 1, max: 3 } }, links: { enable: false }, move: { direction: "bottom", enable: true, outModes: { default: "out" }, random: false, speed: 0.3, straight: true } }, interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true } }, detectRetina: true, background: { opacity: 0 }
+                }).then(() => console.log("tsParticles loaded for Airplane Shooter.")).catch(error => { console.error("Error loading tsParticles:", error); });
+            } else { console.warn("tsParticles library not found."); }
+        });
+    </script>
+</body>
+</html>

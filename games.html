@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <style>
@@ -41,20 +42,29 @@
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-            display: block;
-            text-decoration: none;
+            display: block; 
+            text-decoration: none; 
         }
         .game-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 0 15px var(--glow-color);
         }
-        .game-card .card-header-block {
+        .game-card .card-header-block { 
             border-bottom: 1px solid var(--border-color);
+            font-family: 'Press Start 2P', cursive; 
         }
+         .game-card .card-content h2 { 
+            font-family: 'Press Start 2P', cursive; 
+        }
+        .game-card .card-content p { /* Ensure description uses Inter font */
+            font-family: 'Inter', sans-serif;
+        }
+
+
         /* Style for the new Home button */
         .home-button {
-             padding: 0.5rem; /* p-2 */
-             border-radius: 9999px; /* rounded-full */
+             padding: 0.5rem; 
+             border-radius: 9999px; 
              transition: background-color 0.2s ease;
              color: var(--text-secondary);
         }
@@ -72,7 +82,8 @@
             <div class="text-2xl md:text-3xl font-bold">
                 <span class="text-gradient" data-translate-key="games_hub_title">游戏中心</span>
             </div>
-            <div class="flex items-center space-x-2 md:space-x-3"> <a href="index.html" class="home-button" aria-label="Back to Home" data-translate-key="tooltip_back_to_home">
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <a href="index.html" class="home-button" aria-label="Back to Home" title="返回主页" data-translate-key="tooltip_back_to_home">
                     <i class="fas fa-house text-lg"></i>
                 </a>
                 <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
@@ -102,8 +113,8 @@
                 <div class="h-48 bg-indigo-600 flex items-center justify-center p-6 card-header-block">
                      <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_gomoku_title_card">五子棋</h3>
                 </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_gomoku_title">五子棋 (Gomoku)</h2>
+                <div class="p-6 card-content">
+                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_gomoku_title">五子棋</h2>
                     <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_gomoku_desc">经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。</p>
                 </div>
             </a>
@@ -112,13 +123,23 @@
                 <div class="h-48 bg-emerald-600 flex items-center justify-center p-6 card-header-block">
                      <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_snake_title_card">贪吃蛇</h3>
                 </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_snake_title">贪吃蛇 (Snake)</h2>
+                <div class="p-6 card-content">
+                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_snake_title">贪吃蛇</h2>
                     <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_snake_desc">控制小蛇吃食物，变得越来越长！小心不要撞到墙壁或自己的身体。经典街机风格。</p>
                 </div>
             </a>
+            
+            <a href="airplane-shooter-game.html" class="game-card block rounded-xl overflow-hidden group">
+                <div class="h-48 bg-sky-600 flex items-center justify-center p-6 card-header-block">
+                     <h3 class="text-3xl font-bold text-white text-center" data-translate-key="game_airplane_title_card">飞机大战</h3>
+                </div>
+                <div class="p-6 card-content">
+                    <h2 class="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-[var(--text-accent)] transition-colors" data-translate-key="game_airplane_title">飞机大战</h2>
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-3" data-translate-key="game_airplane_desc">驾驶你的战机，在枪林弹雨中消灭来袭的敌军！经典的纵版射击游戏体验。</p>
+                </div>
+            </a>
 
-            </div>
+        </div>
     </div>
 
     <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
@@ -129,52 +150,61 @@
     </footer>
 
     <script>
-        // --- Translations (Added tooltip key) ---
+        // --- Translations ---
         const translations = {
             'en': {
                 'games_page_title': "Games - MaxCaulfield's Blog",
                 'games_hub_title': "Game Center",
                 'games_list_title': "Game List",
                 'game_gomoku_title_card': "Gomoku",
-                'game_gomoku_title': "Gomoku (Five-in-a-Row)",
-                'game_gomoku_desc': "The classic Gomoku game. Be the first to get five stones in a row to win. Supports Player vs Player or challenge the computer AI at different difficulties.",
+                'game_gomoku_title': "Gomoku",
+                'game_gomoku_desc': "The classic Gomoku game. Be the first to get five stones in a row to win. Supports PvP or challenge the AI.",
                 'game_snake_title_card': "Snake",
-                'game_snake_title': "Snake Game",
-                'game_snake_desc': "Control the snake to eat food and grow longer! Be careful not to hit the walls or yourself. Classic arcade style.",
+                'game_snake_title': "Snake",
+                'game_snake_desc': "Control the snake to eat food and grow longer! Avoid walls and yourself. Classic arcade style.",
+                'game_airplane_title_card': "Air Strike", 
+                'game_airplane_title': "Air Strike", 
+                'game_airplane_desc': "Pilot your fighter jet and destroy incoming enemy forces amidst a hail of bullets! Classic vertical shooter experience.", 
                 'footer_built_with': "Built with ❤️ and code.",
                 'back_to_home': "Back to Home",
                 'current_lang_display': "EN",
-                'tooltip_back_to_home': "Back to Home" // Added tooltip text
+                'tooltip_back_to_home': "Back to Home"
             },
             'zh-CN': {
                 'games_page_title': "小游戏 - 麦青春的博客",
                 'games_hub_title': "游戏中心",
                 'games_list_title': "小游戏列表",
                 'game_gomoku_title_card': "五子棋",
-                'game_gomoku_title': "五子棋 (Gomoku)",
+                'game_gomoku_title': "五子棋",
                 'game_gomoku_desc': "经典的五子棋游戏，率先将五个棋子连成一线者获胜。支持双人对战或挑战不同难度的电脑AI。",
                 'game_snake_title_card': "贪吃蛇",
-                'game_snake_title': "贪吃蛇 (Snake)",
+                'game_snake_title': "贪吃蛇",
                 'game_snake_desc': "控制小蛇吃食物，变得越来越长！小心不要撞到墙壁或自己的身体。经典街机风格。",
+                'game_airplane_title_card': "飞机大战", 
+                'game_airplane_title': "飞机大战", 
+                'game_airplane_desc': "驾驶你的战机，在枪林弹雨中消灭来袭的敌军！经典的纵版射击游戏体验。", 
                 'footer_built_with': "用 ❤️ 和代码构建.",
                 'back_to_home': "返回主页",
                 'current_lang_display': "简",
-                'tooltip_back_to_home': "返回主页" // Added tooltip text
+                'tooltip_back_to_home': "返回主页"
             },
             'zh-TW': {
                 'games_page_title': "小遊戲 - 麥青春的部落格",
                 'games_hub_title': "遊戲中心",
                 'games_list_title': "小遊戲列表",
                 'game_gomoku_title_card': "五子棋",
-                'game_gomoku_title': "五子棋 (Gomoku)",
+                'game_gomoku_title': "五子棋",
                 'game_gomoku_desc': "經典的五子棋遊戲，率先將五個棋子連成一線者獲勝。支援雙人對戰或挑戰不同難度的電腦AI。",
                 'game_snake_title_card': "貪吃蛇",
-                'game_snake_title': "貪吃蛇 (Snake)",
+                'game_snake_title': "貪吃蛇",
                 'game_snake_desc': "控制小蛇吃食物，變得越來越長！小心不要撞到牆壁或自己的身體。經典街機風格。",
+                'game_airplane_title_card': "飛機大戰", 
+                'game_airplane_title': "飛機大戰", 
+                'game_airplane_desc': "駕駛你的戰機，在槍林彈雨中消滅來襲的敵軍！經典的縱版射擊遊戲體驗。", 
                 'footer_built_with': "用 ❤️ 和程式碼構建.",
                 'back_to_home': "返回主頁",
                 'current_lang_display': "繁",
-                'tooltip_back_to_home': "返回主頁" // Added tooltip text
+                'tooltip_back_to_home': "返回主頁"
             }
         };
 
@@ -211,10 +241,9 @@
                  const key = el.getAttribute('data-translate-key');
                  if (translations[lang][key] !== undefined) {
                      if (el.tagName === 'TITLE') { document.title = translations[lang][key]; }
-                     // Apply translation to title attribute for tooltips
                      else if (el.hasAttribute('aria-label') && key === 'tooltip_back_to_home') {
                          el.setAttribute('aria-label', translations[lang][key]);
-                         el.setAttribute('title', translations[lang][key]); // Set title for standard browser tooltip
+                         el.setAttribute('title', translations[lang][key]); 
                      }
                      else { el.innerHTML = translations[lang][key]; }
                  }
@@ -230,7 +259,7 @@
                  });
              }
         }
-        applyTranslations(currentLang); // Apply on initial load
+        applyTranslations(currentLang); 
 
         if (langToggle && langDropdown) {
             const langLinks = langDropdown.querySelectorAll('a[data-lang]');
