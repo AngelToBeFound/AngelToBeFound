@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="post_days_gone_seo_title">《Days Gone 往日不在》游戏测评 - 麦青春的博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- 基础样式和主题变量 --- */
+        :root {
+             --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7); 
+             --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6); 
+             --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark); 
+             scroll-behavior: smooth;
+             --text-accent-rgb: 167, 199, 231;
+             --text-accent-rgb-light: 59, 130, 246;
+             --button-blue-bg: #60a5fa; 
+             --button-blue-text: #ffffff;
+             --button-blue-hover-bg: #3b82f6;
+        }
+        body.light-theme {
+             --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+             --button-blue-bg: #3b82f6;
+             --button-blue-text: #ffffff;
+             --button-blue-hover-bg: #2563eb;
+        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient( -45deg, #2563eb, #7c3aed, #16a34a, #0891b2, #4f46e5, #c026d3, #2563eb ); background-size: 400% 400%; animation: gradient-flow 25s linear infinite; z-index: -2; opacity: 0.7; transition: opacity 0.3s ease; }
+        body.light-theme::before { opacity: 0.4; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        #blog-header { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #blog-header.scrolled { background-color: var(--bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #blog-header:not(.scrolled) { background-color: transparent; border-bottom: 1px solid transparent; }
+        .text-gradient { background-image: linear-gradient(to right, var(--text-accent), var(--glow-color)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.light-theme .text-gradient { background-image: linear-gradient(to right, #3b82f6, #60a5fa); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background-color: var(--text-accent); border-radius: 10px; border: 2px solid var(--bg-primary); } ::-webkit-scrollbar-thumb:hover { background-color: var(--glow-color); }
+
+        .post-content-area { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 2rem; position: relative; z-index: 10; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        @media (min-width: 768px) { .post-content-area { padding: 3rem; } }
+
+        .post-body h1, .post-body h2, .post-body h3, .post-body h4 { color: var(--text-primary); margin-top: 1.75em; margin-bottom: 0.75em; font-weight: 600; line-height: 1.3; }
+        .post-body h1 { font-size: 2.25rem; line-height: 2.5rem; margin-top: 0; }
+        .post-body h2 { font-size: 1.875rem; line-height: 2.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .post-body h3 { font-size: 1.5rem; line-height: 2rem; }
+        .post-body h4 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 500; }
+        .post-body p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25em; }
+        .post-body a { color: var(--text-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; transition: opacity 0.2s ease; word-break: break-all; }
+        .post-body a:hover { opacity: 0.8; }
+        .post-body ul, .post-body ol { margin-left: 1.5rem; margin-bottom: 1.25em; color: var(--text-secondary); }
+        .post-body li { margin-bottom: 0.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+        .post-body strong { font-weight: 600; color: var(--text-primary); }
+        .post-body blockquote { margin: 1.5em 0; padding: 1em 1.5em; border-left: 4px solid var(--text-accent); background-color: rgba(var(--text-accent-rgb, 167, 199, 231), 0.1); color: var(--text-secondary); border-radius: 0.25rem; font-style: normal; }
+        body.light-theme .post-body blockquote { background-color: rgba(var(--text-accent-rgb-light, 59, 130, 246), 0.08); border-left-color: var(--text-accent-light); }
+        .post-body blockquote p { margin-bottom: 0.5em; }
+        .post-body blockquote p:last-child { margin-bottom: 0; }
+        .post-body blockquote.warning { border-left-color: #f59e0b; background-color: rgba(245, 158, 11, 0.1); }
+        body.light-theme .post-body blockquote.warning { border-left-color: #d97706; background-color: rgba(245, 158, 11, 0.08); }
+        
+        .download-button {
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+            padding: 0.65rem 1.25rem; 
+            margin-top: 0.5em;
+            background-color: var(--button-blue-bg); 
+            color: var(--button-blue-text); 
+            font-weight: 500; 
+            border-radius: 0.5rem; 
+            text-decoration: none;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); 
+            border: 1px solid transparent; 
+        }
+        .download-button:hover {
+            background-color: var(--button-blue-hover-bg);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 0 10px var(--glow-color-light); 
+        }
+        .download-button i {
+            margin-right: 0.5rem; 
+        }
+
+        .steam-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.65rem 1.25rem;
+            margin-top: 0.5em;
+            background-color: #1b2838; 
+            color: #c7d5e0; 
+            font-weight: 500;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .steam-button:hover {
+            background-color: #2c4359;
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+        .steam-button svg { /* Style for the SVG icon */
+            width: 1.1em; /* Control size of SVG */
+            height: 1.1em;
+            margin-right: 0.6rem;
+            fill: currentColor; /* SVG will inherit text color */
+        }
+
+
+        .post-body img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5em auto; display: block; border: 1px solid var(--border-color); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .post-body figure { margin: 1.5em 0; text-align: center; }
+        .post-body figure img { display: inline-block; margin-left: auto; margin-right: auto; }
+        .post-body figcaption { text-align: center; font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5em; }
+    </style>
+</head>
+<body class="dark-theme">
+    <div id="tsparticles"></div>
+
+    <header id="blog-header" class="py-4 sticky top-0 z-50 mb-8 md:mb-12 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-bold hover:opacity-80 transition-opacity">
+                <span class="text-gradient" data-translate-key="blog_title_header">麦青春的博客</span>
+            </a>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    <i class="fas fa-sun text-lg"></i> <i class="fas fa-moon text-lg hidden"></i>
+                </button>
+                <div class="relative">
+                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center">
+                        <i class="fas fa-language text-xl mr-1"></i>
+                        <span id="current-lang" class="text-sm font-medium">中文</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 bg-[var(--bg-secondary)] rounded-md shadow-lg border border-[var(--border-color)] hidden glass-effect !py-1 z-30">
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-glass)] hover:text-[var(--text-primary)] transition-colors" data-lang="en">English</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 relative z-10">
+         <div class="mb-6 md:mb-8">
+            <a href="blog.html" class="text-sm text-[var(--text-accent)] hover:underline">
+                &larr; <span data-translate-key="back_to_blog_list">返回博客列表</span>
+            </a>
+        </div>
+         <article class="post-content-area glass-effect">
+            <header class="mb-8 md:mb-12 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gradient" data-translate-key="post_days_gone_title">
+                    《Days Gone 往日不在》游戏测评和分享
+                </h1>
+                <p class="text-sm text-[var(--text-secondary)]">
+                    <span data-translate-key="category_label">分类</span>: <a href="#" class="hover:text-[var(--text-accent)]" data-translate-key="game_review_category">游戏评测</a>
+                    <span class="mx-2">|</span>
+                    <span data-translate-key="posted_on_label">发布于</span>: <time datetime="2025-05-11">2025年5月11日</time>
+                </p>
+            </header>
+
+            <div class="post-body">
+                <figure>
+                    <img src="images/days-gone-banner.jpg" alt="Days Gone 游戏横幅" loading="lazy" class="clickable-image" onerror="this.onerror=null; this.src='https://placehold.co/800x450/0b0f19/a7c7e7?text=Days+Gone+Banner+Not+Found';">
+                    <figcaption data-translate-key="post_days_gone_banner_caption">在末日废土中骑行与求生</figcaption>
+                </figure>
+
+                <p data-translate-key="post_days_gone_intro">
+                    《Days Gone》（中译名《往日不在》）是一款由 Bend Studio 开发、索尼互动娱乐发行的开放世界动作冒险游戏。故事发生在全球性瘟疫爆发两年后的美国俄勒冈州，玩家将扮演前摩托车帮成员迪肯·圣约翰 (Deacon St. John)，在危机四伏、遍布丧尸（游戏中称为“异变者”）的末日世界中挣扎求生，并试图寻找失散的妻子莎拉。今天，我想和大家分享一下我对这款游戏的体验和一些个人看法。
+                </p>
+
+                <h2 data-translate-key="post_days_gone_story_title">剧情与角色：末世中的人性微光</h2>
+                <p data-translate-key="post_days_gone_story_p1">
+                    《往日不在》的剧情围绕着迪肯的个人旅程展开。他不仅要面对外部世界的残酷，还要处理内心的创伤和对妻子的思念。游戏通过大量的过场动画和角色对话，成功塑造了一批有血有肉的角色。迪肯从最初的愤世嫉俗，到逐渐重拾希望和责任感，其转变过程令人信服。他的兄弟“酒鬼”(Boozer) 也是一个亮点，两人之间的兄弟情谊是游戏中温暖的一抹色彩。
+                </p>
+                <p data-translate-key="post_days_gone_story_p2">
+                    虽然主线剧情的节奏有时略显拖沓，且部分情节有些俗套，但整体而言，它讲述了一个关于失去、救赎和在绝望中寻找意义的动人故事。游戏中对人性的探讨，尤其是在极端环境下不同幸存者营地的众生相，也值得深思。
+                </p>
+
+                <h2 data-translate-key="post_days_gone_gameplay_title">玩法核心：摩托、尸潮与开放世界</h2>
+                <p data-translate-key="post_days_gone_gameplay_p1">
+                    <strong>摩托车</strong>是《往日不在》的核心元素之一。它不仅仅是交通工具，更是迪肯的伙伴和生存的依赖。玩家需要不断收集零件升级摩托车，维护油量和耐久度。在广阔的俄勒冈荒野上骑行，感受风驰电掣的快感，同时提防路边的埋伏和异变者的追击，这种体验相当独特。
+                </p>
+                <figure>
+                     <img src="images/days-gone-motorcycle.jpg" alt="迪肯骑着摩托车在公路上" loading="lazy" class="clickable-image" onerror="this.onerror=null; this.src='https://placehold.co/700x394/191970/ADD8E6?text=Motorcycle+Image+Not+Found';">
+                    <figcaption data-translate-key="post_days_gone_motorcycle_caption">摩托车是游戏中不可或缺的一部分</figcaption>
+                </figure>
+                <p data-translate-key="post_days_gone_gameplay_p2">
+                    游戏中最具特色和压迫感的莫过于<strong>“尸潮”</strong>。面对成百上千只异变者同时涌来的场面，无论是视觉冲击力还是心理压力都非常巨大。玩家需要利用环境、陷阱、武器和策略才能成功清除或躲避尸潮，每一次成功的挑战都能带来极大的成就感。
+                </p>
+                <p data-translate-key="post_days_gone_gameplay_p3">
+                    游戏的开放世界设计中规中矩，包含了清理营地、解决随机事件、收集资源等常见元素。虽然任务类型略有重复，但结合动态天气系统和昼夜循环，探索过程依然充满变数。潜行和正面战斗的结合也给了玩家一定的自由度。
+                </p>
+
+                <h2 data-translate-key="post_days_gone_graphics_audio_title">视听表现：氛围十足的末日画卷</h2>
+                <p data-translate-key="post_days_gone_graphics_audio_p1">
+                    《往日不在》的画面表现相当出色，尤其是在 PC 版本上。俄勒冈州多变的地貌——从茂密的森林、雪山到荒芜的沙漠——都得到了细致的展现。动态天气效果，如下雨、下雪，对游戏氛围的营造起到了关键作用。角色建模和动作捕捉也比较到位。
+                </p>
+                <p data-translate-key="post_days_gone_graphics_audio_p2">
+                    音效方面，异变者的嘶吼、摩托车的轰鸣、以及恰到好处的背景音乐，共同构建了一个沉浸感十足的末日世界。配音演员的表演也为角色增色不少。
+                </p>
+
+                <h2 data-translate-key="post_days_gone_pros_cons_title">优缺点总结</h2>
+                <h3 data-translate-key="post_days_gone_pros_title">优点：</h3>
+                <ul>
+                    <li data-translate-key="post_days_gone_pro1">引人入胜的末日氛围和角色塑造。</li>
+                    <li data-translate-key="post_days_gone_pro2">独特的摩托车骑行与维护体验。</li>
+                    <li data-translate-key="post_days_gone_pro3">极具压迫感和挑战性的“尸潮”战斗。</li>
+                    <li data-translate-key="post_days_gone_pro4">优秀的画面和音效表现（尤其PC版）。</li>
+                </ul>
+                <h3 data-translate-key="post_days_gone_cons_title">缺点：</h3>
+                <ul>
+                    <li data-translate-key="post_days_gone_con1">主线剧情节奏偶有拖沓，部分任务设计重复度较高。</li>
+                    <li data-translate-key="post_days_gone_con2">游戏初期可能会感觉比较慢热和困难。</li>
+                    <li data-translate-key="post_days_gone_con3">部分BUG和优化问题（虽然PC版已大有改善）。</li>
+                </ul>
+
+                <h2 data-translate-key="post_days_gone_conclusion_title">总结与推荐</h2>
+                <p data-translate-key="post_days_gone_conclusion_p1">
+                    总的来说，《Days Gone 往日不在》是一款充满诚意且独具特色的开放世界末日生存游戏。它可能不是一款完美无瑕的作品，但其独特的尸潮体验、引人入胜的剧情氛围以及核心的摩托车玩法，都让它在同类游戏中占有一席之地。如果你喜欢末日题材，不畏惧挑战，并且能接受其略显慢热的节奏，那么《往日不在》绝对值得一试。尤其是对于喜欢探索和沉浸式体验的玩家，迪肯在绝境中的旅程或许能带给你不一样的感动。
+                </p>
+
+                <h2 data-translate-key="post_days_gone_download_title">下载链接分享</h2>
+                <blockquote class="warning">
+                    <p data-translate-key="post_days_gone_download_warn1"><strong>重要提示：</strong> 请支持正版游戏！以下链接仅供学习和交流使用，如果您喜欢这款游戏，请通过官方渠道购买正版，以支持游戏开发者。</p>
+                    <p data-translate-key="post_days_gone_download_warn2">下载和安装第三方提供的游戏资源可能存在风险，包括病毒、恶意软件或法律问题。请自行承担相关风险。本站不对任何因使用以下链接造成的后果负责。</p>
+                </blockquote>
+                <p data-translate-key="post_days_gone_download_desc">
+                    考虑到大家寻找资源的便利性，这里提供一个我个人收集的《Days Gone》PC版学习交流资源链接（请注意上述提示）：
+                </p>
+                <a href="YOUR_DAYS_GONE_DOWNLOAD_LINK_HERE" target="_blank" rel="noopener noreferrer" class="download-button">
+                    <i class="fas fa-download"></i> <span data-translate-key="post_days_gone_download_button_text">Days Gone 学习交流版 (PC)</span>
+                </a>
+                <p class="text-sm mt-2 text-[var(--text-secondary)]" data-translate-key="post_days_gone_download_source_note">
+                    (链接来源：互联网收集，请注意甄别)
+                </p>
+                <p class="mt-4" data-translate-key="post_days_gone_steam_link_prompt">
+                    推荐通过官方渠道购买：
+                    <a href="https://store.steampowered.com/app/1259420/Days_Gone/" target="_blank" rel="noopener noreferrer" class="steam-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" role="img" aria-hidden="true">
+                            <path d="M496 256c0 137-111 248-248 248S0 393 0 256 111 8 248 8s248 111 248 248zm-113.6-46.3c-9.1-5.7-20.6-8.8-32.1-8.8s-23 3.1-32.1 8.8c-10.5 6.5-18.5 17.4-21.7 29.9H168.4c-3.2-12.5-11.2-23.4-21.7-29.9-9.1-5.7-20.6-8.8-32.1-8.8s-23 3.1-32.1 8.8c-10.5 6.5-18.5 17.4-21.7 29.9h-2.3c-13.2 0-23.9 10.7-23.9 23.9v27.3c0 13.2 10.7 23.9 23.9 23.9h2.3c3.2 12.5 11.2 23.4 21.7 29.9 9.1 5.7 20.6 8.8 32.1 8.8s23-3.1 32.1-8.8c10.5-6.5 18.5-17.4 21.7-29.9h127.3c3.2 12.5 11.2 23.4 21.7 29.9 9.1 5.7 20.6 8.8 32.1 8.8s23-3.1 32.1-8.8c10.5-6.5 18.5-17.4 21.7-29.9h2.3c13.2 0 23.9-10.7 23.9-23.9v-27.3c0-13.2-10.7-23.9-23.9-23.9h-2.3c-3.2-12.5-11.2-23.4-21.7-29.9zm-201.6 50.1c-10.2 0-18.5-8.3-18.5-18.5s8.3-18.5 18.5-18.5 18.5 8.3 18.5 18.5-8.3 18.5-18.5 18.5zm127.3 0c-10.2 0-18.5-8.3-18.5-18.5s8.3-18.5 18.5-18.5 18.5 8.3 18.5 18.5-8.3 18.5-18.5 18.5z"/>
+                        </svg>
+                        <span data-translate-key="steam_store_button_text">Steam 商店</span>
+                    </a>
+                </p>
+
+                <hr class="my-8 border-[var(--border-color)]">
+                </div>
+         </article>
+    </div>
+
+    <footer class="mt-16 md:mt-24 py-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm relative z-10">
+        <div class="container mx-auto px-6">
+             <p>&copy; 2025 MaxCaulfield's Blog. <span data-translate-key="footer_built_with">用 ❤️ 和代码构建.</span></p>
+             <p class="mt-1"><a href="index.html" class="hover:text-[var(--text-accent)]" data-translate-key="back_to_home">返回主页</a></p>
+        </div>
+    </footer>
+    
+    <div id="lightbox-overlay" class="fixed inset-0 bg-black bg-opacity-85 hidden items-center justify-center z-[100] transition-opacity duration-300 ease-in-out cursor-zoom-out">
+        <span id="lightbox-close" class="absolute top-6 right-8 text-white text-4xl font-bold cursor-pointer hover:text-gray-400 transition-colors leading-none p-2">&times;</span>
+        <img id="lightbox-img" src="" alt="放大的图片" class="max-w-[95%] max-h-[95%] object-contain rounded-lg shadow-xl cursor-default">
+    </div>
+
+
+    <script>
+        // --- 翻译对象 (新增 Days Gone 相关键) ---
+        const translations = {
+            'en': {
+                'blog_title_header': "MaxCaulfield's Blog", 
+                'back_to_blog_list': "Back to Blog List", 
+                'footer_built_with': "Built with ❤️ and code.", 
+                'back_to_home': "Back to Home", 
+                'current_lang_display': "EN",
+                'category_label': "Category",
+                'posted_on_label': "Posted on",
+                'game_review_category': "Game Review", 
+                'post_days_gone_seo_title': "Days Gone Game Review & Share - MaxCaulfield's Blog",
+                'post_days_gone_title': "Days Gone Game Review and Share (Download Link Included)",
+                'post_days_gone_banner_caption': "Riding and surviving in a post-apocalyptic wasteland",
+                'post_days_gone_intro': "Days Gone is an open-world action-adventure game developed by Bend Studio and published by Sony Interactive Entertainment. Set in Oregon, USA, two years after a global pandemic, players take on the role of Deacon St. John, a former outlaw biker, struggling to survive in a perilous post-apocalyptic world overrun by zombie-like creatures called 'Freakers', while searching for his missing wife, Sarah. Today, I want to share my experience and personal thoughts on this game.",
+                'post_days_gone_story_title': "Story & Characters: A Glimmer of Humanity in the Apocalypse",
+                'post_days_gone_story_p1': "The story of Days Gone revolves around Deacon's personal journey. He must not only face the harshness of the external world but also deal with his inner trauma and longing for his wife. The game successfully portrays a cast of fleshed-out characters through numerous cutscenes and dialogues. Deacon's transformation from a cynical drifter to someone regaining hope and responsibility is convincing. His brother, Boozer, is also a highlight, and their brotherhood provides a warm touch in the game.",
+                'post_days_gone_story_p2': "Although the main story's pacing can be a bit slow at times, and some plot points are somewhat clichéd, overall, it tells a moving story about loss, redemption, and finding meaning in despair. The game's exploration of humanity, especially the diverse cast of characters in different survivor camps under extreme circumstances, is also thought-provoking.",
+                'post_days_gone_gameplay_title': "Core Gameplay: Motorcycle, Hordes, and Open World",
+                'post_days_gone_gameplay_p1': "The **motorcycle** is one of the core elements of Days Gone. It's not just a vehicle but Deacon's companion and means of survival. Players need to constantly collect parts to upgrade the motorcycle, and maintain its fuel and durability. Riding through the vast Oregon wilderness, feeling the thrill of speed while watching out for ambushes and Freaker pursuits, is a unique experience.",
+                'post_days_gone_motorcycle_caption': "The motorcycle is an indispensable part of the game",
+                'post_days_gone_gameplay_p2': "The most distinctive and oppressive feature of the game is the **'Horde'**. Facing hundreds or even thousands of Freakers涌rushing at you simultaneously is visually stunning and mentally stressful. Players need to utilize the environment, traps, weapons, and strategy to successfully clear or evade Hordes, and each successful challenge brings a great sense of accomplishment.",
+                'post_days_gone_gameplay_p3': "The game's open-world design is decent, including common elements like clearing camps, resolving random events, and collecting resources. Although mission types can be a bit repetitive, the exploration process, combined with a dynamic weather system and day-night cycle, remains full of variables. The combination of stealth and direct combat also gives players a degree of freedom.",
+                'post_days_gone_graphics_audio_title': "Audiovisuals: An Atmospheric Post-Apocalyptic Picture",
+                'post_days_gone_graphics_audio_p1': "Days Gone's visual presentation is quite impressive, especially on the PC version. The varied landscapes of Oregon—from dense forests and snowy mountains to barren deserts—are rendered in detail. Dynamic weather effects, like rain and snow, play a key role in creating the game's atmosphere. Character modeling and motion capture are also well done.",
+                'post_days_gone_graphics_audio_p2': "In terms of audio, the roars of the Freakers, the roar of the motorcycle, and the well-placed background music together create an immersive post-apocalyptic world. The voice actors' performances also add a lot to the characters.",
+                'post_days_gone_pros_cons_title': "Pros & Cons Summary",
+                'post_days_gone_pros_title': "Pros:",
+                'post_days_gone_pro1': "Engaging post-apocalyptic atmosphere and character development.",
+                'post_days_gone_pro2': "Unique motorcycle riding and maintenance experience.",
+                'post_days_gone_pro3': "Highly oppressive and challenging 'Horde' combat.",
+                'post_days_gone_pro4': "Excellent graphics and sound design (especially PC version).",
+                'post_days_gone_cons_title': "Cons:",
+                'post_days_gone_con1': "Main story pacing can drag at times; some mission designs are repetitive.",
+                'post_days_gone_con2': "The game can feel slow-paced and difficult in the early stages.",
+                'post_days_gone_con3': "Some bugs and optimization issues (though much improved on PC).",
+                'post_days_gone_conclusion_title': "Conclusion & Recommendation",
+                'post_days_gone_conclusion_p1': "Overall, Days Gone is a sincere and distinctive open-world post-apocalyptic survival game. It may not be flawless, but its unique Horde experience, engaging story atmosphere, and core motorcycle gameplay give it a place among similar titles. If you enjoy post-apocalyptic themes, aren't afraid of a challenge, and can accept its somewhat slow-burn pacing, Days Gone is definitely worth a try. Especially for players who enjoy exploration and immersive experiences, Deacon's journey through despair might offer a unique kind of emotional impact.",
+                'post_days_gone_download_title': "Download Link Sharing",
+                'post_days_gone_download_warn1': "<strong>Important Notice:</strong> Please support genuine games! The following link is for learning and communication purposes only. If you enjoy this game, please purchase the legitimate version through official channels to support the game developers.",
+                'post_days_gone_download_warn2': "Downloading and installing game resources provided by third parties may carry risks, including viruses, malware, or legal issues. Please assume all related risks yourself. This site is not responsible for any consequences arising from the use of the following link.",
+                'post_days_gone_download_desc': "For convenience in finding resources, here is a link to a Days Gone PC version learning and communication resource I personally collected (please note the warnings above):",
+                'post_days_gone_download_button_text': "Days Gone Learning Version (PC)", 
+                'post_days_gone_download_source_note': "(Link source: Collected from the internet, please verify carefully)",
+                'post_days_gone_steam_link_prompt': "Recommended to purchase via official channels:",
+                'steam_store_button_text': "Steam Store", 
+            },
+            'zh-CN': {
+                 'blog_title_header': "麦青春的博客", 
+                 'back_to_blog_list': "返回博客列表", 
+                 'footer_built_with': "用 ❤️ 和代码构建.", 
+                 'back_to_home': "返回主页", 
+                 'current_lang_display': "简",
+                 'category_label': "分类",
+                 'posted_on_label': "发布于",
+                 'game_review_category': "游戏评测",
+                 'post_days_gone_seo_title': "《Days Gone 往日不在》游戏测评 - 麦青春的博客",
+                 'post_days_gone_title': "《Days Gone 往日不在》游戏测评和分享",
+                 'post_days_gone_banner_caption': "在末日废土中骑行与求生",
+                 'post_days_gone_intro': "《Days Gone》（中译名《往日不在》）是一款由 Bend Studio 开发、索尼互动娱乐发行的开放世界动作冒险游戏。故事发生在全球性瘟疫爆发两年后的美国俄勒冈州，玩家将扮演前摩托车帮成员迪肯·圣约翰 (Deacon St. John)，在危机四伏、遍布丧尸（游戏中称为“异变者”）的末日世界中挣扎求生，并试图寻找失散的妻子莎拉。今天，我想和大家分享一下我对这款游戏的体验和一些个人看法。",
+                 'post_days_gone_story_title': "剧情与角色：末世中的人性微光",
+                 'post_days_gone_story_p1': "《往日不在》的剧情围绕着迪肯的个人旅程展开。他不仅要面对外部世界的残酷，还要处理内心的创伤和对妻子的思念。游戏通过大量的过场动画和角色对话，成功塑造了一批有血有肉的角色。迪肯从最初的愤世嫉俗，到逐渐重拾希望和责任感，其转变过程令人信服。他的兄弟“酒鬼”(Boozer) 也是一个亮点，两人之间的兄弟情谊是游戏中温暖的一抹色彩。",
+                 'post_days_gone_story_p2': "虽然主线剧情的节奏有时略显拖沓，且部分情节有些俗套，但整体而言，它讲述了一个关于失去、救赎和在绝望中寻找意义的动人故事。游戏中对人性的探讨，尤其是在极端环境下不同幸存者营地的众生相，也值得深思。",
+                 'post_days_gone_gameplay_title': "玩法核心：摩托、尸潮与开放世界",
+                 'post_days_gone_gameplay_p1': "<strong>摩托车</strong>是《往日不在》的核心元素之一。它不仅仅是交通工具，更是迪肯的伙伴和生存的依赖。玩家需要不断收集零件升级摩托车，维护油量和耐久度。在广阔的俄勒冈荒野上骑行，感受风驰电掣的快感，同时提防路边的埋伏和异变者的追击，这种体验相当独特。",
+                 'post_days_gone_motorcycle_caption': "摩托车是游戏中不可或缺的一部分",
+                 'post_days_gone_gameplay_p2': "游戏中最具特色和压迫感的莫过于<strong>“尸潮”</strong>。面对成百上千只异变者同时涌来的场面，无论是视觉冲击力还是心理压力都非常巨大。玩家需要利用环境、陷阱、武器和策略才能成功清除或躲避尸潮，每一次成功的挑战都能带来极大的成就感。",
+                 'post_days_gone_gameplay_p3': "游戏的开放世界设计中规中矩，包含了清理营地、解决随机事件、收集资源等常见元素。虽然任务类型略有重复，但结合动态天气系统和昼夜循环，探索过程依然充满变数。潜行和正面战斗的结合也给了玩家一定的自由度。",
+                 'post_days_gone_graphics_audio_title': "视听表现：氛围十足的末日画卷",
+                 'post_days_gone_graphics_audio_p1': "《往日不在》的画面表现相当出色，尤其是在 PC 版本上。俄勒冈州多变的地貌——从茂密的森林、雪山到荒芜的沙漠——都得到了细致的展现。动态天气效果，如下雨、下雪，对游戏氛围的营造起到了关键作用。角色建模和动作捕捉也比较到位。",
+                 'post_days_gone_graphics_audio_p2': "音效方面，异变者的嘶吼、摩托车的轰鸣、以及恰到好处的背景音乐，共同构建了一个沉浸感十足的末日世界。配音演员的表演也为角色增色不少。",
+                 'post_days_gone_pros_cons_title': "优缺点总结",
+                 'post_days_gone_pros_title': "优点：",
+                 'post_days_gone_pro1': "引人入胜的末日氛围和角色塑造。",
+                 'post_days_gone_pro2': "独特的摩托车骑行与维护体验。",
+                 'post_days_gone_pro3': "极具压迫感和挑战性的“尸潮”战斗。",
+                 'post_days_gone_pro4': "优秀的画面和音效表现（尤其PC版）。",
+                 'post_days_gone_cons_title': "缺点：",
+                 'post_days_gone_con1': "主线剧情节奏偶有拖沓，部分任务设计重复度较高。",
+                 'post_days_gone_con2': "游戏初期可能会感觉比较慢热和困难。",
+                 'post_days_gone_con3': "部分BUG和优化问题（虽然PC版已大有改善）。",
+                 'post_days_gone_conclusion_title': "总结与推荐",
+                 'post_days_gone_conclusion_p1': "总的来说，《Days Gone 往日不在》是一款充满诚意且独具特色的开放世界末日生存游戏。它可能不是一款完美无瑕的作品，但其独特的尸潮体验、引人入胜的剧情氛围以及核心的摩托车玩法，都让它在同类游戏中占有一席之地。如果你喜欢末日题材，不畏惧挑战，并且能接受其略显慢热的节奏，那么《往日不在》绝对值得一试。尤其是对于喜欢探索和沉浸式体验的玩家，迪肯在绝境中的旅程或许能带给你不一样的感动。",
+                 'post_days_gone_download_title': "下载链接分享",
+                 'post_days_gone_download_warn1': "<strong>重要提示：</strong> 请支持正版游戏！以下链接仅供学习和交流使用，如果您喜欢这款游戏，请通过官方渠道购买正版，以支持游戏开发者。",
+                 'post_days_gone_download_warn2': "下载和安装第三方提供的游戏资源可能存在风险，包括病毒、恶意软件或法律问题。请自行承担相关风险。本站不对任何因使用以下链接造成的后果负责。",
+                 'post_days_gone_download_desc': "考虑到大家寻找资源的便利性，这里提供一个我个人收集的《Days Gone》PC版学习交流资源链接（请注意上述提示）：",
+                 'post_days_gone_download_button_text': "Days Gone 学习交流版 (PC)",
+                 'post_days_gone_download_source_note': "(链接来源：互联网收集，请注意甄别)",
+                 'post_days_gone_steam_link_prompt': "推荐通过官方渠道购买：",
+                 'steam_store_button_text': "Steam 商店",
+             },
+             'zh-TW': {
+                 'blog_title_header': "麥青春的部落格", 
+                 'back_to_blog_list': "返回部落格列表", 
+                 'footer_built_with': "用 ❤️ 和程式碼構建.", 
+                 'back_to_home': "返回主頁", 
+                 'current_lang_display': "繁",
+                 'category_label': "分類",
+                 'posted_on_label': "發佈於",
+                 'game_review_category': "遊戲評測",
+                 'post_days_gone_seo_title': "《Days Gone 往日不再》遊戲評測 - 麥青春的部落格",
+                 'post_days_gone_title': "《Days Gone 往日不再》遊戲評測和分享",
+                 'post_days_gone_banner_caption': "在末日廢土中騎行與求生",
+                 'post_days_gone_intro': "《Days Gone》（中譯名《往日不再》）是一款由 Bend Studio 開發、索尼互動娛樂發行的開放世界動作冒險遊戲。故事發生在全球性瘟疫爆發兩年後的美國俄勒岡州，玩家將扮演前摩托車幫成員迪肯·聖約翰 (Deacon St. John)，在危機四伏、遍佈喪屍（遊戲中稱為“異變者”）的末日世界中掙扎求生，並試圖尋找失散的妻子莎拉。今天，我想和大家分享一下我對這款遊戲的體驗和一些個人看法。",
+                 'post_days_gone_story_title': "劇情與角色：末世中的人性微光",
+                 'post_days_gone_story_p1': "《往日不再》的劇情圍繞著迪肯的個人旅程展開。他不僅要面對外部世界的殘酷，還要處理內心的創傷和對妻子的思念。遊戲通過大量的過場動畫和角色對話，成功塑造了一批有血有肉的角色。迪肯從最初的憤世嫉俗，到逐漸重拾希望和責任感，其轉變過程令人信服。他的兄弟“酒鬼”(Boozer) 也是一個亮點，兩人之間的兄弟情誼是遊戲中溫暖的一抹色彩。",
+                 'post_days_gone_story_p2': "雖然主線劇情的節奏有時略顯拖沓，且部分情節有些俗套，但整體而言，它講述了一個關於失去、救贖和在絕望中尋找意義的動人故事。遊戲中對人性的探討，尤其是在極端環境下不同倖存者營地的眾生相，也值得深思。",
+                 'post_days_gone_gameplay_title': "玩法核心：摩托、屍潮與開放世界",
+                 'post_days_gone_gameplay_p1': "<strong>摩托車</strong>是《往日不再》的核心元素之一。它不僅僅是交通工具，更是迪肯的夥伴和生存的依賴。玩家需要不斷收集零件升級摩托車，維護油量和耐久度。在廣闊的俄勒岡荒野上騎行，感受風馳電掣的快感，同時提防路邊的埋伏和異變者的追擊，這種體驗相當獨特。",
+                 'post_days_gone_motorcycle_caption': "摩托車是遊戲中不可或缺的一部分",
+                 'post_days_gone_gameplay_p2': "遊戲中最具特色和壓迫感的莫過於<strong>“屍潮”</strong>。面對成百上千隻異變者同時湧來的場面，無論是視覺衝擊力還是心理壓力都非常巨大。玩家需要利用環境、陷阱、武器和策略才能成功清除或躲避屍潮，每一次成功的挑戰都能帶來極大的成就感。",
+                 'post_days_gone_gameplay_p3': "遊戲的開放世界設計中規中矩，包含了清理營地、解決隨機事件、收集資源等常見元素。雖然任務類型略有重複，但結合動態天氣系統和晝夜循環，探索過程依然充滿變數。潛行和正面戰鬥的結合也給了玩家一定的自由度。",
+                 'post_days_gone_graphics_audio_title': "視聽表現：氛圍十足的末日畫卷",
+                 'post_days_gone_graphics_audio_p1': "《往日不再》的畫面表現相當出色，尤其是在 PC 版本上。俄勒岡州多變的地貌——從茂密的森林、雪山到荒蕪的沙漠——都得到了細緻的展現。動態天氣效果，如下雨、下雪，對遊戲氛圍的營造起到了關鍵作用。角色建模和動作捕捉也比較到位。",
+                 'post_days_gone_graphics_audio_p2': "音效方面，異變者的嘶吼、摩托車的轟鳴、以及恰到好處的背景音樂，共同構建了一個沉浸感十足的末日世界。配音演員的表演也為角色增色不少。",
+                 'post_days_gone_pros_cons_title': "優缺點總結",
+                 'post_days_gone_pros_title': "優點：",
+                 'post_days_gone_pro1': "引人入勝的末日氛圍和角色塑造。",
+                 'post_days_gone_pro2': "獨特的摩托車騎行與維護體驗。",
+                 'post_days_gone_pro3': "極具壓迫感和挑戰性的“屍潮”戰鬥。",
+                 'post_days_gone_pro4': "優秀的畫面和音效表現（尤其PC版）。",
+                 'post_days_gone_cons_title': "缺點：",
+                 'post_days_gone_con1': "主線劇情節奏偶有拖沓，部分任務設計重複度較高。",
+                 'post_days_gone_con2': "遊戲初期可能會感覺比較慢熱和困難。",
+                 'post_days_gone_con3': "部分BUG和優化問題（雖然PC版已大有改善）。",
+                 'post_days_gone_conclusion_title': "總結與推薦",
+                 'post_days_gone_conclusion_p1': "總的來說，《Days Gone 往日不再》是一款充滿誠意且獨具特色的開放世界末日生存遊戲。它可能不是一款完美無瑕的作品，但其獨特的屍潮體驗、引人入勝的劇情氛圍以及核心的摩托車玩法，都讓它在同類遊戲中佔有一席之地。如果你喜歡末日題材，不畏懼挑戰，並且能接受其略顯慢熱的節奏，那麼《往日不再》絕對值得一試。尤其是對於喜歡探索和沉浸式體驗的玩家，迪肯在絕境中的旅程或許能帶給你不一樣的感動。",
+                 'post_days_gone_download_title': "下載連結分享",
+                 'post_days_gone_download_warn1': "<strong>重要提示：</strong> 請支持正版遊戲！以下連結僅供學習和交流使用，如果您喜歡這款遊戲，请透過官方管道購買正版，以支持遊戲開發者。",
+                 'post_days_gone_download_warn2': "下載和安裝第三方提供的遊戲資源可能存在風險，包括病毒、惡意軟體或法律問題。請自行承擔相關風險。本站不對任何因使用以下連結造成的後果負責。",
+                 'post_days_gone_download_desc': "考慮到大家尋找資源的便利性，這裡提供一個我個人收集的《Days Gone》PC版學習交流資源連結（請注意上述提示）：",
+                 'post_days_gone_download_button_text': "Days Gone 學習交流版 (PC)",
+                 'post_days_gone_download_source_note': "(連結來源：網際網路收集，請注意甄別)",
+                 'post_days_gone_steam_link_prompt': "推薦透過官方管道購買：",
+                 'steam_store_button_text': "Steam 商店",
+             }
+        };
+
+        // --- 全局变量和通用函数 ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const currentLangSpan = document.getElementById('current-lang');
+        const header = document.getElementById('blog-header');
+        let currentLang = localStorage.getItem('language') || 'zh-CN';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        function applyCurrentTheme() { 
+            const sunIcon = themeToggle ? themeToggle.querySelector('.fa-sun') : null;
+            const moonIcon = themeToggle ? themeToggle.querySelector('.fa-moon') : null;
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-theme'); document.body.classList.remove('dark-theme');
+                if (sunIcon) sunIcon.classList.add('hidden'); if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+                document.body.classList.add('dark-theme'); document.body.classList.remove('light-theme');
+                if (sunIcon) sunIcon.classList.remove('hidden'); if (moonIcon) moonIcon.classList.add('hidden');
+            }
+        }
+
+        function applyCurrentTranslations() { 
+            if (!translations[currentLang]) { console.warn(`Translations for language '${currentLang}' not found.`); return; }
+            document.documentElement.lang = currentLang.startsWith('zh') ? currentLang : currentLang.split('-')[0];
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (translations[currentLang][key] !== undefined) {
+                    if (el.tagName === 'TITLE') { document.title = translations[currentLang][key]; }
+                    else if (el.tagName === 'INPUT' && el.placeholder) { el.placeholder = translations[currentLang][key]; }
+                    else if (el.title) { el.title = translations[currentLang][key]; }
+                    else { el.innerHTML = translations[currentLang][key]; } 
+                }
+            });
+            if (currentLangSpan) {
+               currentLangSpan.textContent = (translations[currentLang] && translations[currentLang]['current_lang_display']) ? translations[currentLang]['current_lang_display'] : currentLang.split('-')[0].toUpperCase();
+            }
+            if (langDropdown) {
+                const langLinks = langDropdown.querySelectorAll('a[data-lang]');
+                langLinks.forEach(link => {
+                    link.classList.toggle('font-bold', link.getAttribute('data-lang') === currentLang);
+                });
+            }
+        }
+        
+        function setupLangSwitcher(toggleButton, dropdownMenu) { 
+            if (!toggleButton || !dropdownMenu) return;
+            const links = dropdownMenu.querySelectorAll('a[data-lang]');
+            if (!links || links.length === 0) return;
+            toggleButton.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('hidden'); });
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedLang = link.getAttribute('data-lang');
+                    if (selectedLang !== currentLang) {
+                        currentLang = selectedLang;
+                        localStorage.setItem('language', currentLang);
+                        applyCurrentTranslations();
+                    }
+                    dropdownMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const clickableImages = document.querySelectorAll('.post-body img.clickable-image');
+
+        if (lightboxOverlay && lightboxImg && lightboxClose && clickableImages.length > 0) {
+            clickableImages.forEach(img => {
+                const addClickListener = (targetImage) => {
+                    if (window.getComputedStyle(targetImage).display !== 'none') {
+                        targetImage.addEventListener('click', (e) => { 
+                            e.stopPropagation(); 
+                            lightboxImg.src = targetImage.src; 
+                            lightboxOverlay.classList.add('visible'); 
+                            lightboxOverlay.classList.remove('hidden'); 
+                        });
+                    }
+                };
+                if (img.complete && img.naturalWidth > 0) { addClickListener(img); }
+                else { 
+                    img.addEventListener('load', () => addClickListener(img));
+                    img.addEventListener('error', () => {
+                        console.error("Image failed to load for lightbox:", img.src);
+                    });
+                }
+            });
+            const closeLightbox = () => { 
+                lightboxOverlay.classList.remove('visible'); 
+                lightboxOverlay.classList.add('hidden'); 
+                setTimeout(() => { if (!lightboxOverlay.classList.contains('visible')) { lightboxImg.src = ""; } }, 300); 
+            }
+            lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) { closeLightbox(); } });
+            if(lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightboxOverlay.classList.contains('visible')) { closeLightbox(); } });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (themeToggle) {
+                applyCurrentTheme();
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+                    localStorage.setItem('theme', currentTheme);
+                    applyCurrentTheme();
+                });
+            }
+
+            setupLangSwitcher(langToggle, langDropdown);
+            applyCurrentTranslations(); 
+
+            if (header) {
+                window.addEventListener('scroll', () => { if (window.scrollY > 30) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } });
+            }
+
+            if (typeof tsParticles !== 'undefined') {
+                tsParticles.load("tsparticles", {
+                     fpsLimit: 60, particles: { number: { value: 70, density: { enable: false } }, color: { value: ["#FFFFFF", "#ADD8E6", "#F0F8FF", "#a7c7e7", "#60a5fa"] }, shape: { type: ["circle", "star"] }, opacity: { value: {min: 0.1, max: 0.5}, animation: { enable: true, speed: 0.9, minimumValue: 0.1, sync: false } }, size: { value: { min: 0.5, max: 2.0 }, animation: { enable: false } }, links: { color: "random", distance: 140, enable: true, opacity: 0.1, width: 1, warp: false }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.6, straight: false, attract: { enable: false } } }, interactivity: { events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" }, resize: true, }, modes: { repulse: { distance: 80, duration: 0.4, speed: 0.8 }, push: { quantity: 2 }, }, }, detectRetina: true, background: { opacity: 0 }
+                }).catch(error => { console.error("Error loading tsParticles:", error); });
+            } else { console.warn("tsParticles library not found."); }
+        });
+    </script>
+
+</body>
+</html>
