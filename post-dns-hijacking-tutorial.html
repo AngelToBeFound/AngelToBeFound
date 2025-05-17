@@ -119,138 +119,138 @@
             </header>
 
             <div class="post-body">
-                <p>在数字时代，我们每一次上网冲浪，无论是浏览网页、发送邮件还是观看视频，都离不开一项默默无闻却至关重要的基础服务——DNS（Domain Name System，域名系统）。DNS就像是互联网的电话簿，负责将我们容易记住的网站域名（如 www.example.com）翻译成机器能够理解的IP地址（如 93.184.216.34）。然而，正是这个关键环节，也成为了网络攻击者觊觎的目标，DNS劫持应运而生。</p>
-                <p>本文将带您深入了解DNS劫持的原理、危害，并提供一系列实用的反劫持教学，帮助您加固网络防线，确保安全、纯净的上网体验。</p>
+                <p data-translate-key="dns_intro_p1">在数字时代，我们每一次上网冲浪，无论是浏览网页、发送邮件还是观看视频，都离不开一项默默无闻却至关重要的基础服务——DNS（Domain Name System，域名系统）。DNS就像是互联网的电话簿，负责将我们容易记住的网站域名（如 www.example.com）翻译成机器能够理解的IP地址（如 93.184.216.34）。然而，正是这个关键环节，也成为了网络攻击者觊觎的目标，DNS劫持应运而生。</p>
+                <p data-translate-key="dns_intro_p2">本文将带您深入了解DNS劫持的原理、危害，并提供一系列实用的反劫持教学，帮助您加固网络防线，确保安全、纯净的上网体验。</p>
                 
-                <h2>第一章：认识DNS劫持——看不见的“指路牌”篡改者</h2>
-                <h3>什么是DNS劫持？</h3>
-                <p>简单来说，DNS劫持就是攻击者通过某种手段，篡改了正常的DNS解析过程，将用户导向错误的、甚至是恶意的IP地址。这就好比有人偷偷修改了导航地图上的目的地，您以为要去银行，结果却被带到了骗子的窝点。</p>
-                <h3>DNS劫持的常见手段</h3>
+                <h2 data-translate-key="dns_ch1_title">第一章：认识DNS劫持——看不见的“指路牌”篡改者</h2>
+                <h3 data-translate-key="dns_ch1_sec1_title">什么是DNS劫持？</h3>
+                <p data-translate-key="dns_ch1_sec1_p1">简单来说，DNS劫持就是攻击者通过某种手段，篡改了正常的DNS解析过程，将用户导向错误的、甚至是恶意的IP地址。这就好比有人偷偷修改了导航地图上的目的地，您以为要去银行，结果却被带到了骗子的窝点。</p>
+                <h3 data-translate-key="dns_ch1_sec2_title">DNS劫持的常见手段</h3>
                 <ul>
-                    <li><strong>路由器DNS篡改：</strong> 攻击者通过弱密码、固件漏洞等方式入侵您的家用或办公路由器，修改其中的DNS服务器设置为他们控制的恶意DNS服务器。这样，连接到该路由器的所有设备的DNS查询都会被劫持。</li>
-                    <li><strong>恶意软件/病毒：</strong> 安装在您电脑或手机上的恶意软件可以直接修改操作系统的DNS设置，或者在本地hosts文件中添加虚假条目，将特定域名指向恶意IP。</li>
-                    <li><strong>本地DNS缓存投毒（Local DNS Cache Poisoning）：</strong> 攻击者向本地DNS服务器（通常是ISP提供或局域网内的DNS服务器）发送大量伪造的DNS应答，如果服务器存在漏洞，就可能接受并缓存这些虚假记录。</li>
-                    <li><strong>ISP层面的劫持：</strong> 某些情况下，互联网服务提供商（ISP）可能会出于商业目的（如推送广告、展示无法访问页面的“友好提示”）或政策要求，对其DNS服务器进行干预，修改特定域名的解析结果。</li>
-                    <li><strong>中间人攻击（Man-in-the-Middle, MitM）：</strong> 在不安全的网络环境（如公共Wi-Fi）中，攻击者可以截获您的DNS查询流量，并返回一个伪造的IP地址。</li>
+                    <li data-translate-key="dns_ch1_sec2_item1"><strong>路由器DNS篡改：</strong> 攻击者通过弱密码、固件漏洞等方式入侵您的家用或办公路由器，修改其中的DNS服务器设置为他们控制的恶意DNS服务器。这样，连接到该路由器的所有设备的DNS查询都会被劫持。</li>
+                    <li data-translate-key="dns_ch1_sec2_item2"><strong>恶意软件/病毒：</strong> 安装在您电脑或手机上的恶意软件可以直接修改操作系统的DNS设置，或者在本地hosts文件中添加虚假条目，将特定域名指向恶意IP。</li>
+                    <li data-translate-key="dns_ch1_sec2_item3"><strong>本地DNS缓存投毒（Local DNS Cache Poisoning）：</strong> 攻击者向本地DNS服务器（通常是ISP提供或局域网内的DNS服务器）发送大量伪造的DNS应答，如果服务器存在漏洞，就可能接受并缓存这些虚假记录。</li>
+                    <li data-translate-key="dns_ch1_sec2_item4"><strong>ISP层面的劫持：</strong> 某些情况下，互联网服务提供商（ISP）可能会出于商业目的（如推送广告、展示无法访问页面的“友好提示”）或政策要求，对其DNS服务器进行干预，修改特定域名的解析结果。</li>
+                    <li data-translate-key="dns_ch1_sec2_item5"><strong>中间人攻击（Man-in-the-Middle, MitM）：</strong> 在不安全的网络环境（如公共Wi-Fi）中，攻击者可以截获您的DNS查询流量，并返回一个伪造的IP地址。</li>
                 </ul>
-                <h3>DNS劫持的动机与危害</h3>
+                <h3 data-translate-key="dns_ch1_sec3_title">DNS劫持的动机与危害</h3>
                 <ul>
-                    <li><strong>网络钓鱼（Phishing）：</strong> 将用户导向伪造的银行、电商或社交媒体登录页面，窃取账户密码和个人信息。</li>
-                    <li><strong>广告注入与流量变现：</strong> 在用户正常浏览的网页中强行插入广告，或者将用户导向特定的推广页面。</li>
-                    <li><strong>恶意软件分发：</strong> 将用户导向包含病毒、木马、勒索软件的网站。</li>
-                    <li><strong>内容审查与屏蔽：</strong> 阻止用户访问特定的网站或服务。</li>
-                    <li><strong>降低网络体验：</strong> 错误的DNS解析可能导致网站无法打开、速度变慢或功能异常。</li>
-                </ul>
-
-                <h2>第二章：我的DNS被劫持了吗？——识别DNS劫持的蛛丝马迹</h2>
-                <p>虽然DNS劫持在后台悄然发生，但我们仍可以通过一些现象来察觉：</p>
-                <ul>
-                    <li><strong>访问错误的网站：</strong> 输入正确的网址却打开了不相关的、甚至是仿冒的网站。</li>
-                    <li><strong>弹窗广告泛滥：</strong> 浏览任何网站都可能出现额外的、不请自来的弹窗广告或页面底部广告。</li>
-                    <li><strong>安全证书错误：</strong> 访问HTTPS网站时，浏览器频繁提示SSL/TLS证书无效或不匹配（因为您可能被导向了没有正确证书的恶意服务器）。</li>
-                    <li><strong>网速异常缓慢或特定网站无法访问：</strong> 错误的DNS解析可能导致连接超时或路由到低效服务器。</li>
-                    <li><strong>杀毒软件报警：</strong> 如果被导向恶意站点，安全软件可能会发出警告。</li>
-                </ul>
-                <h3>检测方法：</h3>
-                <ul>
-                    <li><strong>使用在线DNS泄露测试工具：</strong> 网站如 dnsleaktest.com 可以显示您当前正在使用的DNS服务器IP，您可以核对这些IP是否是您期望的（例如，您手动设置的公共DNS，或您信任的ISP的DNS）。</li>
-                    <li><strong>对比不同网络环境的解析结果：</strong> 在手机上使用移动数据网络（通常使用运营商的DNS）访问同一域名，对比其解析的IP是否与您在Wi-Fi环境下（可能被劫持）解析到的IP一致。可以使用 <code>ping 域名</code> 或 <code>nslookup 域名</code> (Windows) / <code>dig 域名</code> (Linux/macOS) 命令查看解析到的IP。</li>
-                    <li><strong>检查设备和路由器的DNS设置：</strong> 查看您电脑、手机以及路由器的网络设置，确认DNS服务器地址是否被异常修改。</li>
+                    <li data-translate-key="dns_ch1_sec3_item1"><strong>网络钓鱼（Phishing）：</strong> 将用户导向伪造的银行、电商或社交媒体登录页面，窃取账户密码和个人信息。</li>
+                    <li data-translate-key="dns_ch1_sec3_item2"><strong>广告注入与流量变现：</strong> 在用户正常浏览的网页中强行插入广告，或者将用户导向特定的推广页面。</li>
+                    <li data-translate-key="dns_ch1_sec3_item3"><strong>恶意软件分发：</strong> 将用户导向包含病毒、木马、勒索软件的网站。</li>
+                    <li data-translate-key="dns_ch1_sec3_item4"><strong>内容审查与屏蔽：</strong> 阻止用户访问特定的网站或服务。</li>
+                    <li data-translate-key="dns_ch1_sec3_item5"><strong>降低网络体验：</strong> 错误的DNS解析可能导致网站无法打开、速度变慢或功能异常。</li>
                 </ul>
 
-                <h2>第三章：打响DNS反击战！——防范DNS劫持的核心策略</h2>
-                <p>了解了DNS劫持的原理和危害后，我们来看看如何有效地进行反制。</p>
-                <h3>策略一：加固本地防线——设备与路由器的安全</h3>
+                <h2 data-translate-key="dns_ch2_title">第二章：我的DNS被劫持了吗？——识别DNS劫持的蛛丝马迹</h2>
+                <p data-translate-key="dns_ch2_intro_p1">虽然DNS劫持在后台悄然发生，但我们仍可以通过一些现象来察觉：</p>
                 <ul>
-                    <li><strong>路由器安全：</strong>修改路由器默认登录密码，使用强密码。</li>
-                    <li>定期检查并更新路由器固件至最新版本。</li>
-                    <li>关闭不必要的远程管理功能（如从外网访问路由器管理界面）。</li>
-                    <li>检查路由器DHCP服务分配的DNS服务器地址是否正确。</li>
-                    <li><strong>设备安全：</strong>安装可靠的杀毒软件和防火墙，并保持更新。</li>
-                    <li>及时更新操作系统和应用程序补丁。</li>
-                    <li>不轻易下载和运行来源不明的软件。</li>
-                    <li>谨慎点击邮件和聊天消息中的链接。</li>
-                    <li><strong>警惕公共Wi-Fi：</strong> 避免在不安全的公共Wi-Fi下进行敏感操作。如果必须使用，请配合VPN等加密手段。</li>
+                    <li data-translate-key="dns_ch2_symptom1"><strong>访问错误的网站：</strong> 输入正确的网址却打开了不相关的、甚至是仿冒的网站。</li>
+                    <li data-translate-key="dns_ch2_symptom2"><strong>弹窗广告泛滥：</strong> 浏览任何网站都可能出现额外的、不请自来的弹窗广告或页面底部广告。</li>
+                    <li data-translate-key="dns_ch2_symptom3"><strong>安全证书错误：</strong> 访问HTTPS网站时，浏览器频繁提示SSL/TLS证书无效或不匹配（因为您可能被导向了没有正确证书的恶意服务器）。</li>
+                    <li data-translate-key="dns_ch2_symptom4"><strong>网速异常缓慢或特定网站无法访问：</strong> 错误的DNS解析可能导致连接超时或路由到低效服务器。</li>
+                    <li data-translate-key="dns_ch2_symptom5"><strong>杀毒软件报警：</strong> 如果被导向恶意站点，安全软件可能会发出警告。</li>
                 </ul>
-                <h3>策略二：选择可信的“指路牌”——使用安全的公共DNS服务器</h3>
-                <p>许多ISP提供的默认DNS服务器可能存在被劫持的风险，或者ISP本身会进行一些“良性”或商业性的“劫持”。更换为知名的、受信任的公共DNS服务器是简单有效的第一步。</p>
-                <p><strong>常用公共DNS服务器：</strong></p>
+                <h3 data-translate-key="dns_ch2_detect_title">检测方法：</h3>
                 <ul>
-                    <li>Cloudflare DNS: <code>1.1.1.1</code> 和 <code>1.0.0.1</code> (注重隐私和速度)</li>
-                    <li>Google Public DNS: <code>8.8.8.8</code> 和 <code>8.8.4.4</code> (稳定可靠)</li>
-                    <li>Quad9 DNS: <code>9.9.9.9</code> 和 <code>149.112.112.112</code> (阻止恶意域名)</li>
-                    <li>国内公共DNS (若您在中国大陆)：
+                    <li data-translate-key="dns_ch2_detect_item1"><strong>使用在线DNS泄露测试工具：</strong> 网站如 dnsleaktest.com 可以显示您当前正在使用的DNS服务器IP，您可以核对这些IP是否是您期望的（例如，您手动设置的公共DNS，或您信任的ISP的DNS）。</li>
+                    <li data-translate-key="dns_ch2_detect_item2"><strong>对比不同网络环境的解析结果：</strong> 在手机上使用移动数据网络（通常使用运营商的DNS）访问同一域名，对比其解析的IP是否与您在Wi-Fi环境下（可能被劫持）解析到的IP一致。可以使用 <code>ping 域名</code> 或 <code>nslookup 域名</code> (Windows) / <code>dig 域名</code> (Linux/macOS) 命令查看解析到的IP。</li>
+                    <li data-translate-key="dns_ch2_detect_item3"><strong>检查设备和路由器的DNS设置：</strong> 查看您电脑、手机以及路由器的网络设置，确认DNS服务器地址是否被异常修改。</li>
+                </ul>
+
+                <h2 data-translate-key="dns_ch3_title">第三章：打响DNS反击战！——防范DNS劫持的核心策略</h2>
+                <p data-translate-key="dns_ch3_intro_p1">了解了DNS劫持的原理和危害后，我们来看看如何有效地进行反制。</p>
+                <h3 data-translate-key="dns_ch3_strat1_title">策略一：加固本地防线——设备与路由器的安全</h3>
+                <ul>
+                    <li data-translate-key="dns_ch3_strat1_item1"><strong>路由器安全：</strong>修改路由器默认登录密码，使用强密码。</li>
+                    <li data-translate-key="dns_ch3_strat1_item2">定期检查并更新路由器固件至最新版本。</li>
+                    <li data-translate-key="dns_ch3_strat1_item3">关闭不必要的远程管理功能（如从外网访问路由器管理界面）。</li>
+                    <li data-translate-key="dns_ch3_strat1_item4">检查路由器DHCP服务分配的DNS服务器地址是否正确。</li>
+                    <li data-translate-key="dns_ch3_strat1_item5"><strong>设备安全：</strong>安装可靠的杀毒软件和防火墙，并保持更新。</li>
+                    <li data-translate-key="dns_ch3_strat1_item6">及时更新操作系统和应用程序补丁。</li>
+                    <li data-translate-key="dns_ch3_strat1_item7">不轻易下载和运行来源不明的软件。</li>
+                    <li data-translate-key="dns_ch3_strat1_item8">谨慎点击邮件和聊天消息中的链接。</li>
+                    <li data-translate-key="dns_ch3_strat1_item9"><strong>警惕公共Wi-Fi：</strong> 避免在不安全的公共Wi-Fi下进行敏感操作。如果必须使用，请配合VPN等加密手段。</li>
+                </ul>
+                <h3 data-translate-key="dns_ch3_strat2_title">策略二：选择可信的“指路牌”——使用安全的公共DNS服务器</h3>
+                <p data-translate-key="dns_ch3_strat2_p1">许多ISP提供的默认DNS服务器可能存在被劫持的风险，或者ISP本身会进行一些“良性”或商业性的“劫持”。更换为知名的、受信任的公共DNS服务器是简单有效的第一步。</p>
+                <p data-translate-key="dns_ch3_strat2_common_dns_title"><strong>常用公共DNS服务器：</strong></p>
+                <ul>
+                    <li data-translate-key="dns_ch3_strat2_dns_cf">Cloudflare DNS: <code>1.1.1.1</code> 和 <code>1.0.0.1</code> (注重隐私和速度)</li>
+                    <li data-translate-key="dns_ch3_strat2_dns_google">Google Public DNS: <code>8.8.8.8</code> 和 <code>8.8.4.4</code> (稳定可靠)</li>
+                    <li data-translate-key="dns_ch3_strat2_dns_quad9">Quad9 DNS: <code>9.9.9.9</code> 和 <code>149.112.112.112</code> (阻止恶意域名)</li>
+                    <li data-translate-key="dns_ch3_strat2_dns_china_intro">国内公共DNS (若您在中国大陆)：
                         <ul>
-                            <li>阿里DNS: <code>223.5.5.5</code> 和 <code>223.6.6.6</code></li>
-                            <li>DNSPod (腾讯云): <code>119.29.29.29</code> 和 <code>182.254.116.116</code></li>
-                            <li>百度DNS: <code>180.76.76.76</code></li>
+                            <li data-translate-key="dns_ch3_strat2_dns_ali">阿里DNS: <code>223.5.5.5</code> 和 <code>223.6.6.6</code></li>
+                            <li data-translate-key="dns_ch3_strat2_dns_dnspod">DNSPod (腾讯云): <code>119.29.29.29</code> 和 <code>182.254.116.116</code></li>
+                            <li data-translate-key="dns_ch3_strat2_dns_baidu">百度DNS: <code>180.76.76.76</code></li>
                         </ul>
                     </li>
                 </ul>
-                <p><strong>如何在操作系统中修改DNS服务器： (以Windows 10/11为例)</strong></p>
+                <p data-translate-key="dns_ch3_strat2_howto_title"><strong>如何在操作系统中修改DNS服务器： (以Windows 10/11为例)</strong></p>
                 <ol>
-                    <li>打开“设置” -> “网络和 Internet”。</li>
-                    <li>选择您正在使用的网络连接（如“以太网”或“WLAN”），点击“属性”。</li>
-                    <li>找到“IP 设置”，点击“编辑”。</li>
-                    <li>将设置从“自动 (DHCP)”改为“手动”。</li>
-                    <li>打开 IPv4 开关。</li>
-                    <li>在“首选 DNS”和“备用 DNS”中填入您选择的公共DNS服务器地址。</li>
-                    <li>保存设置。 (提示：禁用IPv6可以在一定程度上避免IPv6相关的DNS泄露，这也是我们之前讨论过的解决方案之一)</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step1">打开“设置” -> “网络和 Internet”。</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step2">选择您正在使用的网络连接（如“以太网”或“WLAN”），点击“属性”。</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step3">找到“IP 设置”，点击“编辑”。</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step4">将设置从“自动 (DHCP)”改为“手动”。</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step5">打开 IPv4 开关。</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step6">在“首选 DNS”和“备用 DNS”中填入您选择的公共DNS服务器地址。</li>
+                    <li data-translate-key="dns_ch3_strat2_howto_win_step7">保存设置。 (提示：禁用IPv6可以在一定程度上避免IPv6相关的DNS泄露，这也是我们之前讨论过的解决方案之一)</li>
                 </ol>
-                <h3>策略三：加密你的“问路”请求——拥抱DoH、DoT与DNSCrypt</h3>
-                <p>传统的DNS查询是基于UDP或TCP的53端口，以明文方式进行的，这就给了攻击者窃听和篡改的机会。加密DNS协议的出现，极大地提升了DNS查询的安全性。</p>
-                <h4>DNS over HTTPS (DoH)：</h4>
+                <h3 data-translate-key="dns_ch3_strat3_title">策略三：加密你的“问路”请求——拥抱DoH、DoT与DNSCrypt</h3>
+                <p data-translate-key="dns_ch3_strat3_p1">传统的DNS查询是基于UDP或TCP的53端口，以明文方式进行的，这就给了攻击者窃听和篡改的机会。加密DNS协议的出现，极大地提升了DNS查询的安全性。</p>
+                <h4 data-translate-key="dns_ch3_strat3_doh_title">DNS over HTTPS (DoH)：</h4>
                 <ul>
-                    <li><strong>原理：</strong> 将DNS查询封装在HTTPS流量中，通过TCP的443端口（与普通网页浏览相同）发送给支持DoH的DNS服务器。</li>
-                    <li><strong>优点：</strong> 良好的加密性；由于使用443端口，可以有效绕过某些基于端口的DNS封锁或干扰；网络中间人难以区分DoH流量和普通HTTPS网页流量。</li>
-                    <li><strong>缺点：</strong> 相比DoT，可能会有轻微的额外开销。</li>
+                    <li data-translate-key="dns_ch3_strat3_doh_principle"><strong>原理：</strong> 将DNS查询封装在HTTPS流量中，通过TCP的443端口（与普通网页浏览相同）发送给支持DoH的DNS服务器。</li>
+                    <li data-translate-key="dns_ch3_strat3_doh_pros"><strong>优点：</strong> 良好的加密性；由于使用443端口，可以有效绕过某些基于端口的DNS封锁或干扰；网络中间人难以区分DoH流量和普通HTTPS网页流量。</li>
+                    <li data-translate-key="dns_ch3_strat3_doh_cons"><strong>缺点：</strong> 相比DoT，可能会有轻微的额外开销。</li>
                 </ul>
-                <h4>DNS over TLS (DoT)：</h4>
+                <h4 data-translate-key="dns_ch3_strat3_dot_title">DNS over TLS (DoT)：</h4>
                 <ul>
-                    <li><strong>原理：</strong> 将DNS查询通过TLS加密后，在专用的TCP 853端口发送给支持DoT的DNS服务器。</li>
-                    <li><strong>优点：</strong> 同样提供强大的加密；使用专用端口，易于网络管理员识别和管理（但也可能因此被针对性封锁）。</li>
-                    <li><strong>缺点：</strong> 853端口可能在某些网络环境下被封锁。</li>
+                    <li data-translate-key="dns_ch3_strat3_dot_principle"><strong>原理：</strong> 将DNS查询通过TLS加密后，在专用的TCP 853端口发送给支持DoT的DNS服务器。</li>
+                    <li data-translate-key="dns_ch3_strat3_dot_pros"><strong>优点：</strong> 同样提供强大的加密；使用专用端口，易于网络管理员识别和管理（但也可能因此被针对性封锁）。</li>
+                    <li data-translate-key="dns_ch3_strat3_dot_cons"><strong>缺点：</strong> 853端口可能在某些网络环境下被封锁。</li>
                 </ul>
-                <h4>DNSCrypt：</h4>
+                <h4 data-translate-key="dns_ch3_strat3_dnscrypt_title">DNSCrypt：</h4>
                 <ul>
-                    <li><strong>原理：</strong> 一个较早出现的加密DNS协议，不仅加密DNS流量，还提供身份验证。</li>
-                    <li><strong>优点：</strong> 加密和认证。</li>
-                    <li><strong>缺点：</strong> 支持的公共服务器数量和客户端集成度可能不如DoH/DoT广泛。</li>
+                    <li data-translate-key="dns_ch3_strat3_dnscrypt_principle"><strong>原理：</strong> 一个较早出现的加密DNS协议，不仅加密DNS流量，还提供身份验证。</li>
+                    <li data-translate-key="dns_ch3_strat3_dnscrypt_pros"><strong>优点：</strong> 加密和认证。</li>
+                    <li data-translate-key="dns_ch3_strat3_dnscrypt_cons"><strong>缺点：</strong> 支持的公共服务器数量和客户端集成度可能不如DoH/DoT广泛。</li>
                 </ul>
-                <p><strong>如何在主流平台启用加密DNS：</strong></p>
+                <p data-translate-key="dns_ch3_strat3_howto_title"><strong>如何在主流平台启用加密DNS：</strong></p>
                 <ul>
-                    <li><strong>Windows 10/11 (DoH)：</strong>确保系统已更新到支持DoH的版本。
+                    <li data-translate-key="dns_ch3_strat3_howto_win_doh"><strong>Windows 10/11 (DoH)：</strong>确保系统已更新到支持DoH的版本。
                         <ol>
-                            <li>在“设置” -> “网络和 Internet” -> (您的网络连接) -> “DNS 服务器分配”中，选择“手动”。</li>
-                            <li>输入支持DoH的DNS服务器IP（如 <code>1.1.1.1</code>）。</li>
-                            <li>在下方的“首选 DNS 加密”中选择“仅加密(HTTPS 上的 DNS)”。如果服务器支持，会自动配置。(您也可以手动添加已知的DoH模板URL)</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_win_doh_step1">在“设置” -> “网络和 Internet” -> (您的网络连接) -> “DNS 服务器分配”中，选择“手动”。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_win_doh_step2">输入支持DoH的DNS服务器IP（如 <code>1.1.1.1</code>）。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_win_doh_step3">在下方的“首选 DNS 加密”中选择“仅加密(HTTPS 上的 DNS)”。如果服务器支持，会自动配置。(您也可以手动添加已知的DoH模板URL)</li>
                         </ol>
                     </li>
-                    <li><strong>Android (Private DNS - 通常是DoT)：</strong>打开“设置” -> “网络和互联网” (或“连接与共享”) -> “私人 DNS”。
+                    <li data-translate-key="dns_ch3_strat3_howto_android_dot"><strong>Android (Private DNS - 通常是DoT)：</strong>打开“设置” -> “网络和互联网” (或“连接与共享”) -> “私人 DNS”。
                         <ol>
-                            <li>选择“指定私人 DNS 提供商主机名”。</li>
-                            <li>输入DoT服务器的主机名 (例如 <code>dns.google</code> 或 <code>1dot1dot1dot1.cloudflare-dns.com</code>)。</li>
-                            <li>保存。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_android_dot_step1">选择“指定私人 DNS 提供商主机名”。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_android_dot_step2">输入DoT服务器的主机名 (例如 <code>dns.google</code> 或 <code>1dot1dot1dot1.cloudflare-dns.com</code>)。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_android_dot_step3">保存。</li>
                         </ol>
                     </li>
-                    <li><strong>iOS (DoH/DoT via Profiles/Apps)：</strong>需要安装描述文件或使用支持加密DNS的第三方App (如 Cloudflare的 1.1.1.1 App)。</li>
-                    <li><strong>主流浏览器 (通常是DoH)：</strong>
+                    <li data-translate-key="dns_ch3_strat3_howto_ios"><strong>iOS (DoH/DoT via Profiles/Apps)：</strong>需要安装描述文件或使用支持加密DNS的第三方App (如 Cloudflare的 1.1.1.1 App)。</li>
+                    <li data-translate-key="dns_ch3_strat3_howto_browsers"><strong>主流浏览器 (通常是DoH)：</strong>
                         <ul>
-                            <li>Chrome: 设置 -> 隐私和安全 -> 安全 -> 高级 -> 使用安全的 DNS。可以选择浏览器内置的提供商或自定义。</li>
-                            <li>Firefox: 设置 -> 常规 -> 网络设置 -> 设置 -> 启用基于HTTPS的DNS。可以选择提供商或自定义。</li>
-                            <li>Edge: 设置 -> 隐私、搜索和服务 -> 安全性 -> 使用安全的 DNS。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_chrome">Chrome: 设置 -> 隐私和安全 -> 安全 -> 高级 -> 使用安全的 DNS。可以选择浏览器内置的提供商或自定义。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_firefox">Firefox: 设置 -> 常规 -> 网络设置 -> 设置 -> 启用基于HTTPS的DNS。可以选择提供商或自定义。</li>
+                            <li data-translate-key="dns_ch3_strat3_howto_edge">Edge: 设置 -> 隐私、搜索和服务 -> 安全性 -> 使用安全的 DNS。</li>
                         </ul>
                     </li>
                 </ul>
-                <h3>策略四：进阶玩法——Proxy软件等代理工具的DNS安全配置</h3>
-                <p>对于使用Proxy软件或其他类似代理工具的用户，可以通过其强大的DNS配置功能，实现更精细化、更安全的DNS管理。这正是我们之前详细探讨和优化的部分！</p>
+                <h3 data-translate-key="dns_ch3_strat4_title">策略四：进阶玩法——Proxy软件等代理工具的DNS安全配置</h3>
+                <p data-translate-key="dns_ch3_strat4_p1">对于使用Proxy软件或其他类似代理工具的用户，可以通过其强大的DNS配置功能，实现更精细化、更安全的DNS管理。这正是我们之前详细探讨和优化的部分！</p>
                 <ul>
-                    <li><strong>指定上游加密DNS服务器：</strong> 在Proxy软件的<code>dns.nameserver</code>配置中，直接填写DoH或DoT服务器的URL，并可以指定这些DNS查询通过特定的代理线路发出（例如 <code>https://dns.google/dns-query#🚀 PROXY</code>，注意：这里的<code>PROXY</code>需要是您在代理软件中定义的实际出站策略名称），实现DNS查询本身的匿名和抗污染。</li>
-                    <li><strong>安全引导DNS：</strong> 配置<code>dns.default-nameserver</code>为可信的公共DNS（如 <code>8.8.8.8</code>），用于安全地解析DoH/DoT服务器自身的域名。</li>
-                    <li><strong>DNS规则分流：</strong> 通过<code>dns.rules</code>和<code>dns.nameserver-policy</code>，可以为不同类型的域名（如国内域名、国外域名、特定应用域名）指定不同的DNS解析策略（例如国内域名使用本地快速DNS直连解析，国外域名通过代理使用加密DNS解析）。</li>
-                    <li><strong>TUN模式下的DNS劫持：</strong> Proxy软件的TUN模式配合<code>dns-hijack</code>功能，可以将本机所有应用程序的DNS请求强制导向Proxy软件内置的、经过安全配置的DNS解析器，从而避免应用程序绕过系统DNS设置或使用不安全的硬编码DNS。这是一种“以魔法打败魔法”的良性劫持，确保所有DNS流量都得到妥善处理。</li>
+                    <li data-translate-key="dns_ch3_strat4_item1"><strong>指定上游加密DNS服务器：</strong> 在Proxy软件的<code>dns.nameserver</code>配置中，直接填写DoH或DoT服务器的URL，并可以指定这些DNS查询通过特定的代理线路发出（例如 <code>https://dns.google/dns-query#🚀 PROXY</code>，注意：这里的<code>PROXY</code>需要是您在代理软件中定义的实际出站策略名称），实现DNS查询本身的匿名和抗污染。</li>
+                    <li data-translate-key="dns_ch3_strat4_item2"><strong>安全引导DNS：</strong> 配置<code>dns.default-nameserver</code>为可信的公共DNS（如 <code>8.8.8.8</code>），用于安全地解析DoH/DoT服务器自身的域名。</li>
+                    <li data-translate-key="dns_ch3_strat4_item3"><strong>DNS规则分流：</strong> 通过<code>dns.rules</code>和<code>dns.nameserver-policy</code>，可以为不同类型的域名（如国内域名、国外域名、特定应用域名）指定不同的DNS解析策略（例如国内域名使用本地快速DNS直连解析，国外域名通过代理使用加密DNS解析）。</li>
+                    <li data-translate-key="dns_ch3_strat4_item4"><strong>TUN模式下的DNS劫持：</strong> Proxy软件的TUN模式配合<code>dns-hijack</code>功能，可以将本机所有应用程序的DNS请求强制导向Proxy软件内置的、经过安全配置的DNS解析器，从而避免应用程序绕过系统DNS设置或使用不安全的硬编码DNS。这是一种“以魔法打败魔法”的良性劫持，确保所有DNS流量都得到妥善处理。</li>
                 </ul>
-                <p><strong>Proxy软件配置示例回顾 (DNS部分核心思路):</strong></p>
+                <p data-translate-key="dns_ch3_strat4_example_title"><strong>Proxy软件配置示例回顾 (DNS部分核心思路):</strong></p>
                 <div class="code-block-wrapper">
                     <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code block">
                         <i class="far fa-copy"></i> <span data-translate-key="copy_button_text">复制</span>
@@ -273,33 +273,33 @@ dns:
     # 其他未匹配的走全局nameserver
                     </code></pre>
                 </div>
-                <p>通过这样的配置，Proxy软件成为了您系统DNS请求的统一、安全的处理中心。</p>
-                <h3>策略五：Hosts文件——简单粗暴的“定点拦截”</h3>
-                <p>操作系统的hosts文件（Windows: <code>C:\Windows\System32\drivers\etc\hosts</code>, Linux/macOS: <code>/etc/hosts</code>）允许您手动指定域名到IP的映射。</p>
+                <p data-translate-key="dns_ch3_strat4_p2">通过这样的配置，Proxy软件成为了您系统DNS请求的统一、安全的处理中心。</p>
+                <h3 data-translate-key="dns_ch3_strat5_title">策略五：Hosts文件——简单粗暴的“定点拦截”</h3>
+                <p data-translate-key="dns_ch3_strat5_p1">操作系统的hosts文件（Windows: <code>C:\Windows\System32\drivers\etc\hosts</code>, Linux/macOS: <code>/etc/hosts</code>）允许您手动指定域名到IP的映射。</p>
                 <ul>
-                    <li><strong>优点：</strong> 优先级高于DNS查询，可以用于屏蔽恶意网站（将其指向 <code>127.0.0.1</code> 或 <code>0.0.0.0</code>）或将特定域名强制指向正确的IP。</li>
-                    <li><strong>缺点：</strong> 需要手动维护，不灵活，对大量域名的管理不便，且无法应对IP地址动态变化的网站。</li>
+                    <li data-translate-key="dns_ch3_strat5_pros"><strong>优点：</strong> 优先级高于DNS查询，可以用于屏蔽恶意网站（将其指向 <code>127.0.0.1</code> 或 <code>0.0.0.0</code>）或将特定域名强制指向正确的IP。</li>
+                    <li data-translate-key="dns_ch3_strat5_cons"><strong>缺点：</strong> 需要手动维护，不灵活，对大量域名的管理不便，且无法应对IP地址动态变化的网站。</li>
                 </ul>
-                <h3>策略六：VPN——整体加密通道中的DNS保护</h3>
-                <p>当您使用VPN时，通常所有的网络流量（包括DNS查询）都会通过加密的VPN通道到达VPN服务器，然后由VPN服务商的DNS服务器进行解析。</p>
+                <h3 data-translate-key="dns_ch3_strat6_title">策略六：VPN——整体加密通道中的DNS保护</h3>
+                <p data-translate-key="dns_ch3_strat6_p1">当您使用VPN时，通常所有的网络流量（包括DNS查询）都会通过加密的VPN通道到达VPN服务器，然后由VPN服务商的DNS服务器进行解析。</p>
                 <ul>
-                    <li><strong>优点：</strong> 有效防止本地网络环境（ISP、公共Wi-Fi）的DNS劫持和窃听。</li>
-                    <li><strong>缺点：</strong> 您需要信任VPN服务商不会记录或滥用您的DNS查询。</li>
+                    <li data-translate-key="dns_ch3_strat6_pros"><strong>优点：</strong> 有效防止本地网络环境（ISP、公共Wi-Fi）的DNS劫持和窃听。</li>
+                    <li data-translate-key="dns_ch3_strat6_cons"><strong>缺点：</strong> 您需要信任VPN服务商不会记录或滥用您的DNS查询。</li>
                 </ul>
 
-                <h2>第四章：更深一度的防御——DNSSEC（域名系统安全扩展）</h2>
-                <p>DNSSEC (DNS Security Extensions) 旨在为DNS提供数据来源验证和数据完整性保护，但它本身不加密DNS查询内容。</p>
+                <h2 data-translate-key="dns_ch4_title">第四章：更深一度的防御——DNSSEC（域名系统安全扩展）</h2>
+                <p data-translate-key="dns_ch4_p1">DNSSEC (DNS Security Extensions) 旨在为DNS提供数据来源验证和数据完整性保护，但它本身不加密DNS查询内容。</p>
                 <ul>
-                    <li><strong>原理：</strong> 通过数字签名技术，DNSSEC允许DNS解析器验证DNS记录是否来自权威的DNS服务器，并且在传输过程中没有被篡改。</li>
-                    <li><strong>作用：</strong> 主要防范DNS缓存投毒和中间人伪造DNS应答。</li>
-                    <li><strong>局限性：</strong>不加密DNS查询本身，您的ISP或网络监听者仍然可以看到您查询了哪些域名。</li>
-                    <li>需要从顶级域（TLD）、域名注册商、权威DNS服务器到递归DNS解析器（您使用的DNS服务器）的全链路支持才能完全生效。目前并非所有域名和DNS服务都完全支持DNSSEC。</li>
+                    <li data-translate-key="dns_ch4_item1_principle"><strong>原理：</strong> 通过数字签名技术，DNSSEC允许DNS解析器验证DNS记录是否来自权威的DNS服务器，并且在传输过程中没有被篡改。</li>
+                    <li data-translate-key="dns_ch4_item2_function"><strong>作用：</strong> 主要防范DNS缓存投毒和中间人伪造DNS应答。</li>
+                    <li data-translate-key="dns_ch4_item3_limitations"><strong>局限性：</strong>不加密DNS查询本身，您的ISP或网络监听者仍然可以看到您查询了哪些域名。</li>
+                    <li data-translate-key="dns_ch4_item4_dependency">需要从顶级域（TLD）、域名注册商、权威DNS服务器到递归DNS解析器（您使用的DNS服务器）的全链路支持才能完全生效。目前并非所有域名和DNS服务都完全支持DNSSEC。</li>
                 </ul>
-                <p>尽管有局限，但选择支持DNSSEC验证的DNS解析器（如Google Public DNS, Cloudflare DNS等多数公共DNS都支持）仍然是一个好习惯，它能为您增加一层针对特定类型攻击的防护。</p>
+                <p data-translate-key="dns_ch4_p2">尽管有局限，但选择支持DNSSEC验证的DNS解析器（如Google Public DNS, Cloudflare DNS等多数公共DNS都支持）仍然是一个好习惯，它能为您增加一层针对特定类型攻击的防护。</p>
 
-                <h2>结语：持续警惕，主动防御</h2>
-                <p>DNS安全是整体网络安全中不可或缺的一环。DNS劫持虽然隐蔽，但其潜在危害不容小觑。通过理解其原理，结合本文提供的多种反劫持策略——从基础的设备安全、选择可信DNS，到核心的加密DNS协议应用（DoH/DoT），再到高级工具（如Proxy软件）的精细化配置——我们可以层层设防，最大限度地保护自己免受DNS劫持的困扰。</p>
-                <p>网络安全没有一劳永逸的解决方案，保持安全意识，定期检查和更新您的安全设置，才能在日益复杂的网络环境中畅游无忧。希望这篇教学文章能为您在守护网络门户的道路上，提供有力的支持！</p>
+                <h2 data-translate-key="dns_conclusion_title">结语：持续警惕，主动防御</h2>
+                <p data-translate-key="dns_conclusion_p1">DNS安全是整体网络安全中不可或缺的一环。DNS劫持虽然隐蔽，但其潜在危害不容小觑。通过理解其原理，结合本文提供的多种反劫持策略——从基础的设备安全、选择可信DNS，到核心的加密DNS协议应用（DoH/DoT），再到高级工具（如Proxy软件）的精细化配置——我们可以层层设防，最大限度地保护自己免受DNS劫持的困扰。</p>
+                <p data-translate-key="dns_conclusion_p2">网络安全没有一劳永逸的解决方案，保持安全意识，定期检查和更新您的安全设置，才能在日益复杂的网络环境中畅游无忧。希望这篇教学文章能为您在守护网络门户的道路上，提供有力的支持！</p>
 
                 <hr class="my-8 border-[var(--border-color)]">
             </div>
@@ -330,11 +330,124 @@ dns:
                 'current_lang_display': "EN",
                 'category_label': "Category",
                 'posted_on_label': "Posted on",
-                'tech_category': "Tech", // 确保技术分类的翻译
+                'tech_category': "Tech",
                 'post_dns_hijack_seo_title': "DNS Hijacking & Anti-Hijacking: A Guide to Securing Your Network Gateway - MaxCaulfield's Blog",
                 'post_dns_hijack_title': "DNS Hijacking & Anti-Hijacking: A Guide to Securing Your Network Gateway",
                 'copy_button_text': "Copy",
-                'copy_button_copied_text': "Copied!"
+                'copy_button_copied_text': "Copied!",
+                // Article Body Translations
+                'dns_intro_p1': "In the digital age, every time we surf the internet, whether browsing web pages, sending emails, or watching videos, we rely on an unsung yet crucial basic service – DNS (Domain Name System). DNS is like the internet's phone book, responsible for translating easy-to-remember website domain names (e.g., www.example.com) into machine-understandable IP addresses (e.g., 93.184.216.34). However, this critical link has also become a coveted target for network attackers, leading to DNS hijacking.",
+                'dns_intro_p2': "This article will take you deep into the principles and dangers of DNS hijacking, and provide a series of practical anti-hijacking tutorials to help you strengthen your network defenses and ensure a safe, clean online experience.",
+                'dns_ch1_title': "Chapter 1: Understanding DNS Hijacking – The Invisible Signpost Tamperer",
+                'dns_ch1_sec1_title': "What is DNS Hijacking?",
+                'dns_ch1_sec1_p1': "Simply put, DNS hijacking is when attackers, through some means, tamper with the normal DNS resolution process, redirecting users to incorrect or even malicious IP addresses. It's like someone secretly changing the destination on your navigation map; you think you're going to the bank, but you end up at a scammer's den.",
+                'dns_ch1_sec2_title': "Common Methods of DNS Hijacking",
+                'dns_ch1_sec2_item1': "<strong>Router DNS Tampering:</strong> Attackers compromise your home or office router through weak passwords, firmware vulnerabilities, etc., and change its DNS server settings to their controlled malicious DNS servers. Thus, all DNS queries from devices connected to this router are hijacked.",
+                'dns_ch1_sec2_item2': "<strong>Malware/Viruses:</strong> Malware installed on your computer or phone can directly modify the operating system's DNS settings or add fake entries to the local hosts file, pointing specific domains to malicious IPs.",
+                'dns_ch1_sec2_item3': "<strong>Local DNS Cache Poisoning:</strong> Attackers send a large number of forged DNS responses to local DNS servers (usually provided by ISPs or DNS servers within the local network). If the server has vulnerabilities, it may accept and cache these false records.",
+                'dns_ch1_sec2_item4': "<strong>ISP-Level Hijacking:</strong> In some cases, Internet Service Providers (ISPs) may intervene with their DNS servers for commercial purposes (e.g., pushing ads, displaying 'friendly reminders' for inaccessible pages) or policy requirements, modifying the resolution results of specific domains.",
+                'dns_ch1_sec2_item5': "<strong>Man-in-the-Middle (MitM) Attack:</strong> In insecure network environments (like public Wi-Fi), attackers can intercept your DNS query traffic and return a forged IP address.",
+                'dns_ch1_sec3_title': "Motives and Harms of DNS Hijacking",
+                'dns_ch1_sec3_item1': "<strong>Phishing:</strong> Redirecting users to fake bank, e-commerce, or social media login pages to steal account passwords and personal information.",
+                'dns_ch1_sec3_item2': "<strong>Ad Injection & Traffic Monetization:</strong> Forcibly inserting ads into normally browsed web pages or redirecting users to specific promotional pages.",
+                'dns_ch1_sec3_item3': "<strong>Malware Distribution:</strong> Redirecting users to websites containing viruses, Trojans, or ransomware.",
+                'dns_ch1_sec3_item4': "<strong>Content Censorship & Blocking:</strong> Preventing users from accessing specific websites or services.",
+                'dns_ch1_sec3_item5': "<strong>Degraded Network Experience:</strong> Incorrect DNS resolution can lead to websites being inaccessible, slow loading speeds, or abnormal functionality.",
+                'dns_ch2_title': "Chapter 2: Has My DNS Been Hijacked? – Identifying Traces of DNS Hijacking",
+                'dns_ch2_intro_p1': "Although DNS hijacking occurs silently in the background, we can still detect it through some phenomena:",
+                'dns_ch2_symptom1': "<strong>Visiting the wrong websites:</strong> Entering the correct URL but landing on an unrelated or even counterfeit website.",
+                'dns_ch2_symptom2': "<strong>Flood of pop-up ads:</strong> Extra, unsolicited pop-up ads or ads at the bottom of the page appearing on any website you browse.",
+                'dns_ch2_symptom3': "<strong>Security certificate errors:</strong> Browsers frequently display SSL/TLS certificate invalid or mismatch errors when visiting HTTPS sites (as you might be redirected to a malicious server without a proper certificate).",
+                'dns_ch2_symptom4': "<strong>Abnormally slow internet speed or inability to access specific websites:</strong> Incorrect DNS resolution can lead to connection timeouts or routing to inefficient servers.",
+                'dns_ch2_symptom5': "<strong>Antivirus software alerts:</strong> Security software may issue warnings if you are redirected to a malicious site.",
+                'dns_ch2_detect_title': "Detection Methods:",
+                'dns_ch2_detect_item1': "<strong>Use online DNS leak test tools:</strong> Websites like dnsleaktest.com can show the IP addresses of the DNS servers you are currently using. You can check if these IPs are what you expect (e.g., public DNS you manually set, or your trusted ISP's DNS).",
+                'dns_ch2_detect_item2': "<strong>Compare resolution results in different network environments:</strong> Access the same domain on your mobile phone using mobile data (which usually uses the carrier's DNS) and compare its resolved IP with the IP resolved in your Wi-Fi environment (which might be hijacked). You can use commands like <code>ping domain_name</code> or <code>nslookup domain_name</code> (Windows) / <code>dig domain_name</code> (Linux/macOS) to see the resolved IP.",
+                'dns_ch2_detect_item3': "<strong>Check DNS settings on devices and routers:</strong> Review the network settings on your computer, phone, and router to confirm if the DNS server addresses have been unusually modified.",
+                'dns_ch3_title': "Chapter 3: Launching the DNS Counterattack! – Core Strategies to Prevent DNS Hijacking",
+                'dns_ch3_intro_p1': "Having understood the principles and dangers of DNS hijacking, let's look at how to effectively counter it.",
+                'dns_ch3_strat1_title': "Strategy 1: Fortify Local Defenses – Device and Router Security",
+                'dns_ch3_strat1_item1': "<strong>Router Security:</strong> Change the default router login password and use a strong password.",
+                'dns_ch3_strat1_item2': "Regularly check for and update router firmware to the latest version.",
+                'dns_ch3_strat1_item3': "Disable unnecessary remote management features (e.g., accessing the router management interface from the internet).",
+                'dns_ch3_strat1_item4': "Check if the DNS server addresses assigned by the router's DHCP service are correct.",
+                'dns_ch3_strat1_item5': "<strong>Device Security:</strong> Install reliable antivirus software and firewalls, and keep them updated.",
+                'dns_ch3_strat1_item6': "Promptly update operating system and application patches.",
+                'dns_ch3_strat1_item7': "Do not easily download and run software from unknown sources.",
+                'dns_ch3_strat1_item8': "Be cautious when clicking links in emails and chat messages.",
+                'dns_ch3_strat1_item9': "<strong>Beware of Public Wi-Fi:</strong> Avoid performing sensitive operations on insecure public Wi-Fi. If you must use it, employ VPNs or other encryption methods.",
+                'dns_ch3_strat2_title': "Strategy 2: Choose Trustworthy Signposts – Use Secure Public DNS Servers",
+                'dns_ch3_strat2_p1': "Many default DNS servers provided by ISPs may be at risk of hijacking, or the ISP itself might perform some 'benign' or commercial 'hijacking'. Switching to well-known, trusted public DNS servers is a simple and effective first step.",
+                'dns_ch3_strat2_common_dns_title': "<strong>Common Public DNS Servers:</strong>",
+                'dns_ch3_strat2_dns_cf': "Cloudflare DNS: <code>1.1.1.1</code> and <code>1.0.0.1</code> (focuses on privacy and speed)",
+                'dns_ch3_strat2_dns_google': "Google Public DNS: <code>8.8.8.8</code> and <code>8.8.4.4</code> (stable and reliable)",
+                'dns_ch3_strat2_dns_quad9': "Quad9 DNS: <code>9.9.9.9</code> and <code>149.112.112.112</code> (blocks malicious domains)",
+                'dns_ch3_strat2_dns_china_intro': "Domestic Public DNS (if you are in Mainland China):",
+                'dns_ch3_strat2_dns_ali': "AliDNS: <code>223.5.5.5</code> and <code>223.6.6.6</code>",
+                'dns_ch3_strat2_dns_dnspod': "DNSPod (Tencent Cloud): <code>119.29.29.29</code> and <code>182.254.116.116</code>",
+                'dns_ch3_strat2_dns_baidu': "Baidu DNS: <code>180.76.76.76</code>",
+                'dns_ch3_strat2_howto_title': "<strong>How to Change DNS Servers in Your Operating System: (Example for Windows 10/11)</strong>",
+                'dns_ch3_strat2_howto_win_step1': "Open 'Settings' -> 'Network & Internet'.",
+                'dns_ch3_strat2_howto_win_step2': "Select your active network connection (e.g., 'Ethernet' or 'Wi-Fi') and click 'Properties'.",
+                'dns_ch3_strat2_howto_win_step3': "Find 'IP settings' and click 'Edit'.",
+                'dns_ch3_strat2_howto_win_step4': "Change the setting from 'Automatic (DHCP)' to 'Manual'.",
+                'dns_ch3_strat2_howto_win_step5': "Turn on the IPv4 switch.",
+                'dns_ch3_strat2_howto_win_step6': "Enter your chosen public DNS server addresses in 'Preferred DNS' and 'Alternate DNS'.",
+                'dns_ch3_strat2_howto_win_step7': "Save settings. (Tip: Disabling IPv6 can, to some extent, prevent IPv6-related DNS leaks, which is one of the solutions we discussed earlier).",
+                'dns_ch3_strat3_title': "Strategy 3: Encrypt Your 'Route Inquiries' – Embrace DoH, DoT, and DNSCrypt",
+                'dns_ch3_strat3_p1': "Traditional DNS queries are made over UDP or TCP on port 53 in plaintext, giving attackers opportunities to eavesdrop and tamper. The advent of encrypted DNS protocols has significantly enhanced the security of DNS queries.",
+                'dns_ch3_strat3_doh_title': "DNS over HTTPS (DoH):",
+                'dns_ch3_strat3_doh_principle': "<strong>Principle:</strong> Encapsulates DNS queries within HTTPS traffic, sent over TCP port 443 (same as regular web browsing) to DoH-supporting DNS servers.",
+                'dns_ch3_strat3_doh_pros': "<strong>Advantages:</strong> Good encryption; effectively bypasses some port-based DNS blocking or interference due to using port 443; difficult for network intermediaries to distinguish DoH traffic from regular HTTPS web traffic.",
+                'dns_ch3_strat3_doh_cons': "<strong>Disadvantages:</strong> May have slightly more overhead compared to DoT.",
+                'dns_ch3_strat3_dot_title': "DNS over TLS (DoT):",
+                'dns_ch3_strat3_dot_principle': "<strong>Principle:</strong> DNS queries are encrypted via TLS and sent over dedicated TCP port 853 to DoT-supporting DNS servers.",
+                'dns_ch3_strat3_dot_pros': "<strong>Advantages:</strong> Also provides strong encryption; uses a dedicated port, making it easier for network administrators to identify and manage (but also potentially easier to block).",
+                'dns_ch3_strat3_dot_cons': "<strong>Disadvantages:</strong> Port 853 might be blocked in some network environments.",
+                'dns_ch3_strat3_dnscrypt_title': "DNSCrypt:",
+                'dns_ch3_strat3_dnscrypt_principle': "<strong>Principle:</strong> An earlier encrypted DNS protocol that not only encrypts DNS traffic but also provides authentication.",
+                'dns_ch3_strat3_dnscrypt_pros': "<strong>Advantages:</strong> Encryption and authentication.",
+                'dns_ch3_strat3_dnscrypt_cons': "<strong>Disadvantages:</strong> The number of supporting public servers and client integration might not be as widespread as DoH/DoT.",
+                'dns_ch3_strat3_howto_title': "<strong>How to Enable Encrypted DNS on Major Platforms:</strong>",
+                'dns_ch3_strat3_howto_win_doh': "<strong>Windows 10/11 (DoH):</strong> Ensure your system is updated to a version that supports DoH.",
+                'dns_ch3_strat3_howto_win_doh_step1': "In 'Settings' -> 'Network & Internet' -> (Your network connection) -> 'DNS server assignment', select 'Manual'.",
+                'dns_ch3_strat3_howto_win_doh_step2': "Enter the IP of a DoH-supporting DNS server (e.g., <code>1.1.1.1</code>).",
+                'dns_ch3_strat3_howto_win_doh_step3': "Below, in 'Preferred DNS encryption', select 'Encrypted only (DNS over HTTPS)'. If the server supports it, it will be configured automatically. (You can also manually add known DoH template URLs).",
+                'dns_ch3_strat3_howto_android_dot': "<strong>Android (Private DNS - usually DoT):</strong> Open 'Settings' -> 'Network & internet' (or 'Connections & sharing') -> 'Private DNS'.",
+                'dns_ch3_strat3_howto_android_dot_step1': "Select 'Private DNS provider hostname'.",
+                'dns_ch3_strat3_howto_android_dot_step2': "Enter the hostname of a DoT server (e.g., <code>dns.google</code> or <code>1dot1dot1dot1.cloudflare-dns.com</code>).",
+                'dns_ch3_strat3_howto_android_dot_step3': "Save.",
+                'dns_ch3_strat3_howto_ios': "<strong>iOS (DoH/DoT via Profiles/Apps):</strong> Requires installing a configuration profile or using a third-party app that supports encrypted DNS (e.g., Cloudflare's 1.1.1.1 App).",
+                'dns_ch3_strat3_howto_browsers': "<strong>Mainstream Browsers (usually DoH):</strong>",
+                'dns_ch3_strat3_howto_chrome': "Chrome: Settings -> Privacy and security -> Security -> Advanced -> Use secure DNS. You can choose a built-in provider or customize.",
+                'dns_ch3_strat3_howto_firefox': "Firefox: Settings -> General -> Network Settings -> Settings -> Enable DNS over HTTPS. You can choose a provider or customize.",
+                'dns_ch3_strat3_howto_edge': "Edge: Settings -> Privacy, search, and services -> Security -> Use secure DNS.",
+                'dns_ch3_strat4_title': "Strategy 4: Advanced Play – DNS Security Configuration in Proxy Software and Similar Tools",
+                'dns_ch3_strat4_p1': "For users of Proxy Software or other similar proxy tools, their powerful DNS configuration features allow for more granular and secure DNS management. This is precisely the part we've discussed and optimized in detail before!",
+                'dns_ch3_strat4_item1': "<strong>Specify Upstream Encrypted DNS Servers:</strong> In Proxy Software's <code>dns.nameserver</code> configuration, directly enter the URLs of DoH or DoT servers. You can also specify that these DNS queries are sent through particular proxy routes (e.g., <code>https://dns.google/dns-query#🚀 PROXY</code>, note: <code>PROXY</code> here needs to be the actual outbound policy name defined in your proxy software), achieving anonymity and anti-pollution for DNS queries themselves.",
+                'dns_ch3_strat4_item2': "<strong>Secure Bootstrap DNS:</strong> Configure <code>dns.default-nameserver</code> with a trusted public DNS (e.g., <code>8.8.8.8</code>) to securely resolve the domain names of the DoH/DoT servers themselves.",
+                'dns_ch3_strat4_item3': "<strong>DNS Rule-Based Routing:</strong> Through <code>dns.rules</code> and <code>dns.nameserver-policy</code>, you can assign different DNS resolution strategies for various types of domains (e.g., domestic domains, foreign domains, specific application domains). For instance, domestic domains can be resolved directly by fast local DNS, while foreign domains are resolved via encrypted DNS through a proxy.",
+                'dns_ch3_strat4_item4': "<strong>DNS Hijacking in TUN Mode:</strong> Proxy Software's TUN mode, combined with the <code>dns-hijack</code> feature, can forcibly redirect DNS requests from all applications on the device to Proxy Software's built-in, securely configured DNS resolver. This prevents applications from bypassing system DNS settings or using insecure hardcoded DNS. It's a form of 'fighting fire with fire' – a benign hijack ensuring all DNS traffic is handled properly.",
+                'dns_ch3_strat4_example_title': "<strong>Proxy Software Configuration Example Recap (Core DNS Ideas):</strong>",
+                'dns_ch3_strat4_p2': "With such a configuration, Proxy Software becomes the unified, secure processing center for your system's DNS requests.",
+                'dns_ch3_strat5_title': "Strategy 5: The Hosts File – A Simple but Crude 'Targeted Interception'",
+                'dns_ch3_strat5_p1': "The operating system's hosts file (Windows: <code>C:\\Windows\\System32\\drivers\\etc\\hosts</code>, Linux/macOS: <code>/etc/hosts</code>) allows you to manually map domain names to IP addresses.",
+                'dns_ch3_strat5_pros': "<strong>Advantages:</strong> Takes precedence over DNS queries, can be used to block malicious websites (by pointing them to <code>127.0.0.1</code> or <code>0.0.0.0</code>) or force specific domains to resolve to correct IPs.",
+                'dns_ch3_strat5_cons': "<strong>Disadvantages:</strong> Requires manual maintenance, is inflexible, inconvenient for managing a large number of domains, and cannot cope with websites that have dynamically changing IP addresses.",
+                'dns_ch3_strat6_title': "Strategy 6: VPN – DNS Protection within an Encrypted Tunnel",
+                'dns_ch3_strat6_p1': "When you use a VPN, typically all network traffic (including DNS queries) passes through the encrypted VPN tunnel to the VPN server and is then resolved by the VPN provider's DNS servers.",
+                'dns_ch3_strat6_pros': "<strong>Advantages:</strong> Effectively prevents DNS hijacking and eavesdropping in local network environments (ISP, public Wi-Fi).",
+                'dns_ch3_strat6_cons': "<strong>Disadvantages:</strong> You need to trust that the VPN provider will not log or misuse your DNS queries.",
+                'dns_ch4_title': "Chapter 4: Deeper Defense – DNSSEC (Domain Name System Security Extensions)",
+                'dns_ch4_p1': "DNSSEC (DNS Security Extensions) aims to provide data origin authentication and data integrity protection for DNS, but it does not encrypt the DNS query content itself.",
+                'dns_ch4_item1_principle': "<strong>Principle:</strong> Through digital signature technology, DNSSEC allows DNS resolvers to verify that DNS records come from authoritative DNS servers and have not been tampered with during transmission.",
+                'dns_ch4_item2_function': "<strong>Function:</strong> Primarily prevents DNS cache poisoning and MitM forgery of DNS responses.",
+                'dns_ch4_item3_limitations': "<strong>Limitations:</strong> Does not encrypt the DNS query itself; your ISP or network eavesdroppers can still see which domains you are querying.",
+                'dns_ch4_item4_dependency': "Requires full-chain support from the Top-Level Domain (TLD), domain registrar, authoritative DNS server, to the recursive DNS resolver (the DNS server you use) to be fully effective. Currently, not all domains and DNS services fully support DNSSEC.",
+                'dns_ch4_p2': "Despite its limitations, choosing a DNS resolver that supports DNSSEC validation (most public DNS servers like Google Public DNS, Cloudflare DNS, etc., do) is still a good practice, as it adds a layer of protection against specific types of attacks.",
+                'dns_conclusion_title': "Conclusion: Stay Vigilant, Defend Proactively",
+                'dns_conclusion_p1': "DNS security is an indispensable part of overall network security. Although DNS hijacking is covert, its potential harm should not be underestimated. By understanding its principles and combining the various anti-hijacking strategies provided in this article – from basic device security and choosing trusted DNS, to the core application of encrypted DNS protocols (DoH/DoT), and further to the refined configuration of advanced tools (like Proxy Software) – we can build layered defenses to maximally protect ourselves from the troubles of DNS hijacking.",
+                'dns_conclusion_p2': "There is no one-size-fits-all solution in network security. Maintaining security awareness, regularly checking, and updating your security settings are key to carefree surfing in an increasingly complex network environment. Hopefully, this tutorial will provide strong support for you on your journey to safeguarding your network gateway!"
             },
             'zh-CN': {
                  'blog_title_header': "麦青春的博客", 
@@ -348,7 +461,120 @@ dns:
                  'post_dns_hijack_seo_title': "DNS劫持与反劫持：守护你的网络门户安全指南 - 麦青春的博客",
                  'post_dns_hijack_title': "DNS劫持与反劫持：守护你的网络门户安全指南",
                  'copy_button_text': "复制",
-                 'copy_button_copied_text': "已复制!"
+                 'copy_button_copied_text': "已复制!",
+                 // 正文翻译 (简体中文)
+                'dns_intro_p1': "在数字时代，我们每一次上网冲浪，无论是浏览网页、发送邮件还是观看视频，都离不开一项默默无闻却至关重要的基础服务——DNS（Domain Name System，域名系统）。DNS就像是互联网的电话簿，负责将我们容易记住的网站域名（如 www.example.com）翻译成机器能够理解的IP地址（如 93.184.216.34）。然而，正是这个关键环节，也成为了网络攻击者觊觎的目标，DNS劫持应运而生。",
+                'dns_intro_p2': "本文将带您深入了解DNS劫持的原理、危害，并提供一系列实用的反劫持教学，帮助您加固网络防线，确保安全、纯净的上网体验。",
+                'dns_ch1_title': "第一章：认识DNS劫持——看不见的“指路牌”篡改者",
+                'dns_ch1_sec1_title': "什么是DNS劫持？",
+                'dns_ch1_sec1_p1': "简单来说，DNS劫持就是攻击者通过某种手段，篡改了正常的DNS解析过程，将用户导向错误的、甚至是恶意的IP地址。这就好比有人偷偷修改了导航地图上的目的地，您以为要去银行，结果却被带到了骗子的窝点。",
+                'dns_ch1_sec2_title': "DNS劫持的常见手段",
+                'dns_ch1_sec2_item1': "<strong>路由器DNS篡改：</strong> 攻击者通过弱密码、固件漏洞等方式入侵您的家用或办公路由器，修改其中的DNS服务器设置为他们控制的恶意DNS服务器。这样，连接到该路由器的所有设备的DNS查询都会被劫持。",
+                'dns_ch1_sec2_item2': "<strong>恶意软件/病毒：</strong> 安装在您电脑或手机上的恶意软件可以直接修改操作系统的DNS设置，或者在本地hosts文件中添加虚假条目，将特定域名指向恶意IP。",
+                'dns_ch1_sec2_item3': "<strong>本地DNS缓存投毒（Local DNS Cache Poisoning）：</strong> 攻击者向本地DNS服务器（通常是ISP提供或局域网内的DNS服务器）发送大量伪造的DNS应答，如果服务器存在漏洞，就可能接受并缓存这些虚假记录。",
+                'dns_ch1_sec2_item4': "<strong>ISP层面的劫持：</strong> 某些情况下，互联网服务提供商（ISP）可能会出于商业目的（如推送广告、展示无法访问页面的“友好提示”）或政策要求，对其DNS服务器进行干预，修改特定域名的解析结果。",
+                'dns_ch1_sec2_item5': "<strong>中间人攻击（Man-in-the-Middle, MitM）：</strong> 在不安全的网络环境（如公共Wi-Fi）中，攻击者可以截获您的DNS查询流量，并返回一个伪造的IP地址。",
+                'dns_ch1_sec3_title': "DNS劫持的动机与危害",
+                'dns_ch1_sec3_item1': "<strong>网络钓鱼（Phishing）：</strong> 将用户导向伪造的银行、电商或社交媒体登录页面，窃取账户密码和个人信息。",
+                'dns_ch1_sec3_item2': "<strong>广告注入与流量变现：</strong> 在用户正常浏览的网页中强行插入广告，或者将用户导向特定的推广页面。",
+                'dns_ch1_sec3_item3': "<strong>恶意软件分发：</strong> 将用户导向包含病毒、木马、勒索软件的网站。",
+                'dns_ch1_sec3_item4': "<strong>内容审查与屏蔽：</strong> 阻止用户访问特定的网站或服务。",
+                'dns_ch1_sec3_item5': "<strong>降低网络体验：</strong> 错误的DNS解析可能导致网站无法打开、速度变慢或功能异常。",
+                'dns_ch2_title': "第二章：我的DNS被劫持了吗？——识别DNS劫持的蛛丝马迹",
+                'dns_ch2_intro_p1': "虽然DNS劫持在后台悄然发生，但我们仍可以通过一些现象来察觉：",
+                'dns_ch2_symptom1': "<strong>访问错误的网站：</strong> 输入正确的网址却打开了不相关的、甚至是仿冒的网站。",
+                'dns_ch2_symptom2': "<strong>弹窗广告泛滥：</strong> 浏览任何网站都可能出现额外的、不请自来的弹窗广告或页面底部广告。",
+                'dns_ch2_symptom3': "<strong>安全证书错误：</strong> 访问HTTPS网站时，浏览器频繁提示SSL/TLS证书无效或不匹配（因为您可能被导向了没有正确证书的恶意服务器）。",
+                'dns_ch2_symptom4': "<strong>网速异常缓慢或特定网站无法访问：</strong> 错误的DNS解析可能导致连接超时或路由到低效服务器。",
+                'dns_ch2_symptom5': "<strong>杀毒软件报警：</strong> 如果被导向恶意站点，安全软件可能会发出警告。",
+                'dns_ch2_detect_title': "检测方法：",
+                'dns_ch2_detect_item1': "<strong>使用在线DNS泄露测试工具：</strong> 网站如 dnsleaktest.com 可以显示您当前正在使用的DNS服务器IP，您可以核对这些IP是否是您期望的（例如，您手动设置的公共DNS，或您信任的ISP的DNS）。",
+                'dns_ch2_detect_item2': "<strong>对比不同网络环境的解析结果：</strong> 在手机上使用移动数据网络（通常使用运营商的DNS）访问同一域名，对比其解析的IP是否与您在Wi-Fi环境下（可能被劫持）解析到的IP一致。可以使用 <code>ping 域名</code> 或 <code>nslookup 域名</code> (Windows) / <code>dig 域名</code> (Linux/macOS) 命令查看解析到的IP。",
+                'dns_ch2_detect_item3': "<strong>检查设备和路由器的DNS设置：</strong> 查看您电脑、手机以及路由器的网络设置，确认DNS服务器地址是否被异常修改。",
+                'dns_ch3_title': "第三章：打响DNS反击战！——防范DNS劫持的核心策略",
+                'dns_ch3_intro_p1': "了解了DNS劫持的原理和危害后，我们来看看如何有效地进行反制。",
+                'dns_ch3_strat1_title': "策略一：加固本地防线——设备与路由器的安全",
+                'dns_ch3_strat1_item1': "<strong>路由器安全：</strong>修改路由器默认登录密码，使用强密码。",
+                'dns_ch3_strat1_item2': "定期检查并更新路由器固件至最新版本。",
+                'dns_ch3_strat1_item3': "关闭不必要的远程管理功能（如从外网访问路由器管理界面）。",
+                'dns_ch3_strat1_item4': "检查路由器DHCP服务分配的DNS服务器地址是否正确。",
+                'dns_ch3_strat1_item5': "<strong>设备安全：</strong>安装可靠的杀毒软件和防火墙，并保持更新。",
+                'dns_ch3_strat1_item6': "及时更新操作系统和应用程序补丁。",
+                'dns_ch3_strat1_item7': "不轻易下载和运行来源不明的软件。",
+                'dns_ch3_strat1_item8': "谨慎点击邮件和聊天消息中的链接。",
+                'dns_ch3_strat1_item9': "<strong>警惕公共Wi-Fi：</strong> 避免在不安全的公共Wi-Fi下进行敏感操作。如果必须使用，请配合VPN等加密手段。",
+                'dns_ch3_strat2_title': "策略二：选择可信的“指路牌”——使用安全的公共DNS服务器",
+                'dns_ch3_strat2_p1': "许多ISP提供的默认DNS服务器可能存在被劫持的风险，或者ISP本身会进行一些“良性”或商业性的“劫持”。更换为知名的、受信任的公共DNS服务器是简单有效的第一步。",
+                'dns_ch3_strat2_common_dns_title': "<strong>常用公共DNS服务器：</strong>",
+                'dns_ch3_strat2_dns_cf': "Cloudflare DNS: <code>1.1.1.1</code> 和 <code>1.0.0.1</code> (注重隐私和速度)",
+                'dns_ch3_strat2_dns_google': "Google Public DNS: <code>8.8.8.8</code> 和 <code>8.8.4.4</code> (稳定可靠)",
+                'dns_ch3_strat2_dns_quad9': "Quad9 DNS: <code>9.9.9.9</code> 和 <code>149.112.112.112</code> (阻止恶意域名)",
+                'dns_ch3_strat2_dns_china_intro': "国内公共DNS (若您在中国大陆)：",
+                'dns_ch3_strat2_dns_ali': "阿里DNS: <code>223.5.5.5</code> 和 <code>223.6.6.6</code>",
+                'dns_ch3_strat2_dns_dnspod': "DNSPod (腾讯云): <code>119.29.29.29</code> 和 <code>182.254.116.116</code>",
+                'dns_ch3_strat2_dns_baidu': "百度DNS: <code>180.76.76.76</code>",
+                'dns_ch3_strat2_howto_title': "<strong>如何在操作系统中修改DNS服务器： (以Windows 10/11为例)</strong>",
+                'dns_ch3_strat2_howto_win_step1': "打开“设置” -> “网络和 Internet”。",
+                'dns_ch3_strat2_howto_win_step2': "选择您正在使用的网络连接（如“以太网”或“WLAN”），点击“属性”。",
+                'dns_ch3_strat2_howto_win_step3': "找到“IP 设置”，点击“编辑”。",
+                'dns_ch3_strat2_howto_win_step4': "将设置从“自动 (DHCP)”改为“手动”。",
+                'dns_ch3_strat2_howto_win_step5': "打开 IPv4 开关。",
+                'dns_ch3_strat2_howto_win_step6': "在“首选 DNS”和“备用 DNS”中填入您选择的公共DNS服务器地址。",
+                'dns_ch3_strat2_howto_win_step7': "保存设置。 (提示：禁用IPv6可以在一定程度上避免IPv6相关的DNS泄露，这也是我们之前讨论过的解决方案之一)",
+                'dns_ch3_strat3_title': "策略三：加密你的“问路”请求——拥抱DoH、DoT与DNSCrypt",
+                'dns_ch3_strat3_p1': "传统的DNS查询是基于UDP或TCP的53端口，以明文方式进行的，这就给了攻击者窃听和篡改的机会。加密DNS协议的出现，极大地提升了DNS查询的安全性。",
+                'dns_ch3_strat3_doh_title': "DNS over HTTPS (DoH)：",
+                'dns_ch3_strat3_doh_principle': "<strong>原理：</strong> 将DNS查询封装在HTTPS流量中，通过TCP的443端口（与普通网页浏览相同）发送给支持DoH的DNS服务器。",
+                'dns_ch3_strat3_doh_pros': "<strong>优点：</strong> 良好的加密性；由于使用443端口，可以有效绕过某些基于端口的DNS封锁或干扰；网络中间人难以区分DoH流量和普通HTTPS网页流量。",
+                'dns_ch3_strat3_doh_cons': "<strong>缺点：</strong> 相比DoT，可能会有轻微的额外开销。",
+                'dns_ch3_strat3_dot_title': "DNS over TLS (DoT)：",
+                'dns_ch3_strat3_dot_principle': "<strong>原理：</strong> 将DNS查询通过TLS加密后，在专用的TCP 853端口发送给支持DoT的DNS服务器。",
+                'dns_ch3_strat3_dot_pros': "<strong>优点：</strong> 同样提供强大的加密；使用专用端口，易于网络管理员识别和管理（但也可能因此被针对性封锁）。",
+                'dns_ch3_strat3_dot_cons': "<strong>缺点：</strong> 853端口可能在某些网络环境下被封锁。",
+                'dns_ch3_strat3_dnscrypt_title': "DNSCrypt：",
+                'dns_ch3_strat3_dnscrypt_principle': "<strong>原理：</strong> 一个较早出现的加密DNS协议，不仅加密DNS流量，还提供身份验证。",
+                'dns_ch3_strat3_dnscrypt_pros': "<strong>优点：</strong> 加密和认证。",
+                'dns_ch3_strat3_dnscrypt_cons': "<strong>缺点：</strong> 支持的公共服务器数量和客户端集成度可能不如DoH/DoT广泛。",
+                'dns_ch3_strat3_howto_title': "<strong>如何在主流平台启用加密DNS：</strong>",
+                'dns_ch3_strat3_howto_win_doh': "<strong>Windows 10/11 (DoH)：</strong>确保系统已更新到支持DoH的版本。",
+                'dns_ch3_strat3_howto_win_doh_step1': "在“设置” -> “网络和 Internet” -> (您的网络连接) -> “DNS 服务器分配”中，选择“手动”。",
+                'dns_ch3_strat3_howto_win_doh_step2': "输入支持DoH的DNS服务器IP（如 <code>1.1.1.1</code>）。",
+                'dns_ch3_strat3_howto_win_doh_step3': "在下方的“首选 DNS 加密”中选择“仅加密(HTTPS 上的 DNS)”。如果服务器支持，会自动配置。(您也可以手动添加已知的DoH模板URL)",
+                'dns_ch3_strat3_howto_android_dot': "<strong>Android (Private DNS - 通常是DoT)：</strong>打开“设置” -> “网络和互联网” (或“连接与共享”) -> “私人 DNS”。",
+                'dns_ch3_strat3_howto_android_dot_step1': "选择“指定私人 DNS 提供商主机名”。",
+                'dns_ch3_strat3_howto_android_dot_step2': "输入DoT服务器的主机名 (例如 <code>dns.google</code> 或 <code>1dot1dot1dot1.cloudflare-dns.com</code>)。",
+                'dns_ch3_strat3_howto_android_dot_step3': "保存。",
+                'dns_ch3_strat3_howto_ios': "<strong>iOS (DoH/DoT via Profiles/Apps)：</strong>需要安装描述文件或使用支持加密DNS的第三方App (如 Cloudflare的 1.1.1.1 App)。",
+                'dns_ch3_strat3_howto_browsers': "<strong>主流浏览器 (通常是DoH)：</strong>",
+                'dns_ch3_strat3_howto_chrome': "Chrome: 设置 -> 隐私和安全 -> 安全 -> 高级 -> 使用安全的 DNS。可以选择浏览器内置的提供商或自定义。",
+                'dns_ch3_strat3_howto_firefox': "Firefox: 设置 -> 常规 -> 网络设置 -> 设置 -> 启用基于HTTPS的DNS。可以选择提供商或自定义。",
+                'dns_ch3_strat3_howto_edge': "Edge: 设置 -> 隐私、搜索和服务 -> 安全性 -> 使用安全的 DNS。",
+                'dns_ch3_strat4_title': "策略四：进阶玩法——Proxy软件等代理工具的DNS安全配置",
+                'dns_ch3_strat4_p1': "对于使用Proxy软件或其他类似代理工具的用户，可以通过其强大的DNS配置功能，实现更精细化、更安全的DNS管理。这正是我们之前详细探讨和优化的部分！",
+                'dns_ch3_strat4_item1': "<strong>指定上游加密DNS服务器：</strong> 在Proxy软件的<code>dns.nameserver</code>配置中，直接填写DoH或DoT服务器的URL，并可以指定这些DNS查询通过特定的代理线路发出（例如 <code>https://dns.google/dns-query#🚀 PROXY</code>，注意：这里的<code>PROXY</code>需要是您在代理软件中定义的实际出站策略名称），实现DNS查询本身的匿名和抗污染。",
+                'dns_ch3_strat4_item2': "<strong>安全引导DNS：</strong> 配置<code>dns.default-nameserver</code>为可信的公共DNS（如 <code>8.8.8.8</code>），用于安全地解析DoH/DoT服务器自身的域名。",
+                'dns_ch3_strat4_item3': "<strong>DNS规则分流：</strong> 通过<code>dns.rules</code>和<code>dns.nameserver-policy</code>，可以为不同类型的域名（如国内域名、国外域名、特定应用域名）指定不同的DNS解析策略（例如国内域名使用本地快速DNS直连解析，国外域名通过代理使用加密DNS解析）。",
+                'dns_ch3_strat4_item4': "<strong>TUN模式下的DNS劫持：</strong> Proxy软件的TUN模式配合<code>dns-hijack</code>功能，可以将本机所有应用程序的DNS请求强制导向Proxy软件内置的、经过安全配置的DNS解析器，从而避免应用程序绕过系统DNS设置或使用不安全的硬编码DNS。这是一种“以魔法打败魔法”的良性劫持，确保所有DNS流量都得到妥善处理。",
+                'dns_ch3_strat4_example_title': "<strong>Proxy软件配置示例回顾 (DNS部分核心思路):</strong>",
+                'dns_ch3_strat4_p2': "通过这样的配置，Proxy软件成为了您系统DNS请求的统一、安全的处理中心。",
+                'dns_ch3_strat5_title': "策略五：Hosts文件——简单粗暴的“定点拦截”",
+                'dns_ch3_strat5_p1': "操作系统的hosts文件（Windows: <code>C:\\Windows\\System32\\drivers\\etc\\hosts</code>, Linux/macOS: <code>/etc/hosts</code>）允许您手动指定域名到IP的映射。",
+                'dns_ch3_strat5_pros': "<strong>优点：</strong> 优先级高于DNS查询，可以用于屏蔽恶意网站（将其指向 <code>127.0.0.1</code> 或 <code>0.0.0.0</code>）或将特定域名强制指向正确的IP。",
+                'dns_ch3_strat5_cons': "<strong>缺点：</strong> 需要手动维护，不灵活，对大量域名的管理不便，且无法应对IP地址动态变化的网站。",
+                'dns_ch3_strat6_title': "策略六：VPN——整体加密通道中的DNS保护",
+                'dns_ch3_strat6_p1': "当您使用VPN时，通常所有的网络流量（包括DNS查询）都会通过加密的VPN通道到达VPN服务器，然后由VPN服务商的DNS服务器进行解析。",
+                'dns_ch3_strat6_pros': "<strong>优点：</strong> 有效防止本地网络环境（ISP、公共Wi-Fi）的DNS劫持和窃听。",
+                'dns_ch3_strat6_cons': "<strong>缺点：</strong> 您需要信任VPN服务商不会记录或滥用您的DNS查询。",
+                'dns_ch4_title': "第四章：更深一度的防御——DNSSEC（域名系统安全扩展）",
+                'dns_ch4_p1': "DNSSEC (DNS Security Extensions) 旨在为DNS提供数据来源验证和数据完整性保护，但它本身不加密DNS查询内容。",
+                'dns_ch4_item1_principle': "<strong>原理：</strong> 通过数字签名技术，DNSSEC允许DNS解析器验证DNS记录是否来自权威的DNS服务器，并且在传输过程中没有被篡改。",
+                'dns_ch4_item2_function': "<strong>作用：</strong> 主要防范DNS缓存投毒和中间人伪造DNS应答。",
+                'dns_ch4_item3_limitations': "<strong>局限性：</strong>不加密DNS查询本身，您的ISP或网络监听者仍然可以看到您查询了哪些域名。",
+                'dns_ch4_item4_dependency': "需要从顶级域（TLD）、域名注册商、权威DNS服务器到递归DNS解析器（您使用的DNS服务器）的全链路支持才能完全生效。目前并非所有域名和DNS服务都完全支持DNSSEC。",
+                'dns_ch4_p2': "尽管有局限，但选择支持DNSSEC验证的DNS解析器（如Google Public DNS, Cloudflare DNS等多数公共DNS都支持）仍然是一个好习惯，它能为您增加一层针对特定类型攻击的防护。",
+                'dns_conclusion_title': "结语：持续警惕，主动防御",
+                'dns_conclusion_p1': "DNS安全是整体网络安全中不可或缺的一环。DNS劫持虽然隐蔽，但其潜在危害不容小觑。通过理解其原理，结合本文提供的多种反劫持策略——从基础的设备安全、选择可信DNS，到核心的加密DNS协议应用（DoH/DoT），再到高级工具（如Proxy软件）的精细化配置——我们可以层层设防，最大限度地保护自己免受DNS劫持的困扰。",
+                'dns_conclusion_p2': "网络安全没有一劳永逸的解决方案，保持安全意识，定期检查和更新您的安全设置，才能在日益复杂的网络环境中畅游无忧。希望这篇教学文章能为您在守护网络门户的道路上，提供有力的支持！"
              },
              'zh-TW': {
                  'blog_title_header': "麥青春的部落格", 
@@ -360,9 +586,122 @@ dns:
                  'posted_on_label': "發佈於",
                  'tech_category': "技術",
                  'post_dns_hijack_seo_title': "DNS劫持與反劫持：守護你的網路門戶安全指南 - 麥青春的部落格",
-                 'post_dns_hijack_title': "DNS劫持与反劫持：守护你的网络门户安全指南",
+                 'post_dns_hijack_title': "DNS劫持與反劫持：守護你的網路門戶安全指南",
                  'copy_button_text': "複製",
-                 'copy_button_copied_text': "已複製!"
+                 'copy_button_copied_text': "已複製!",
+                 // 正文翻译 (繁體中文)
+                'dns_intro_p1': "在數位時代，我們每一次上網衝浪，無論是瀏覽網頁、傳送郵件還是觀看影片，都離不開一項默默無聞卻至關重要的基礎服務——DNS（Domain Name System，網域名稱系統）。DNS就像是網際網路的電話簿，負責將我們容易記住的網站網域名稱（如 www.example.com）翻譯成機器能夠理解的IP位址（如 93.184.216.34）。然而，正是這個關鍵環節，也成為了網路攻擊者覬覦的目標，DNS劫持應運而生。",
+                'dns_intro_p2': "本文將帶您深入了解DNS劫持的原理、危害，並提供一系列實用的反劫持教學，幫助您加固網路防線，確保安全、純淨的上網體驗。",
+                'dns_ch1_title': "第一章：認識DNS劫持——看不見的「指路牌」篡改者",
+                'dns_ch1_sec1_title': "什麼是DNS劫持？",
+                'dns_ch1_sec1_p1': "簡單來說，DNS劫持就是攻擊者透過某種手段，篡改了正常的DNS解析過程，將使用者導向錯誤的、甚至是惡意的IP位址。這就好比有人偷偷修改了導航地圖上的目的地，您以為要去銀行，結果卻被帶到了騙子的窩點。",
+                'dns_ch1_sec2_title': "DNS劫持的常見手段",
+                'dns_ch1_sec2_item1': "<strong>路由器DNS篡改：</strong> 攻擊者透過弱密碼、韌體漏洞等方式入侵您的家用或辦公路由器，修改其中的DNS伺服器設定為他們控制的惡意DNS伺服器。這樣，連接到該路由器的所有裝置的DNS查詢都會被劫持。",
+                'dns_ch1_sec2_item2': "<strong>惡意軟體/病毒：</strong> 安裝在您電腦或手機上的惡意軟體可以直接修改作業系統的DNS設定，或者在本地hosts檔案中新增虛假條目，將特定網域名稱指向惡意IP。",
+                'dns_ch1_sec2_item3': "<strong>本地DNS快取投毒（Local DNS Cache Poisoning）：</strong> 攻擊者向本地DNS伺服器（通常是ISP提供或區域網路內的DNS伺服器）傳送大量偽造的DNS應答，如果伺服器存在漏洞，就可能接受並快取這些虛假記錄。",
+                'dns_ch1_sec2_item4': "<strong>ISP層面的劫持：</strong> 某些情況下，網際網路服務供應商（ISP）可能會出於商業目的（如推播廣告、展示無法存取頁面的「友好提示」）或政策要求，對其DNS伺服器進行干預，修改特定網域名稱的解析結果。",
+                'dns_ch1_sec2_item5': "<strong>中間人攻擊（Man-in-the-Middle, MitM）：</strong> 在不安全的網路環境（如公共Wi-Fi）中，攻擊者可以攔截您的DNS查詢流量，並返回一個偽造的IP位址。",
+                'dns_ch1_sec3_title': "DNS劫持的動機與危害",
+                'dns_ch1_sec3_item1': "<strong>網路釣魚（Phishing）：</strong> 將使用者導向偽造的銀行、電商或社群媒體登入頁面，竊取帳戶密碼和個人資訊。",
+                'dns_ch1_sec3_item2': "<strong>廣告注入與流量變現：</strong> 在使用者正常瀏覽的網頁中強行插入廣告，或者將使用者導向特定的推廣頁面。",
+                'dns_ch1_sec3_item3': "<strong>惡意軟體分發：</strong> 將使用者導向包含病毒、木馬、勒索軟體的網站。",
+                'dns_ch1_sec3_item4': "<strong>內容審查與封鎖：</strong> 阻止使用者存取特定的網站或服務。",
+                'dns_ch1_sec3_item5': "<strong>降低網路體驗：</strong> 錯誤的DNS解析可能導致網站無法開啟、速度變慢或功能異常。",
+                'dns_ch2_title': "第二章：我的DNS被劫持了嗎？——識別DNS劫持的蛛絲馬跡",
+                'dns_ch2_intro_p1': "雖然DNS劫持在後台悄然發生，但我們仍可透過一些現象來察覺：",
+                'dns_ch2_symptom1': "<strong>存取錯誤的網站：</strong> 輸入正確的網址卻開啟了不相關的、甚至是仿冒的網站。",
+                'dns_ch2_symptom2': "<strong>彈出式廣告氾濫：</strong> 瀏覽任何網站都可能出現額外的、不請自來的彈出式廣告或頁面底部廣告。",
+                'dns_ch2_symptom3': "<strong>安全憑證錯誤：</strong> 存取HTTPS網站時，瀏覽器頻繁提示SSL/TLS憑證無效或不符（因為您可能被導向了沒有正確憑證的惡意伺服器）。",
+                'dns_ch2_symptom4': "<strong>網速異常緩慢或特定網站無法存取：</strong> 錯誤的DNS解析可能導致連線逾時或路由到低效伺服器。",
+                'dns_ch2_symptom5': "<strong>防毒軟體報警：</strong> 如果被导向恶意站点，安全软体可能会发出警告。",
+                'dns_ch2_detect_title': "偵測方法：",
+                'dns_ch2_detect_item1': "<strong>使用線上DNS洩漏測試工具：</strong> 網站如 dnsleaktest.com 可以顯示您目前正在使用的DNS伺服器IP，您可以核對這些IP是否是您期望的（例如，您手動設定的公共DNS，或您信任的ISP的DNS）。",
+                'dns_ch2_detect_item2': "<strong>對比不同網路環境的解析結果：</strong> 在手機上使用行動數據網路（通常使用營運商的DNS）存取同一網域名稱，對比其解析的IP是否与您在Wi-Fi环境下（可能被劫持）解析到的IP一致。可以使用 <code>ping 網域名稱</code> 或 <code>nslookup 網域名稱</code> (Windows) / <code>dig 網域名稱</code> (Linux/macOS) 命令查看解析到的IP。",
+                'dns_ch2_detect_item3': "<strong>檢查裝置和路由器的DNS設定：</strong> 查看您電腦、手機以及路由器的網路設定，確認DNS伺服器位址是否被異常修改。",
+                'dns_ch3_title': "第三章：打響DNS反擊戰！——防範DNS劫持的核心策略",
+                'dns_ch3_intro_p1': "了解了DNS劫持的原理和危害後，我們來看看如何有效地進行反制。",
+                'dns_ch3_strat1_title': "策略一：加固本地防線——裝置與路由器的安全",
+                'dns_ch3_strat1_item1': "<strong>路由器安全：</strong>修改路由器預設登入密碼，使用強密碼。",
+                'dns_ch3_strat1_item2': "定期檢查並更新路由器韌體至最新版本。",
+                'dns_ch3_strat1_item3': "關閉不必要的遠端管理功能（如從外網存取路由器管理介面）。",
+                'dns_ch3_strat1_item4': "檢查路由器DHCP服務分配的DNS伺服器位址是否正確。",
+                'dns_ch3_strat1_item5': "<strong>裝置安全：</strong>安裝可靠的防毒軟體和防火牆，並保持更新。",
+                'dns_ch3_strat1_item6': "及時更新作業系統和應用程式修補程式。",
+                'dns_ch3_strat1_item7': "不輕易下載和執行來源不明的軟體。",
+                'dns_ch3_strat1_item8': "謹慎點擊郵件和聊天訊息中的連結。",
+                'dns_ch3_strat1_item9': "<strong>警惕公共Wi-Fi：</strong> 避免在不安全的公共Wi-Fi下進行敏感操作。如果必須使用，請配合VPN等加密手段。",
+                'dns_ch3_strat2_title': "策略二：選擇可信的「指路牌」——使用安全的公共DNS伺服器",
+                'dns_ch3_strat2_p1': "許多ISP提供的預設DNS伺服器可能存在被劫持的風險，或者ISP本身會進行一些「良性」或商業性的「劫持」。更換為知名的、受信任的公共DNS伺服器是簡單有效的第一步。",
+                'dns_ch3_strat2_common_dns_title': "<strong>常用公共DNS伺服器：</strong>",
+                'dns_ch3_strat2_dns_cf': "Cloudflare DNS: <code>1.1.1.1</code> 和 <code>1.0.0.1</code> (注重隱私和速度)",
+                'dns_ch3_strat2_dns_google': "Google Public DNS: <code>8.8.8.8</code> 和 <code>8.8.4.4</code> (穩定可靠)",
+                'dns_ch3_strat2_dns_quad9': "Quad9 DNS: <code>9.9.9.9</code> 和 <code>149.112.112.112</code> (阻止惡意網域名稱)",
+                'dns_ch3_strat2_dns_china_intro': "中國大陸公共DNS (若您在中國大陸)：",
+                'dns_ch3_strat2_dns_ali': "阿里DNS: <code>223.5.5.5</code> 和 <code>223.6.6.6</code>",
+                'dns_ch3_strat2_dns_dnspod': "DNSPod (騰訊雲): <code>119.29.29.29</code> 和 <code>182.254.116.116</code>",
+                'dns_ch3_strat2_dns_baidu': "百度DNS: <code>180.76.76.76</code>",
+                'dns_ch3_strat2_howto_title': "<strong>如何在作業系統中修改DNS伺服器： (以Windows 10/11為例)</strong>",
+                'dns_ch3_strat2_howto_win_step1': "開啟「設定」 -> 「網路和 Internet」。",
+                'dns_ch3_strat2_howto_win_step2': "選擇您正在使用的網路連線（如「乙太網路」或「WLAN」），點擊「內容」。",
+                'dns_ch3_strat2_howto_win_step3': "找到「IP 設定」，點擊「編輯」。",
+                'dns_ch3_strat2_howto_win_step4': "將設定從「自動 (DHCP)」改為「手動」。",
+                'dns_ch3_strat2_howto_win_step5': "開啟 IPv4 開關。",
+                'dns_ch3_strat2_howto_win_step6': "在「慣用 DNS」和「其他 DNS」中填入您選擇的公共DNS伺服器位址。",
+                'dns_ch3_strat2_howto_win_step7': "儲存設定。 (提示：停用IPv6可以在一定程度上避免IPv6相關的DNS洩漏，這也是我們之前討論過的解決方案之一)",
+                'dns_ch3_strat3_title': "策略三：加密你的「問路」請求——擁抱DoH、DoT與DNSCrypt",
+                'dns_ch3_strat3_p1': "傳統的DNS查詢是基於UDP或TCP的53連接埠，以明文方式進行的，這就給了攻擊者竊聽和篡改的機會。加密DNS協定的出現，極大地提升了DNS查詢的安全性。",
+                'dns_ch3_strat3_doh_title': "DNS over HTTPS (DoH)：",
+                'dns_ch3_strat3_doh_principle': "<strong>原理：</strong> 將DNS查詢封裝在HTTPS流量中，透過TCP的443連接埠（與普通網頁瀏覽相同）傳送给支援DoH的DNS伺服器。",
+                'dns_ch3_strat3_doh_pros': "<strong>優點：</strong> 良好的加密性；由於使用443連接埠，可以有效繞過某些基於連接埠的DNS封鎖或干擾；網路中間人難以區分DoH流量和普通HTTPS網頁流量。",
+                'dns_ch3_strat3_doh_cons': "<strong>缺點：</strong> 相較DoT，可能會有些微的額外開銷。",
+                'dns_ch3_strat3_dot_title': "DNS over TLS (DoT)：",
+                'dns_ch3_strat3_dot_principle': "<strong>原理：</strong> 將DNS查詢透過TLS加密後，在專用的TCP 853連接埠傳送给支援DoT的DNS伺服器。",
+                'dns_ch3_strat3_dot_pros': "<strong>優點：</strong> 同樣提供強大的加密；使用專用連接埠，易於網路管理員識別和管理（但也可能因此被針對性封鎖）。",
+                'dns_ch3_strat3_dot_cons': "<strong>缺點：</strong> 853連接埠可能在某些網路環境下被封鎖。",
+                'dns_ch3_strat3_dnscrypt_title': "DNSCrypt：",
+                'dns_ch3_strat3_dnscrypt_principle': "<strong>原理：</strong> 一個較早出現的加密DNS協定，不僅加密DNS流量，還提供身份驗證。",
+                'dns_ch3_strat3_dnscrypt_pros': "<strong>優點：</strong> 加密和認證。",
+                'dns_ch3_strat3_dnscrypt_cons': "<strong>缺點：</strong> 支援的公共伺服器數量和用戶端整合度可能不如DoH/DoT廣泛。",
+                'dns_ch3_strat3_howto_title': "<strong>如何在主流平台啟用加密DNS：</strong>",
+                'dns_ch3_strat3_howto_win_doh': "<strong>Windows 10/11 (DoH)：</strong>確保系統已更新到支援DoH的版本。",
+                'dns_ch3_strat3_howto_win_doh_step1': "在「設定」 -> 「網路和 Internet」 -> (您的網路連線) -> 「DNS 伺服器指派」中，選擇「手動」。",
+                'dns_ch3_strat3_howto_win_doh_step2': "輸入支援DoH的DNS伺服器IP（如 <code>1.1.1.1</code>）。",
+                'dns_ch3_strat3_howto_win_doh_step3': "在下方的「慣用 DNS 加密」中選擇「僅加密(HTTPS 上的 DNS)」。如果伺服器支援，會自動設定。(您也可以手動新增已知的DoH範本URL)",
+                'dns_ch3_strat3_howto_android_dot': "<strong>Android (私人 DNS - 通常是DoT)：</strong>開啟「設定」 -> 「網路和網際網路」 (或「連線與共享」) -> 「私人 DNS」。",
+                'dns_ch3_strat3_howto_android_dot_step1': "選擇「指定私人 DNS 提供者主機名稱」。",
+                'dns_ch3_strat3_howto_android_dot_step2': "輸入DoT伺服器的主機名稱 (例如 <code>dns.google</code> 或 <code>1dot1dot1dot1.cloudflare-dns.com</code>)。",
+                'dns_ch3_strat3_howto_android_dot_step3': "儲存。",
+                'dns_ch3_strat3_howto_ios': "<strong>iOS (DoH/DoT via Profiles/Apps)：</strong>需要安裝描述檔或使用支援加密DNS的第三方App (如 Cloudflare的 1.1.1.1 App)。",
+                'dns_ch3_strat3_howto_browsers': "<strong>主流瀏覽器 (通常是DoH)：</strong>",
+                'dns_ch3_strat3_howto_chrome': "Chrome: 設定 -> 隱私權和安全性 -> 安全性 -> 進階 -> 使用安全的 DNS。可以選擇瀏覽器內建的提供者或自訂。",
+                'dns_ch3_strat3_howto_firefox': "Firefox: 設定 -> 一般 -> 網路設定 -> 設定 -> 啟用 HTTPS over DNS。可以選擇提供者或自訂。",
+                'dns_ch3_strat3_howto_edge': "Edge: 設定 -> 隱私權、搜尋與服務 -> 安全性 -> 使用安全的 DNS。",
+                'dns_ch3_strat4_title': "策略四：進階玩法——Proxy軟體等代理工具的DNS安全設定",
+                'dns_ch3_strat4_p1': "對於使用Proxy軟體或其他類似代理工具的使用者，可以透過其強大的DNS設定功能，實現更精細化、更安全的DNS管理。這正是我們之前詳細探討和最佳化的部分！",
+                'dns_ch3_strat4_item1': "<strong>指定上游加密DNS伺服器：</strong> 在Proxy軟體的<code>dns.nameserver</code>設定中，直接填寫DoH或DoT伺服器的URL，並可以指定這些DNS查詢透過特定的代理線路發出（例如 <code>https://dns.google/dns-query#🚀 PROXY</code>，注意：這裡的<code>PROXY</code>需要是您在代理軟體中定義的實際出站策略名稱），實現DNS查詢本身的匿名和抗污染。",
+                'dns_ch3_strat4_item2': "<strong>安全引導DNS：</strong> 設定<code>dns.default-nameserver</code>為可信的公共DNS（如 <code>8.8.8.8</code>），用於安全地解析DoH/DoT伺服器自身的網域名稱。",
+                'dns_ch3_strat4_item3': "<strong>DNS規則分流：</strong> 透過<code>dns.rules</code>和<code>dns.nameserver-policy</code>，可以為不同類型的網域名稱（如國內網域名稱、國外網域名稱、特定應用網域名稱）指定不同的DNS解析策略（例如國內網域名稱使用本地快速DNS直連解析，國外網域名稱透過代理使用加密DNS解析）。",
+                'dns_ch3_strat4_item4': "<strong>TUN模式下的DNS劫持：</strong> Proxy軟體的TUN模式配合<code>dns-hijack</code>功能，可以將本機所有應用程式的DNS請求強制導向Proxy軟體內建的、經過安全設定的DNS解析器，從而避免應用程式繞過系統DNS設定或使用不安全的硬編碼DNS。這是一種「以魔法打敗魔法」的良性劫持，確保所有DNS流量都得到妥善處理。",
+                'dns_ch3_strat4_example_title': "<strong>Proxy軟體設定範例回顧 (DNS部分核心思路):</strong>",
+                'dns_ch3_strat4_p2': "透過這樣的設定，Proxy軟體成為了您系統DNS請求的統一、安全的處理中心。",
+                'dns_ch3_strat5_title': "策略五：Hosts檔案——簡單粗暴的「定點攔截」",
+                'dns_ch3_strat5_p1': "作業系統的hosts檔案（Windows: <code>C:\\Windows\\System32\\drivers\\etc\\hosts</code>, Linux/macOS: <code>/etc/hosts</code>）允許您手動指定網域名稱到IP的對應。",
+                'dns_ch3_strat5_pros': "<strong>優點：</strong> 優先級高於DNS查詢，可以用於封鎖惡意網站（將其指向 <code>127.0.0.1</code> 或 <code>0.0.0.0</code>）或將特定網域名稱強制指向正確的IP。",
+                'dns_ch3_strat5_cons': "<strong>缺點：</strong> 需要手動維護，不靈活，對大量網域名稱的管理不便，且無法應對IP位址動態變化的網站。",
+                'dns_ch3_strat6_title': "策略六：VPN——整體加密通道中的DNS保護",
+                'dns_ch3_strat6_p1': "當您使用VPN時，通常所有的網路流量（包括DNS查詢）都會透過加密的VPN通道到達VPN伺服器，然後由VPN服務供應商的DNS伺服器進行解析。",
+                'dns_ch3_strat6_pros': "<strong>優點：</strong> 有效防止本地網路環境（ISP、公共Wi-Fi）的DNS劫持和竊聽。",
+                'dns_ch3_strat6_cons': "<strong>缺點：</strong> 您需要信任VPN服務供應商不會記錄或濫用您的DNS查詢。",
+                'dns_ch4_title': "第四章：更深一度的防禦——DNSSEC（網域名稱系統安全擴充）",
+                'dns_ch4_p1': "DNSSEC (DNS Security Extensions) 旨在為DNS提供資料來源驗證和資料完整性保護，但它本身不加密DNS查詢內容。",
+                'dns_ch4_item1_principle': "<strong>原理：</strong> 透過數位簽章技術，DNSSEC允許DNS解析器驗證DNS記錄是否來自權威的DNS伺服器，並且在傳輸過程中沒有被篡改。",
+                'dns_ch4_item2_function': "<strong>作用：</strong> 主要防範DNS快取投毒和中間人偽造DNS應答。",
+                'dns_ch4_item3_limitations': "<strong>局限性：</strong>不加密DNS查詢本身，您的ISP或網路監聽者仍然可以看到您查詢了哪些網域名稱。",
+                'dns_ch4_item4_dependency': "需要從頂級域（TLD）、網域名稱註冊商、權威DNS伺服器到遞迴DNS解析器（您使用的DNS伺服器）的全鏈路支援才能完全生效。目前並非所有網域名稱和DNS服務都完全支援DNSSEC。",
+                'dns_ch4_p2': "儘管有局限，但選擇支援DNSSEC驗證的DNS解析器（如Google Public DNS, Cloudflare DNS等多數公共DNS都支援）仍然是一個好習慣，它能為您增加一層針對特定類型攻擊的防護。",
+                'dns_conclusion_title': "結語：持續警惕，主動防禦",
+                'dns_conclusion_p1': "DNS安全是整體網路安全中不可或缺的一環。DNS劫持雖然隱蔽，但其潛在危害不容小覷。透過理解其原理，結合本文提供的多種反劫持策略——從基礎的裝置安全、選擇可信DNS，到核心的加密DNS協定應用（DoH/DoT），再到進階工具（如Proxy軟體）的精細化設定——我們可以層層設防，最大限度地保護自己免受DNS劫持的困擾。",
+                'dns_conclusion_p2': "網路安全沒有一勞永逸的解決方案，保持安全意識，定期檢查和更新您的安全設定，才能在日益複雜的網路環境中暢遊無憂。希望這篇教學文章能為您在守護網路門戶的道路上，提供有力的支援！"
              }
         };
 

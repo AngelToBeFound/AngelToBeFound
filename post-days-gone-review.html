@@ -105,13 +105,13 @@
             transform: translateY(-1px);
             color: #ffffff;
         }
-        .steam-button svg { /* Style for the SVG icon */
-            width: 1.1em; /* Control size of SVG */
-            height: 1.1em;
-            margin-right: 0.6rem;
-            fill: currentColor; /* SVG will inherit text color */
+        .steam-button svg { 
+            width: 1em; 
+            height: 1em;
+            margin-right: 0.5rem; 
+            fill: currentColor; 
+            flex-shrink: 0;
         }
-
 
         .post-body img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5em auto; display: block; border: 1px solid var(--border-color); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .post-body figure { margin: 1.5em 0; text-align: center; }
@@ -225,7 +225,7 @@
                 <p data-translate-key="post_days_gone_conclusion_p1">
                     总的来说，《Days Gone 往日不在》是一款充满诚意且独具特色的开放世界末日生存游戏。它可能不是一款完美无瑕的作品，但其独特的尸潮体验、引人入胜的剧情氛围以及核心的摩托车玩法，都让它在同类游戏中占有一席之地。如果你喜欢末日题材，不畏惧挑战，并且能接受其略显慢热的节奏，那么《往日不在》绝对值得一试。尤其是对于喜欢探索和沉浸式体验的玩家，迪肯在绝境中的旅程或许能带给你不一样的感动。
                 </p>
-
+                
                 <h2 data-translate-key="post_days_gone_download_title">下载链接分享</h2>
                 <blockquote class="warning">
                     <p data-translate-key="post_days_gone_download_warn1"><strong>重要提示：</strong> 请支持正版游戏！以下链接仅供学习和交流使用，如果您喜欢这款游戏，请通过官方渠道购买正版，以支持游戏开发者。</p>
@@ -234,24 +234,21 @@
                 <p data-translate-key="post_days_gone_download_desc">
                     考虑到大家寻找资源的便利性，这里提供一个我个人收集的《Days Gone》PC版学习交流资源链接（请注意上述提示）：
                 </p>
-                <a href="YOUR_DAYS_GONE_DOWNLOAD_LINK_HERE" target="_blank" rel="noopener noreferrer" class="download-button">
+                <a href="https://www.vgter.net/archives/2628" target="_blank" rel="noopener noreferrer" class="download-button">
                     <i class="fas fa-download"></i> <span data-translate-key="post_days_gone_download_button_text">Days Gone 学习交流版 (PC)</span>
                 </a>
                 <p class="text-sm mt-2 text-[var(--text-secondary)]" data-translate-key="post_days_gone_download_source_note">
                     (链接来源：互联网收集，请注意甄别)
                 </p>
-                <p class="mt-4" data-translate-key="post_days_gone_steam_link_prompt">
-                    推荐通过官方渠道购买：
-                    <a href="https://store.steampowered.com/app/1259420/Days_Gone/" target="_blank" rel="noopener noreferrer" class="steam-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" role="img" aria-hidden="true">
-                            <path d="M496 256c0 137-111 248-248 248S0 393 0 256 111 8 248 8s248 111 248 248zm-113.6-46.3c-9.1-5.7-20.6-8.8-32.1-8.8s-23 3.1-32.1 8.8c-10.5 6.5-18.5 17.4-21.7 29.9H168.4c-3.2-12.5-11.2-23.4-21.7-29.9-9.1-5.7-20.6-8.8-32.1-8.8s-23 3.1-32.1 8.8c-10.5 6.5-18.5 17.4-21.7 29.9h-2.3c-13.2 0-23.9 10.7-23.9 23.9v27.3c0 13.2 10.7 23.9 23.9 23.9h2.3c3.2 12.5 11.2 23.4 21.7 29.9 9.1 5.7 20.6 8.8 32.1 8.8s23-3.1 32.1-8.8c10.5-6.5 18.5-17.4 21.7-29.9h127.3c3.2 12.5 11.2 23.4 21.7 29.9 9.1 5.7 20.6 8.8 32.1 8.8s23-3.1 32.1-8.8c10.5-6.5 18.5-17.4 21.7-29.9h2.3c13.2 0 23.9-10.7 23.9-23.9v-27.3c0-13.2-10.7-23.9-23.9-23.9h-2.3c-3.2-12.5-11.2-23.4-21.7-29.9zm-201.6 50.1c-10.2 0-18.5-8.3-18.5-18.5s8.3-18.5 18.5-18.5 18.5 8.3 18.5 18.5-8.3 18.5-18.5 18.5zm127.3 0c-10.2 0-18.5-8.3-18.5-18.5s8.3-18.5 18.5-18.5 18.5 8.3 18.5 18.5-8.3 18.5-18.5 18.5z"/>
-                        </svg>
-                        <span data-translate-key="steam_store_button_text">Steam 商店</span>
-                    </a>
-                </p>
-
+                <p class="mt-4" data-translate-key="post_days_gone_steam_link_prompt">推荐通过官方渠道购买：</p>
+                <a href="https://store.steampowered.com/agecheck/app/1259420/" target="_blank" rel="noopener noreferrer" class="steam-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" role="img" aria-hidden="true">
+                        <path d="M496 256c0 137-111 248-248 248S0 393 0 256 111 8 248 8s248 111 248 248zm-113.6-46.3c-9.1-5.7-20.6-8.8-32.1-8.8s-23 3.1-32.1 8.8c-10.5 6.5-18.5 17.4-21.7 29.9H168.4c-3.2-12.5-11.2-23.4-21.7-29.9-9.1-5.7-20.6-8.8-32.1-8.8s-23 3.1-32.1 8.8c-10.5 6.5-18.5 17.4-21.7 29.9h-2.3c-13.2 0-23.9 10.7-23.9 23.9v27.3c0 13.2 10.7 23.9 23.9 23.9h2.3c3.2 12.5 11.2 23.4 21.7 29.9 9.1 5.7 20.6 8.8 32.1 8.8s23-3.1 32.1-8.8c10.5 6.5 18.5 17.4 21.7 29.9h127.3c3.2 12.5 11.2 23.4 21.7 29.9 9.1 5.7 20.6 8.8 32.1 8.8s23-3.1 32.1-8.8c10.5 6.5 18.5-17.4 21.7-29.9h2.3c13.2 0 23.9-10.7 23.9-23.9v-27.3c0-13.2-10.7-23.9-23.9-23.9h-2.3c-3.2-12.5-11.2-23.4-21.7-29.9zm-201.6 50.1c-10.2 0-18.5-8.3-18.5-18.5s8.3-18.5 18.5-18.5 18.5 8.3 18.5 18.5-8.3 18.5-18.5 18.5zm127.3 0c-10.2 0-18.5-8.3-18.5-18.5s8.3-18.5 18.5-18.5 18.5 8.3 18.5 18.5-8.3 18.5-18.5 18.5z"/>
+                    </svg>
+                    <span data-translate-key="steam_store_button_text">Steam 商店</span>
+                </a>
                 <hr class="my-8 border-[var(--border-color)]">
-                </div>
+            </div>
          </article>
     </div>
 
@@ -269,7 +266,7 @@
 
 
     <script>
-        // --- 翻译对象 (新增 Days Gone 相关键) ---
+        // --- 翻译对象 (确保所有键都存在) ---
         const translations = {
             'en': {
                 'blog_title_header': "MaxCaulfield's Blog", 
@@ -281,7 +278,7 @@
                 'posted_on_label': "Posted on",
                 'game_review_category': "Game Review", 
                 'post_days_gone_seo_title': "Days Gone Game Review & Share - MaxCaulfield's Blog",
-                'post_days_gone_title': "Days Gone Game Review and Share (Download Link Included)",
+                'post_days_gone_title': "Days Gone Game Review and Share",
                 'post_days_gone_banner_caption': "Riding and surviving in a post-apocalyptic wasteland",
                 'post_days_gone_intro': "Days Gone is an open-world action-adventure game developed by Bend Studio and published by Sony Interactive Entertainment. Set in Oregon, USA, two years after a global pandemic, players take on the role of Deacon St. John, a former outlaw biker, struggling to survive in a perilous post-apocalyptic world overrun by zombie-like creatures called 'Freakers', while searching for his missing wife, Sarah. Today, I want to share my experience and personal thoughts on this game.",
                 'post_days_gone_story_title': "Story & Characters: A Glimmer of Humanity in the Apocalypse",
@@ -313,7 +310,7 @@
                 'post_days_gone_download_desc': "For convenience in finding resources, here is a link to a Days Gone PC version learning and communication resource I personally collected (please note the warnings above):",
                 'post_days_gone_download_button_text': "Days Gone Learning Version (PC)", 
                 'post_days_gone_download_source_note': "(Link source: Collected from the internet, please verify carefully)",
-                'post_days_gone_steam_link_prompt': "Recommended to purchase via official channels:",
+                'post_days_gone_steam_link_prompt': "Recommended to purchase via official channels:", 
                 'steam_store_button_text': "Steam Store", 
             },
             'zh-CN': {
@@ -358,7 +355,7 @@
                  'post_days_gone_download_desc': "考虑到大家寻找资源的便利性，这里提供一个我个人收集的《Days Gone》PC版学习交流资源链接（请注意上述提示）：",
                  'post_days_gone_download_button_text': "Days Gone 学习交流版 (PC)",
                  'post_days_gone_download_source_note': "(链接来源：互联网收集，请注意甄别)",
-                 'post_days_gone_steam_link_prompt': "推荐通过官方渠道购买：",
+                 'post_days_gone_steam_link_prompt': "推荐通过官方渠道购买：", 
                  'steam_store_button_text': "Steam 商店",
              },
              'zh-TW': {
@@ -403,7 +400,7 @@
                  'post_days_gone_download_desc': "考慮到大家尋找資源的便利性，這裡提供一個我個人收集的《Days Gone》PC版學習交流資源連結（請注意上述提示）：",
                  'post_days_gone_download_button_text': "Days Gone 學習交流版 (PC)",
                  'post_days_gone_download_source_note': "(連結來源：網際網路收集，請注意甄別)",
-                 'post_days_gone_steam_link_prompt': "推薦透過官方管道購買：",
+                 'post_days_gone_steam_link_prompt': "推薦透過官方管道購買：", 
                  'steam_store_button_text': "Steam 商店",
              }
         };
