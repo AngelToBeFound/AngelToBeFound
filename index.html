@@ -15,18 +15,39 @@
         /* 毛玻璃效果 */
         .glass-effect { background-color: rgba(31, 41, 55, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(55, 65, 81, 0.5); border-radius: 0.5rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
         /* 语言下拉菜单链接颜色 */
-        #lang-dropdown a { color: var(--text-secondary-dark, #9ca3af); }
-        #lang-dropdown a:hover { background-color: rgba(55, 65, 81, 0.6); color: var(--text-primary-dark, #e5e7eb); }
+        #lang-dropdown a, #blog-nav-dropdown a { color: var(--text-secondary-dark, #9ca3af); }
+        #lang-dropdown a:hover, #blog-nav-dropdown a:hover { background-color: rgba(55, 65, 81, 0.6); color: var(--text-primary-dark, #e5e7eb); }
         /* 移动端语言下拉菜单背景 */
-        #mobile-lang-dropdown { background-color: rgba(31, 41, 55, 0.9); }
-        #mobile-lang-dropdown a { color: var(--accent-link, #a7c7e7); }
-        #mobile-lang-dropdown a:hover { background-color: #374151; color: var(--star-bright, #FFF); }
+        #mobile-lang-dropdown, #mobile-blog-dropdown { background-color: rgba(31, 41, 55, 0.9); }
+        #mobile-lang-dropdown a, #mobile-blog-dropdown a { color: var(--accent-link, #a7c7e7); }
+        #mobile-lang-dropdown a:hover, #mobile-blog-dropdown a:hover { background-color: #374151; color: var(--star-bright, #FFF); }
         
-        /* 确保按钮在小屏幕上也能良好显示 */
         .cta-button {
-            min-width: 150px; /* 给按钮一个最小宽度 */
+            min-width: 150px; 
             text-align: center;
         }
+        .nav-link-button { /* 用于导航栏中模拟链接样式的按钮 */
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            color: var(--accent-link);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.4s var(--ease-out-smooth);
+        }
+        .nav-link-button:hover {
+            color: var(--star-bright);
+        }
+        .nav-link-button::after { /* 下划线效果 */
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -5px; left: 50%; transform: translateX(-50%);
+            background-color: var(--glow-color);
+            transition: width 0.4s var(--ease-out-smooth), box-shadow 0.4s var(--ease-out-smooth);
+            box-shadow: 0 0 8px var(--glow-color);
+        }
+        .nav-link-button:hover::after, .nav-link-button.active::after { width: 100%; }
+
     </style>
 </head>
 <body class="text-gray-200">
@@ -41,11 +62,19 @@
                 <a href="#home" class="nav-link active" data-translate-key="nav_home">主页</a>
                 <a href="#about" class="nav-link" data-translate-key="nav_about">关于我</a>
                 <a href="#photos" class="nav-link" data-translate-key="nav_photos">照片展览</a>
-                <a href="blog.html" class="nav-link" data-translate-key="nav_blog">博客</a>
+                <div class="relative">
+                    <button id="blog-nav-toggle" aria-label="Toggle blog menu" class="nav-link-button flex items-center">
+                        <span data-translate-key="nav_blog">博客</span> <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </button>
+                    <div id="blog-nav-dropdown" class="absolute left-0 mt-2 w-40 rounded-md shadow-lg border hidden glass-effect !py-1 z-30">
+                        <a href="blog.html" class="block px-4 py-2 text-sm transition-colors" data-translate-key="nav_blog_enter">进入博客</a>
+                        <a href="http://47.94.12.184/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm transition-colors" data-translate-key="nav_mainsite_enter">前往主站</a>
+                    </div>
+                </div>
                 <a href="games.html" class="nav-link" data-translate-key="nav_games">小游戏</a>
                 <a href="#contact" class="nav-link" data-translate-key="nav_contact">联系我</a>
                 <div class="relative">
-                    <button id="lang-toggle" aria-label="Change language" class="p-2 rounded-full hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white flex items-center">
+                    <button id="lang-toggle" aria-label="Change language" class="nav-link-button flex items-center">
                         <i class="fas fa-language text-xl mr-1"></i> <span id="current-lang" class="text-sm font-medium">中文</span> <i class="fas fa-chevron-down text-xs ml-1"></i>
                     </button>
                     <div id="lang-dropdown" class="absolute right-0 mt-2 w-32 rounded-md shadow-lg border hidden glass-effect !py-1 z-30">
@@ -67,7 +96,16 @@
             <a href="#home" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_home">主页</a>
             <a href="#about" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_about">关于我</a>
             <a href="#photos" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_photos">照片展览</a>
-            <a href="blog.html" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_blog">博客</a>
+            <div class="px-4">
+                <button id="mobile-blog-toggle" aria-label="Toggle blog menu" class="w-full flex justify-between items-center py-3 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150">
+                    <span data-translate-key="nav_blog">博客</span>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </button>
+                <div id="mobile-blog-dropdown" class="mt-1 space-y-1 hidden rounded bg-gray-800/80 p-1">
+                    <a href="blog.html" class="block px-3 py-1.5 text-sm rounded hover:bg-gray-700 transition-colors w-full text-left" data-translate-key="nav_blog_enter">进入博客</a>
+                    <a href="http://47.94.12.184/" target="_blank" rel="noopener noreferrer" class="block px-3 py-1.5 text-sm rounded hover:bg-gray-700 transition-colors w-full text-left" data-translate-key="nav_mainsite_enter">前往主站</a>
+                </div>
+            </div>
             <a href="games.html" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_games">小游戏</a>
             <a href="#contact" class="block py-3 px-4 text-sm text-[var(--accent-link)] hover:text-[var(--star-bright)] hover:bg-gray-700 transition duration-150" data-translate-key="nav_contact">联系我</a>
             <div class="px-4 pt-3 pb-2 border-t border-gray-700">
@@ -189,7 +227,7 @@
         });
 
         const sections = document.querySelectorAll('section[id], header[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
+        const navLinks = document.querySelectorAll('a.nav-link'); // 只选择带nav-link类的a标签
         const mobileNavLinks = document.querySelectorAll('#mobile-menu a[href^="#"]'); 
 
         function updateActiveLink() {
@@ -267,21 +305,26 @@
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLangToggle = document.getElementById('mobile-lang-toggle');
         const mobileLangDropdown = document.getElementById('mobile-lang-dropdown');
+        const mobileBlogToggle = document.getElementById('mobile-blog-toggle');
+        const mobileBlogDropdown = document.getElementById('mobile-blog-dropdown');
 
         if (mobileMenuButton && mobileMenu) {
              mobileMenuButton.addEventListener('click', () => {
                 const isHidden = mobileMenu.classList.toggle('hidden');
                 mobileMenuButton.setAttribute('aria-expanded', String(!isHidden)); 
-                if (isHidden && mobileLangDropdown && !mobileLangDropdown.classList.contains('hidden')) {
-                     mobileLangDropdown.classList.add('hidden');
+                if (isHidden) { // 如果主菜单隐藏了，确保所有子下拉也隐藏
+                    if (mobileLangDropdown) mobileLangDropdown.classList.add('hidden');
+                    if (mobileBlogDropdown) mobileBlogDropdown.classList.add('hidden');
                 }
             });
+            // 关闭主移动菜单时，如果点击的是下拉菜单项
             mobileMenu.querySelectorAll('a').forEach(link => {
-                if (!link.hasAttribute('data-lang')) {
+                if (!link.closest('#mobile-lang-dropdown') && !link.closest('#mobile-blog-dropdown')) { // 排除下拉菜单内的链接
                     link.addEventListener('click', () => {
                         mobileMenu.classList.add('hidden');
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         if (mobileLangDropdown) mobileLangDropdown.classList.add('hidden');
+                        if (mobileBlogDropdown) mobileBlogDropdown.classList.add('hidden');
                     });
                 }
             });
@@ -289,6 +332,14 @@
                  mobileLangToggle.addEventListener('click', (e) => {
                      e.stopPropagation(); 
                      mobileLangDropdown.classList.toggle('hidden');
+                     if (mobileBlogDropdown) mobileBlogDropdown.classList.add('hidden'); // 关闭另一个下拉
+                 });
+             }
+             if (mobileBlogToggle && mobileBlogDropdown) {
+                 mobileBlogToggle.addEventListener('click', (e) => {
+                     e.stopPropagation();
+                     mobileBlogDropdown.classList.toggle('hidden');
+                     if (mobileLangDropdown) mobileLangDropdown.classList.add('hidden'); // 关闭另一个下拉
                  });
              }
          }
@@ -334,24 +385,30 @@
             });
         }
 
-        // --- Language Switching Logic ---
+        // --- Language and Blog Dropdown Switching Logic ---
         const translations = {
             'en': {
-                'page_title': "MaxCaulfield's Little Station", 'nav_home': "Home", 'nav_about': "About Me", 'nav_photos': "Photo Gallery", 'nav_blog': "Blog", 'nav_games': "Games", 'nav_contact': "Contact Me", 'language_select': "Select Language", 'hero_greeting': "Hello, I'm MaxCaulfield", 'hero_subtitle': "Student at Beijing International Studies University | Love Creating & Exploring", 
+                'page_title': "MaxCaulfield's Little Station", 'nav_home': "Home", 'nav_about': "About Me", 'nav_photos': "Photo Gallery", 
+                'nav_blog': "Blog", 'nav_blog_enter': "Enter Blog", 'nav_mainsite_enter': "Go to Main Site", // 新增博客下拉菜单项翻译
+                'nav_games': "Games", 'nav_contact': "Contact Me", 'language_select': "Select Language", 'hero_greeting': "Hello, I'm MaxCaulfield", 'hero_subtitle': "Student at Beijing International Studies University | Love Creating & Exploring", 
                 'hero_blog_button': "Enter Blog", 
-                'hero_mainsite_button': "Go to Main Site", // 新增英文翻译
+                'hero_mainsite_button': "Go to Main Site", 
                 'hero_scroll_prompt': "Scroll down for more ↓", 'about_title': "About Me", 'about_para1': "I am someone who madly absorbs information in the vast flow of the internet. Always curious about new things, passionate about exploring the boundaries of technology and the charm of design.", 'about_para2': "As a student at Beijing International Studies University, I not only focus on my studies but also spend my spare time immersed in the digital world, learning programming, experiencing different software tools, and trying to turn ideas into reality. I believe continuous learning and hands-on practice are the best ways to grow.", 'about_tag1': "Fast Learner", 'about_tag2': "Digital Explorer", 'about_tag3': "Stay Curious", 'photos_title': "Photo Gallery", 'photos_caption': "Actually cute anime characters created by AI", 'contact_title': "Contact Me", 'contact_prompt': "Contact me via email:", 'contact_email_tooltip': "Click to send email", 'footer_text': "Built with ❤️ and code.", 'current_lang_display': "EN"
             },
             'zh-CN': {
-                'page_title': "麦青春的小小站", 'nav_home': "主页", 'nav_about': "关于我", 'nav_photos': "照片展览", 'nav_blog': "博客", 'nav_games': "小游戏", 'nav_contact': "联系我", 'language_select': "选择语言", 'hero_greeting': "你好，我是 MaxCaulfield", 'hero_subtitle': "北京市第二外国语学院 学生 | 热爱创造与探索", 
+                'page_title': "麦青春的小小站", 'nav_home': "主页", 'nav_about': "关于我", 'nav_photos': "照片展览", 
+                'nav_blog': "博客", 'nav_blog_enter': "进入博客", 'nav_mainsite_enter': "前往主站",
+                'nav_games': "小游戏", 'nav_contact': "联系我", 'language_select': "选择语言", 'hero_greeting': "你好，我是 MaxCaulfield", 'hero_subtitle': "北京市第二外国语学院 学生 | 热爱创造与探索", 
                 'hero_blog_button': "进入博客", 
-                'hero_mainsite_button': "前往主站", // 新增简体中文翻译
+                'hero_mainsite_button': "前往主站", 
                 'hero_scroll_prompt': "下滑了解更多 ↓", 'about_title': "关于我", 'about_para1': "我是一个在网络宏流中疯狂汲取信息的人。对新鲜事物永远保持好奇，热衷于探索技术的边界和设计的魅力。", 'about_para2': "作为北京市第二外国语学院的学生，我不仅专注于学业，更利用课余时间沉浸在数字世界，学习编程、体验不同的软件工具，并尝试将创意变为现实。我相信持续学习和动手实践是成长的最佳途径。", 'about_tag1': "快速学习", 'about_tag2': "数字探索", 'about_tag3': "保持好奇", 'photos_title': "照片展览", 'photos_caption': "其实是主包丢AI创作出来的卡哇伊二刺螈", 'contact_title': "联系我", 'contact_prompt': "通过邮箱联系我:", 'contact_email_tooltip': "点击发送邮件", 'footer_text': "用 ❤️ 和代码构建.", 'current_lang_display': "简"
             },
             'zh-TW': {
-                'page_title': "麥青春的小小站", 'nav_home': "主頁", 'nav_about': "關於我", 'nav_photos': "照片展覽", 'nav_blog': "部落格", 'nav_games': "小遊戲", 'nav_contact': "聯繫我", 'language_select': "選擇語言", 'hero_greeting': "你好，我是 MaxCaulfield", 'hero_subtitle': "北京第二外國語學院 學生 | 熱愛創造與探索", 
+                'page_title': "麥青春的小小站", 'nav_home': "主頁", 'nav_about': "關於我", 'nav_photos': "照片展覽", 
+                'nav_blog': "部落格", 'nav_blog_enter': "進入部落格", 'nav_mainsite_enter': "前往主站",
+                'nav_games': "小遊戲", 'nav_contact': "聯繫我", 'language_select': "選擇語言", 'hero_greeting': "你好，我是 MaxCaulfield", 'hero_subtitle': "北京第二外國語學院 學生 | 熱愛創造與探索", 
                 'hero_blog_button': "進入部落格", 
-                'hero_mainsite_button': "前往主站", // 新增繁體中文翻译
+                'hero_mainsite_button': "前往主站", 
                 'hero_scroll_prompt': "下滑了解更多 ↓", 'about_title': "關於我", 'about_para1': "我是一個在網路宏流中瘋狂汲取資訊的人。對新鮮事物永遠保持好奇，熱衷於探索技術的邊界和設計的魅力。", 'about_para2': "作為北京第二外國語學院的學生，我不僅專注於學業，更利用課餘時間沉浸在數位世界，學習程式設計、體驗不同的軟體工具，並嘗試將創意變為現實。我相信持續學習和動手實踐是成長的最佳途徑。", 'about_tag1': "快速學習", 'about_tag2': "數位探索", 'about_tag3': "保持好奇", 'photos_title': "照片展覽", 'photos_caption': "其實是主包丟AI創作出來的卡哇伊二次元", 'contact_title': "聯繫我", 'contact_prompt': "透過郵箱聯繫我:", 'contact_email_tooltip': "點擊發送郵件", 'footer_text': "用 ❤️ 和程式碼構建.", 'current_lang_display': "繁"
             }
         };
@@ -359,10 +416,15 @@
         const langToggleDesktop = document.getElementById('lang-toggle');
         const langDropdownDesktop = document.getElementById('lang-dropdown');
         const currentLangSpanDesktop = document.getElementById('current-lang');
-        const langLinksDesktop = document.querySelectorAll('#lang-dropdown a[data-lang]'); 
+        const langLinksDesktop = langDropdownDesktop ? langDropdownDesktop.querySelectorAll('a[data-lang]') : [];
         
+        const blogNavToggleDesktop = document.getElementById('blog-nav-toggle');
+        const blogNavDropdownDesktop = document.getElementById('blog-nav-dropdown');
+
         const mobileCurrentLangSpan = document.getElementById('mobile-current-lang');
-        const langLinksMobile = document.querySelectorAll('#mobile-lang-dropdown a[data-lang]'); 
+        const langLinksMobile = mobileLangDropdown ? mobileLangDropdown.querySelectorAll('a[data-lang]') : [];
+        const blogLinksMobile = mobileBlogDropdown ? mobileBlogDropdown.querySelectorAll('a') : [];
+
 
         let currentLang = localStorage.getItem('language') || 'zh-CN';
 
@@ -382,14 +444,14 @@
                     else if (el.tagName === 'IMG' && el.alt) { el.alt = translations[lang][key]; } 
                     else { el.textContent = translations[lang][key]; } 
                 } else {
-                    console.warn(`Translation key "${key}" not found for language "${lang}"`);
+                    // console.warn(`Translation key "${key}" not found for language "${lang}"`);
                 }
             });
             const displayLang = translations[lang]['current_lang_display'] || lang.split('-')[0].toUpperCase();
             if (currentLangSpanDesktop) currentLangSpanDesktop.textContent = displayLang; 
             if (mobileCurrentLangSpan) mobileCurrentLangSpan.textContent = displayLang; 
 
-            const allLangLinks = document.querySelectorAll('a[data-lang]');
+            const allLangLinks = document.querySelectorAll('#lang-dropdown a[data-lang], #mobile-lang-dropdown a[data-lang]');
             allLangLinks.forEach(link => {
                 const linkLang = link.getAttribute('data-lang');
                 link.classList.toggle('font-bold', linkLang === lang); 
@@ -397,42 +459,66 @@
             });
         }
 
-        function setupLangSwitcher(toggleButton, dropdownMenu, links) {
-            if (!toggleButton || !dropdownMenu || !links || links.length === 0) {
+        function setupDropdown(toggleButton, dropdownMenu, linksToCloseMenu = [], otherDropdownsToClose = []) {
+            if (!toggleButton || !dropdownMenu) {
+                // console.warn("Dropdown toggle or menu not found for setup:", toggleButton, dropdownMenu);
                 return; 
             }
             toggleButton.addEventListener('click', (e) => {
                 e.stopPropagation(); 
-                dropdownMenu.classList.toggle('hidden');
-            });
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault(); 
-                    const selectedLang = link.getAttribute('data-lang');
-                    if (selectedLang !== currentLang) {
-                        currentLang = selectedLang;
-                        localStorage.setItem('language', currentLang); 
-                        applyTranslations(currentLang); 
-                    }
-                    dropdownMenu.classList.add('hidden'); 
-                    if (mobileMenu && !mobileMenu.classList.contains('hidden') && dropdownMenu === mobileLangDropdown) {
-                         mobileMenu.classList.add('hidden');
-                         mobileMenuButton.setAttribute('aria-expanded', 'false');
+                const isHidden = dropdownMenu.classList.toggle('hidden');
+                if (toggleButton.hasAttribute('aria-expanded')) {
+                    toggleButton.setAttribute('aria-expanded', String(!isHidden));
+                }
+                // Close other specified dropdowns
+                otherDropdownsToClose.forEach(otherDropdown => {
+                    if (otherDropdown && otherDropdown !== dropdownMenu && !otherDropdown.classList.contains('hidden')) {
+                        otherDropdown.classList.add('hidden');
+                        const otherToggle = document.querySelector(`[aria-controls="${otherDropdown.id}"], [id="${otherDropdown.id.replace('-dropdown', '-toggle')}"]`);
+                        if (otherToggle && otherToggle.hasAttribute('aria-expanded')) {
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                        }
                     }
                 });
             });
-        }
 
-        document.addEventListener('click', (e) => {
-            if (langToggleDesktop && langDropdownDesktop && !langToggleDesktop.contains(e.target) && !langDropdownDesktop.contains(e.target)) {
-                langDropdownDesktop.classList.add('hidden');
+            if (linksToCloseMenu && linksToCloseMenu.length > 0) {
+                linksToCloseMenu.forEach(link => {
+                    link.addEventListener('click', () => {
+                        dropdownMenu.classList.add('hidden');
+                        if (toggleButton.hasAttribute('aria-expanded')) {
+                             toggleButton.setAttribute('aria-expanded', 'false');
+                        }
+                        // If this is inside the main mobile menu, also close the main mobile menu
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden') && dropdownMenu.closest('#mobile-menu')) {
+                             mobileMenu.classList.add('hidden');
+                             if (mobileMenuButton) mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
             }
-            if (mobileLangToggle && mobileLangDropdown && !mobileLangToggle.contains(e.target) && !mobileLangDropdown.contains(e.target)) {
-                 if (!mobileMenuButton || !mobileMenuButton.contains(e.target)) {
-                      mobileLangDropdown.classList.add('hidden');
-                 }
-             }
+        }
+        
+        document.addEventListener('click', (e) => {
+            const allDropdowns = [
+                {toggle: langToggleDesktop, menu: langDropdownDesktop},
+                {toggle: blogNavToggleDesktop, menu: blogNavDropdownDesktop},
+                {toggle: mobileLangToggle, menu: mobileLangDropdown},
+                {toggle: mobileBlogToggle, menu: mobileBlogDropdown}
+            ];
+
+            allDropdowns.forEach(item => {
+                if (item.toggle && item.menu && !item.menu.classList.contains('hidden')) {
+                    if (!item.toggle.contains(e.target) && !item.menu.contains(e.target)) {
+                        item.menu.classList.add('hidden');
+                         if (item.toggle.hasAttribute('aria-expanded')) {
+                            item.toggle.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                }
+            });
         });
+
 
         function loadImages() {
             const avatarImg = document.getElementById('avatar-img');
@@ -452,8 +538,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            setupLangSwitcher(langToggleDesktop, langDropdownDesktop, langLinksDesktop);
-            setupLangSwitcher(mobileLangToggle, mobileLangDropdown, langLinksMobile);
+            // Setup desktop dropdowns
+            setupDropdown(langToggleDesktop, langDropdownDesktop, Array.from(langLinksDesktop), [blogNavDropdownDesktop]);
+            setupDropdown(blogNavToggleDesktop, blogNavDropdownDesktop, Array.from(blogNavDropdownDesktop ? blogNavDropdownDesktop.querySelectorAll('a') : []), [langDropdownDesktop]);
+
+            // Setup mobile dropdowns
+            setupDropdown(mobileLangToggle, mobileLangDropdown, Array.from(langLinksMobile), [mobileBlogDropdown]);
+            setupDropdown(mobileBlogToggle, mobileBlogDropdown, Array.from(blogLinksMobile), [mobileLangDropdown]);
+            
             applyTranslations(currentLang);
             updateActiveLink(); 
             loadImages();
