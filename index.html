@@ -8,26 +8,104 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" xintegrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <style>
         :root {
-            --bg-primary-dark: #0b0f19; --bg-secondary-dark: rgba(17, 24, 39, 0.8); --bg-glass-dark: rgba(31, 41, 55, 0.6); --text-primary-dark: #e5e7eb; --text-secondary-dark: #9ca3af; --text-accent-dark: #a7c7e7; --border-color-dark: rgba(55, 65, 81, 0.5); --glow-color-dark: rgba(173, 216, 230, 0.7);
-            --bg-primary-light: #f9fafb; --bg-secondary-light: rgba(255, 255, 255, 0.85); --bg-glass-light: rgba(243, 244, 246, 0.7); --text-primary-light: #1f2937; --text-secondary-light: #4b5563; --text-accent-light: #3b82f6; --border-color-light: rgba(209, 213, 219, 0.6); --glow-color-light: rgba(59, 130, 246, 0.6);
-            --bg-primary: var(--bg-primary-dark); --bg-secondary: var(--bg-secondary-dark); --bg-glass: var(--bg-glass-dark); --text-primary: var(--text-primary-dark); --text-secondary: var(--text-secondary-dark); --text-accent: var(--text-accent-dark); --border-color: var(--border-color-dark); --glow-color: var(--glow-color-dark);
+            /* Dark Theme Variables */
+            --bg-primary-dark: #0b0f19; 
+            --bg-secondary-dark: rgba(17, 24, 39, 0.8); 
+            --bg-glass-dark: rgba(27, 38, 59, 0.6); /* Slightly different glass for resource theme */
+            --text-primary-dark: #e5e7eb; 
+            --text-secondary-dark: #9ca3af; 
+            --text-accent-dark: #6ee7b7; /* Emerald accent for resource theme */
+            --border-color-dark: rgba(55, 65, 81, 0.5); 
+            --glow-color-dark: rgba(52, 211, 153, 0.6); /* Emerald glow */
+
+            /* Light Theme Variables */
+            --bg-primary-light: #f9fafb; 
+            --bg-secondary-light: rgba(255, 255, 255, 0.85); 
+            --bg-glass-light: rgba(236, 253, 245, 0.7); /* Light emerald glass */
+            --text-primary-light: #1f2937; 
+            --text-secondary-light: #4b5563; 
+            --text-accent-light: #059669; /* Darker emerald for light theme accent */
+            --border-color-light: rgba(209, 213, 219, 0.6); 
+            --glow-color-light: rgba(16, 185, 129, 0.5); /* Emerald glow for light theme */
+
+            /* Default to Dark Theme */
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --bg-glass: var(--bg-glass-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --text-accent: var(--text-accent-dark);
+            --border-color: var(--border-color-dark);
+            --glow-color: var(--glow-color-dark);
             scroll-behavior: smooth;
         }
         body.light-theme {
-            --bg-primary: var(--bg-primary-light); --bg-secondary: var(--bg-secondary-light); --bg-glass: var(--bg-glass-light); --text-primary: var(--text-primary-light); --text-secondary: var(--text-secondary-light); --text-accent: var(--text-accent-light); --border-color: var(--border-color-light); --glow-color: var(--glow-color-light);
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --bg-glass: var(--bg-glass-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --text-accent: var(--text-accent-light);
+            --border-color: var(--border-color-light);
+            --glow-color: var(--glow-color-light);
         }
-        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; position: relative; display: flex; flex-direction: column; min-height: 100vh; }
-        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(-45deg, #f59e0b, #facc15, #a3e635, #4ade80, #fcd34d, #fbbf24, #f59e0b); /* Resource gradient - yellows, ambers, light greens */ background-size: 400% 400%; animation: gradient-flow 30s linear infinite; z-index: -2; opacity: 0.6; transition: opacity 0.3s ease; }
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
+            font-family: 'Inter', sans-serif; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
+            overflow-x: hidden; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+        body::before { 
+            content: ''; 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            /* Resource Library Gradient: Greens, Teals, Blues */
+            background: linear-gradient(-45deg,  #10b981, #06b6d4, #3b82f6, #14532d, #06b6d4, #1e3a8a, #10b981); 
+            background-size: 400% 400%; 
+            animation: gradient-flow 30s linear infinite; 
+            z-index: -2; 
+            opacity: 0.6; 
+            transition: opacity 0.3s ease; 
+        }
         body.light-theme::before { opacity: 0.3; }
-        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-        #tsparticles-404-online-resources { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .glass-effect { background-color: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 0.75rem; transition: background-color 0.3s ease, border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        .text-gradient-resources-online { background-image: linear-gradient(to right, #facc15, #fb923c); -webkit-background-clip: text; background-clip: text; color: transparent; } /* Yellow to Orange gradient for Resources .online */
-        body.light-theme .text-gradient-resources-online { background-image: linear-gradient(to right, #eab308, #f97316); }
+        @keyframes gradient-flow { 
+            0% { background-position: 0% 50%; } 
+            100% { background-position: 100% 50%; } 
+        }
+        #tsparticles-404-online-resources { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            z-index: -1; 
+        }
+        .glass-effect { 
+            background-color: var(--bg-glass); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid var(--border-color); 
+            border-radius: 0.75rem; 
+            transition: background-color 0.3s ease, border-color 0.3s ease; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+        /* Text gradient for Resource Library */
+        .text-gradient-online-resources { 
+            background-image: linear-gradient(to right, var(--text-accent-dark), #0ea5e9); /* Emerald to Sky Blue for dark */
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            color: transparent; 
+        }
+        body.light-theme .text-gradient-online-resources { 
+            background-image: linear-gradient(to right, var(--text-accent-light), #0284c7); /* Darker Emerald to Cyan for light */
+        }
         
         .header-404 {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 50;
@@ -40,7 +118,7 @@
         }
         .main-content {
             flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 2rem; padding-top: 100px; padding-bottom: 80px;
+            text-align: center; padding: 2rem; padding-top: 100px; padding-bottom: 80px; /* Adjust for header/footer */
         }
         .footer-404 {
             position: fixed; bottom: 0; left: 0; width: 100%;
@@ -49,6 +127,7 @@
         .construction-icon svg {
             width: 80px; height: 80px; margin: 0 auto 1.5rem; display: block; color: var(--text-accent);
         }
+        /* Added spinner animation */
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loading-spinner { animation: spin 1s linear infinite; }
 
@@ -58,6 +137,27 @@
         }
         body.light-theme .title-404 { text-shadow: 2px 2px 0px var(--border-color-light); }
         @media (min-width: 768px) { .title-404 { font-size: 5rem; } }
+
+        /* Button Style */
+        .action-button {
+            display: inline-block; 
+            background-color: var(--text-accent); 
+            color: var(--bg-primary); /* Ensure contrast */
+            font-weight: 600; /* Tailwind's font-semibold */
+            padding-top: 0.75rem; padding-bottom: 0.75rem; /* py-3 */
+            padding-left: 2rem; padding-right: 2rem; /* px-8 */
+            border-radius: 9999px; /* rounded-full */
+            transition-property: opacity;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+        .action-button:hover {
+            opacity: 0.8;
+        }
+        body.light-theme .action-button {
+            color: var(--bg-primary-light); /* Ensure contrast for light theme */
+        }
+
     </style>
 </head>
 <body class="dark-theme">
@@ -66,7 +166,7 @@
     <header id="header-404-online-resources" class="header-404 py-3">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="http://maxcaulfield.cn" target="_blank" rel="noopener noreferrer" class="text-xl font-bold hover:opacity-80 transition-opacity">
-                <span class="text-gradient-resources-online" data-translate-key="online_resources_site_name">麦青春的资源库</span>
+                <span class="text-gradient-online-resources" data-translate-key="online_resources_site_name">麦青春的资源库</span>
             </a>
             <div class="flex items-center space-x-3">
                 <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-[var(--bg-glass)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
@@ -94,12 +194,12 @@
                 <circle cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round" stroke-dasharray="94.245 125.66" />
             </svg>
         </div>
-        <h1 class="title-404 text-gradient-resources-online" data-translate-key="heading_404">404</h1>
-        <h2 class="text-2xl md:text-3xl font-semibold mb-4" data-translate-key="subheading_construction_online_resources">资源库正在努力搬砖中...</h2>
+        <h1 class="title-404 text-gradient-online-resources" data-translate-key="heading_404_online">404</h1>
+        <h2 class="text-2xl md:text-3xl font-semibold mb-4" data-translate-key="subheading_construction_online_resources">资源库正在整理打包中...</h2>
         <p class="text-lg text-[var(--text-secondary)] mb-8 max-w-md mx-auto" data-translate-key="message_404_online_resources">
-            抱歉，MaxCaulfield 的资源库 (maxcaulfield.online) 正在全力整理和扩充中，很快就会带来满满干货与你分享！
+            客官请稍候！MaxCaulfield 正在精心搜集和整理各种宝藏资源 (maxcaulfield.online)，很快就能开放共享啦！
         </p>
-        <a href="http://maxcaulfield.cn" target="_blank" rel="noopener noreferrer" class="inline-block bg-[var(--text-accent)] text-[var(--bg-primary)] font-semibold py-3 px-8 rounded-full hover:opacity-80 transition-opacity duration-300" data-translate-key="button_main_site">
+        <a href="http://maxcaulfield.cn" target="_blank" rel="noopener noreferrer" class="action-button" data-translate-key="button_main_site_online">
             前往主站
         </a>
     </main>
@@ -109,35 +209,35 @@
     </footer>
 
     <script>
-        // --- Translations ---
+        // --- Translations (Button text updated) ---
         const translations = {
             'en': {
                 'title_404_online_resources': "Page Not Found (404) - Max's Resource Library Under Construction",
                 'online_resources_site_name': "Max's Resource Library",
-                'heading_404': "404",
-                'subheading_construction_online_resources': "Resource Library is Working Hard...",
-                'message_404_online_resources': "Sorry, MaxCaulfield's Resource Library (maxcaulfield.online) is currently being organized and expanded. It will be back soon with lots of goodies to share!",
-                'button_main_site': "前往主站",
+                'heading_404_online': "404",
+                'subheading_construction_online_resources': "Resource Library is Being Organized...",
+                'message_404_online_resources': "Please wait a moment! MaxCaulfield is carefully collecting and organizing various treasures for maxcaulfield.online. It will be open for sharing soon!",
+                'button_main_site_online': "Go to Main Site", // Updated
                 'current_lang_display': "EN",
                 'online_resources_site_name_footer': "Max's Resource Library"
             },
             'zh-CN': {
                 'title_404_online_resources': "页面未找到 (404) - 麦青春的资源库建设中",
                 'online_resources_site_name': "麦青春的资源库",
-                'heading_404': "404",
-                'subheading_construction_online_resources': "资源库正在努力搬砖中...",
-                'message_404_online_resources': "抱歉，MaxCaulfield 的资源库 (maxcaulfield.online) 正在全力整理和扩充中，很快就会带来满满干货与你分享！",
-                'button_main_site': "前往主站",
+                'heading_404_online': "404",
+                'subheading_construction_online_resources': "资源库正在整理打包中...",
+                'message_404_online_resources': "客官请稍候！MaxCaulfield 正在精心搜集和整理各种宝藏资源 (maxcaulfield.online)，很快就能开放共享啦！",
+                'button_main_site_online': "前往主站", // Updated
                 'current_lang_display': "简",
                 'online_resources_site_name_footer': "麦青春的资源库"
             },
             'zh-TW': {
                 'title_404_online_resources': "頁面未找到 (404) - 麥青春的資源庫建設中",
                 'online_resources_site_name': "麥青春的資源庫",
-                'heading_404': "404",
-                'subheading_construction_online_resources': "資源庫正在努力搬磚中...",
-                'message_404_online_resources': "抱歉，MaxCaulfield 的資源庫 (maxcaulfield.online) 正在全力整理和擴充中，很快就會帶來滿滿乾貨與你分享！",
-                'button_main_site': "前往主站",
+                'heading_404_online': "404",
+                'subheading_construction_online_resources': "資源庫正在整理打包中...",
+                'message_404_online_resources': "客官請稍候！MaxCaulfield 正在精心蒐集和整理各種寶藏資源 (maxcaulfield.online)，很快就能開放共享啦！",
+                'button_main_site_online': "前往主站", // Updated
                 'current_lang_display': "繁",
                 'online_resources_site_name_footer': "麥青春的資源庫"
             }
@@ -244,22 +344,22 @@
                 });
             }
 
-            // tsParticles Initialization for Resources Page
+            // tsParticles Initialization for Resource Library
             if (typeof tsParticles !== 'undefined') {
-                tsParticles.load("tsparticles-404-online-resources", { // Unique ID
+                tsParticles.load("tsparticles-404-online-resources", {
                     fpsLimit: 60,
                     particles: {
                         number: { value: 50, density: { enable: true, area: 800 } },
-                        color: { value: ["#facc15", "#fbbf24", "#fde047", "#fef3c7"] }, // Yellows and ambers
-                        shape: { type: "polygon", polygon: { nb_sides: 6 } }, // Hexagons, like data blocks
-                        opacity: { value: {min: 0.2, max: 0.6}, animation: { enable: true, speed: 0.7, minimumValue: 0.15 } },
-                        size: { value: {min: 1.5, max: 4} },
-                        links: { color: "#fbbf24", distance: 160, enable: true, opacity: 0.3, width: 1 },
-                        move: { enable: true, speed: 0.7, direction: "top-left", random: false, straight: false, outModes: { default: "out" } } 
+                        color: { value: ["#22c55e", "#67e8f9", "#f0f9ff", "#d1fae5"] }, // Greens, light blues, off-whites
+                        shape: { type: "polygon", polygon: { sides: 6 } }, // Hexagons
+                        opacity: { value: {min: 0.1, max: 0.4}, animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false } },
+                        size: { value: {min: 1, max: 4} },
+                        links: { color: "#6ee7b7", distance: 160, enable: true, opacity: 0.2, width: 1 }, // Emerald links
+                        move: { enable: true, speed: 0.7, direction: "none", random: true, straight: false, outModes: { default: "out" }, attract: { enable: false } } 
                     },
                     interactivity: {
-                        events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } },
-                        modes: { grab: { distance: 120, links: { opacity: 0.5 } }, push: { quantity: 3 } }
+                        events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } }, 
+                        modes: { grab: { distance: 140, links: { opacity: 0.5 } }, push: { quantity: 3 } }
                     },
                     detectRetina: true,
                     background: { opacity: 0 }
